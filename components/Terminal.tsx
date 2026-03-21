@@ -82,6 +82,9 @@ export default function Terminal() {
             // check commands map
             if (commands[trimmed]) {
                 const val = commands[trimmed];
+                if (trimmed === "cat resume.pdf") {
+                    window.open(socialLinks.cv, "_blank");
+                }
                 return typeof val === "function" ? val() : val;
             }
 

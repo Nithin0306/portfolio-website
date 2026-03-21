@@ -34,7 +34,7 @@ export default function Hero() {
                             <a
                                 href={socialLinks.cv}
                                 className="profile-button"
-                                download="NITHIN_CV.pdf"
+                                download="resume.pdf"
                             >
                                 <i className="fas fa-download" /> Download CV
                             </a>
