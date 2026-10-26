@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sprite Engine Test · Phase 3 Verification</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <style>
+    body {
+      padding: 32px var(--m);
+      background-color: var(--paper);
+    }
+    h1 {
+      font-family: var(--font-pixel);
+      font-size: var(--fs-m);
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .sprite-card {
+      background: var(--paper-2);
+      border: var(--border-ink);
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .sprite-card .name {
+      font-family: var(--font-pixel);
+      font-size: var(--fs-xs);
+      color: var(--ink);
+    }
+    .render-box {
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px;
+      width: 100%;
+    }
+    .tile-demo {
+      height: 48px;
+      width: 100%;
+      border: 2px solid var(--ink);
+      background-repeat: repeat;
+    }
+  </style>
+</head>
+<body>
+  <a class="btn" href="index.html">← Back to Portfolio</a>
+  <h1>PHASE 3: SPRITE ENGINE VERIFICATION</h1>
+  <p>Verifying crisp pixel rendering at 100% (scale 6) and 200% zoom with no blur.</p>
+
+  <h2>Sprite Showcase</h2>
+  <div class="grid" id="spriteGrid"></div>
+
+  <h2>Repeating Background Tiles</h2>
+  <div class="grid" id="tileGrid"></div>
+
+  <script type="module">
+    import { MAPS, sprite, tile } from "./js/sprites.js";
+
+    const spriteGrid = document.getElementById("spriteGrid");
+    const tileGrid = document.getElementById("tileGrid");
+
+    const scaleMap = {
+      hero: 6,
+      q: 6,
+      used: 6,
+      bulb: 6,
+      term: 6,
+      trophy: 6,
+      gear: 6,
+      doc: 6,
+      castle: 6,
+      flag: 4,
+      pipe: 4,
+      fish: 6,
+      card: 5,
+      seat: 6
+    };
+
+    Object.keys(MAPS).forEach(name => {
+      if (['brick', 'earth', 'ubrick', 'chain'].includes(name)) return;
+      const card = document.createElement("div");
+      card.className = "sprite-card";
+      
+      const sc = scaleMap[name] || 5;
+      const img100 = sprite(name, sc);
+      const img200 = sprite(name, sc * 2);
+
+      card.innerHTML = `
+        <span class="name">${name}</span>
+        <div class="render-box">
+          <img src="${img100}" class="pixelated" alt="${name} 100%" title="Scale ${sc} (100%)">
+        </div>
+        <span class="tag">200% Zoom:</span>
+        <div class="render-box">
+          <img src="${img200}" class="pixelated" alt="${name} 200%" title="Scale ${sc * 2} (200%)">
+        </div>
+      `;
+      spriteGrid.appendChild(card);
+    });
+
+    ['brick', 'earth', 'ubrick'].forEach(name => {
+      const card = document.createElement("div");
+      card.className = "sprite-card";
+      const sc = name === 'ubrick' ? 4 : 3;
+      card.innerHTML = `
+        <span class="name">Tile: ${name}</span>
+        <div class="tile-demo" style="background-image: ${tile(name, sc)};"></div>
+      `;
+      tileGrid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

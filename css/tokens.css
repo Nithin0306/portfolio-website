@@ -1,0 +1,104 @@
+/* ==========================================================================
+   2. DESIGN TOKENS
+   Flat colour only. No smooth gradients, no blur, no glows, no translucent shadows.
+   Two typefaces (Press Start 2P, Inter) + JetBrains Mono for prompt.
+   Five type sizes: --fs-xs (12px), --fs-s (16px), --fs-m (24px), --fs-l (32px), --fs-xl.
+   ========================================================================== */
+
+:root {
+  /* ink + paper */
+  --ink: #1a1208;
+  --paper: #fbf6e6;
+  --paper-2: #f1e9cf;
+  --muted: #5c5546;
+
+  /* accents */
+  --gold: #f5c451;
+  --red: #e8453c;
+  --green: #2e9f4a;
+
+  /* wood sign */
+  --wood: #a8742f;
+  --wood-2: #8f5f25;
+  --wood-dark: #3b2410;
+  --wood-light: #c99350;
+  --sign-text: #fff4d6;
+
+  /* brick floor */
+  --brick: #c84c0c;
+  --brick-dark: #7a2a00;
+  --brick-top: #e08a4a;
+
+  /* underground */
+  --wall: #1d4fd8;
+  --wall-dark: #0b2570;
+
+  /* scenery */
+  --grass: #2fa84f;
+  --grass-dark: #0c5a1f;
+  --stone: #b4b4b8;
+  --stone-dark: #7a7a80;
+
+  /* sky: 4 flat bands, lightest at the horizon */
+  --sky-1: #4f87f0;
+  --sky-2: #5c94fc;
+  --sky-3: #6fa3ff;
+  --sky-4: #86b4ff;
+  --cloud: #ffffff;
+  --sun: #ffe36b;
+
+  /* project worlds */
+  --water-1: #0f4f8a;
+  --water-2: #1d6fb8;
+  --water-3: #2a86d4;
+  --cine-wall: #2a1418;
+  --curtain: #7a1f2b;
+  --curtain-dark: #5a1420;
+  --study-1: #1f7a6b;
+  --study-2: #2a9a88;
+
+  /* 2.2 Type tokens */
+  --fs-xs: 12px;
+  --fs-s: 16px;
+  --fs-m: 24px;
+  --fs-l: 32px;
+  --fs-xl: clamp(40px, 8.5vw, 120px);
+
+  --font-pixel: "Press Start 2P", "Courier New", monospace;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* 2.3 Space, borders, shadows */
+  --m: clamp(16px, 3vw, 40px);
+  --border-width: 3px;
+  --border-ink: 3px solid var(--ink);
+  --shadow-sm: 4px 4px 0 var(--ink);
+  --shadow-card: 6px 6px 0 var(--ink);
+
+  /* 2.4 Motion tokens */
+  --t-fast: 120ms;
+  --t-med: 250ms;
+  --t-slide: 800ms cubic-bezier(0.6, 0, 0.3, 1);
+  --stagger-step: 70ms;
+}
+
+/* night variant: only sky, clouds, and sun change */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --sky-1: #141f55;
+    --sky-2: #1b2a66;
+    --sky-3: #243480;
+    --sky-4: #34459a;
+    --cloud: #8d9bd0;
+    --sun: #e8ecf5;
+  }
+}
+
+:root[data-theme="dark"] {
+  --sky-1: #141f55;
+  --sky-2: #1b2a66;
+  --sky-3: #243480;
+  --sky-4: #34459a;
+  --cloud: #8d9bd0;
+  --sun: #e8ecf5;
+}

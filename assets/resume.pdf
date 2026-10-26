@@ -1,0 +1,57 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 580 >>
+stream
+BT
+/F1 24 Tf
+50 720 Td
+(NITHIN - SOFTWARE ENGINEER RESUME) Tj
+/F1 12 Tf
+0 -30 Td
+(Email: nithin@example.com | GitHub: github.com/Nithin0306 | LinkedIn: linkedin.com/in/nithin) Tj
+0 -40 Td
+(EDUCATION: Amrita Vishwa Vidyapeetham - B.Tech Computer Science and Engineering) Tj
+0 -30 Td
+(EXPERIENCE: Software Development Engineer Intern) Tj
+0 -20 Td
+(- Architected full-stack web applications and AI integration pipelines) Tj
+0 -20 Td
+(- Optimized database query latencies and responsive user interface components) Tj
+0 -30 Td
+(PROJECTS:) Tj
+0 -20 Td
+(- SkillUp: AI Skill Gap Analyzer - Hack101 2nd Place Runner-Up) Tj
+0 -20 Td
+(- GroupFlix: Collaborative Movie Recommendation Engine with Consensus Algorithm) Tj
+0 -20 Td
+(- FishGlob: Ocean Current-Aware Marine Fisheries Analytics) Tj
+0 -20 Td
+(- NeoFlash: Web-Based Spaced Repetition Flashcard Learning System) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000244 00000 n 
+0000000877 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+947
+%%EOF

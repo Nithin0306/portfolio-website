@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Nithin · Software engineer in the making</title>
+  <meta name="description" content="Nithin: CSE student at Amrita, SDE intern, Hack101 runner-up. Projects in AI and web.">
+  <meta property="og:title" content="Nithin · Software engineer in the making">
+  <meta property="og:description" content="Projects, experience and resume.">
+  <meta property="og:image" content="assets/og.png">
+  <meta name="theme-color" content="#4f87f0">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <!-- Google Fonts: Press Start 2P, Inter (400, 600, 700), JetBrains Mono (400) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <!-- CSS tokens and base styles for Phase 1 & 2 -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+
+  <script>
+    /* In Phase 1, we keep the page fully viewable without JS.
+       When Phase 4+ is activated, this class switches on the interactive world scene. */
+    // document.documentElement.classList.add('js');
+  </script>
+</head>
+<body>
+  <a class="skip" href="#pages">Skip to content</a>
+
+  <!-- Phase 4 and later container; empty at this stage as per plan -->
+  <div id="world"></div>
+
+  <main id="pages">
+    <!-- Home Header -->
+    <header class="page" data-page="home">
+      <div class="status-badge" aria-label="Current status">
+        <span class="status-dot" aria-hidden="true"></span> Open to opportunities
+      </div>
+      <h1 class="name-hero">Nithin</h1>
+      <p class="lead-statement">Software engineer in the making: CSE student at Amrita, SDE intern, Hack101 runner-up.</p>
+      <nav class="quick-nav" aria-label="Direct quick links">
+        <a class="btn pri" href="assets/resume.pdf" download>Download Resume ↓</a>
+        <a class="btn" href="#projects">View Projects</a>
+        <a class="btn" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- About Section -->
+    <section class="page" id="about" data-page="about" data-icon="bulb">
+      <div class="section-badge">
+        <span class="plaque">ABOUT</span>
+      </div>
+      <h2>About</h2>
+      <p class="about-summary">
+        CSE student at Amrita and SDE intern. I build AI tools and web apps, turning ideas into reliable software people actually use.
+      </p>
+
+      <div class="facts-card">
+        <ul class="facts-list">
+          <li><strong>Education:</strong> Amrita Vishwa Vidyapeetham · B.Tech in Computer Science and Engineering (Expected 2026)</li>
+          <li><strong>Role:</strong> Software Development Engineer Intern <!-- TODO: company name --></li>
+          <li><strong>Focus:</strong> Full-Stack Web Development, Applied AI &amp; Recommender Systems</li>
+          <li><strong>Status:</strong> Available for SDE Internship &amp; New Grad Opportunities</li>
+        </ul>
+      </div>
+
+      <div class="action-row">
+        <a class="btn pri" href="assets/resume.pdf" download>Download Resume ↓</a>
+        <a class="btn" href="#projects">Explore Projects ▸</a>
+      </div>
+    </section>
+
+    <!-- Projects Overview Section -->
+    <section class="page" id="projects" data-page="projects" data-icon="term">
+      <div class="section-badge">
+        <span class="plaque">PROJECTS</span>
+      </div>
+      <h2>Projects</h2>
+      <p class="sub-desc">Four levels so far. Open one for the case study.</p>
+
+      <div class="projects-list">
+        <article class="project-entry">
+          <div class="level-label">1-1</div>
+          <div class="project-info">
+            <div class="project-title-row">
+              <h3><a href="#skillup">SkillUp · AI skill gap analyzer</a></h3>
+              <span class="plaque gold">Hack101 · 2nd</span>
+            </div>
+            <p>Shows what to learn next for a target role based on automated resume parsing and job requirements.</p>
+            <div class="tags-row">
+              <span class="tag">Python</span>
+              <span class="tag">ML</span>
+              <span class="tag">FastAPI</span>
+            </div>
+          </div>
+          <a class="entry-link" href="#skillup" aria-label="Open SkillUp case study">open ▸</a>
+        </article>
+
+        <article class="project-entry">
+          <div class="level-label">1-2</div>
+          <div class="project-info">
+            <div class="project-title-row">
+              <h3><a href="#groupflix">GroupFlix · Movie recommendation</a></h3>
+            </div>
+            <p>Recommends movies a whole group can agree on through real-time preference voting and consensus algorithms.</p>
+            <div class="tags-row">
+              <span class="tag">Python</span>
+              <span class="tag">Recommender</span>
+              <span class="tag">WebSockets</span>
+            </div>
+          </div>
+          <a class="entry-link" href="#groupflix" aria-label="Open GroupFlix case study">open ▸</a>
+        </article>
+
+        <article class="project-entry">
+          <div class="level-label">1-3</div>
+          <div class="project-info">
+            <div class="project-title-row">
+              <h3><a href="#fishglob">FishGlob · Current-aware fish analysis</a></h3>
+            </div>
+            <p>Analyses fish distribution data with ocean-current context and hydrodynamics.</p>
+            <div class="tags-row">
+              <span class="tag">Python</span>
+              <span class="tag">Data analysis</span>
+              <span class="tag">Geospatial</span>
+            </div>
+          </div>
+          <a class="entry-link" href="#fishglob" aria-label="Open FishGlob case study">open ▸</a>
+        </article>
+
+        <article class="project-entry">
+          <div class="level-label">2-1</div>
+          <div class="project-info">
+            <div class="project-title-row">
+              <h3><a href="#neoflash">NeoFlash · Learning platform</a></h3>
+            </div>
+            <p>A web platform for learning with flashcards and spaced repetition algorithms.</p>
+            <div class="tags-row">
+              <span class="tag">JavaScript</span>
+              <span class="tag">HTML/CSS</span>
+              <span class="tag">Local-First</span>
+            </div>
+          </div>
+          <a class="entry-link" href="#neoflash" aria-label="Open NeoFlash case study">open ▸</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Project 1: SkillUp Detailed Article -->
+    <article class="page project" id="skillup" data-page="skillup" data-level="1-1" data-theme="gap"
+             data-shot="assets/shots/skillup.png" data-title="SkillUp" data-tagline="AI skill gap analyzer"
+             data-skills="Python,PyTorch,System Design">
+      <div class="section-badge">
+        <span class="plaque">LEVEL 1-1</span>
+        <span class="plaque gold">Hack101 · 2nd Place</span>
+      </div>
+      <h2>SkillUp</h2>
+      <p class="tagline">AI skill gap analyzer</p>
+
+      <figure class="shot-wrapper">
+        <img src="assets/shots/skillup.png" width="1280" height="800" alt="SkillUp interface showing skill gap matrix, readiness score of 82 percent, and recommended learning curriculum">
+        <figcaption>Level 1-1 · SkillUp: Automated AI requirement parsing and curriculum recommendation dashboard.</figcaption>
+      </figure>
+
+      <div class="project-body">
+        <div class="overview-box">
+          <h4>Overview</h4>
+          <p>
+            Job descriptions and candidate resumes often speak completely different vocabularies. SkillUp extracts requirement matrices from target roles, identifies missing competencies, and maps out an actionable milestone roadmap.
+          </p>
+        </div>
+
+        <div class="highlights-box">
+          <h4>Highlights</h4>
+          <ul>
+            <li>Placed 2nd out of 100+ competing engineering teams at Hack101.</li>
+            <li>Built an automated parser extracting requirement matrices across 50+ technology stacks.</li>
+            <li>Generates milestone-driven learning roadmaps with step-by-step project suggestions.</li>
+          </ul>
+        </div>
+
+        <div class="stack-box">
+          <h4>Stack</h4>
+          <div class="tags-row">
+            <span class="tag">Python</span>
+            <span class="tag">Machine Learning</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Vector Search</span>
+          </div>
+        </div>
+
+        <div class="project-links">
+          <a class="btn pri" href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+          <a class="btn" href="#projects">All Projects</a>
+          <a class="btn" href="#groupflix">Next Level: GroupFlix ▸</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 2: GroupFlix Detailed Article -->
+    <article class="page project" id="groupflix" data-page="groupflix" data-level="1-2" data-theme="cinema"
+             data-shot="assets/shots/groupflix.png" data-title="GroupFlix" data-tagline="Movie recommendation">
+      <div class="section-badge">
+        <span class="plaque">LEVEL 1-2</span>
+      </div>
+      <h2>GroupFlix</h2>
+      <p class="tagline">Movie recommendation</p>
+
+      <figure class="shot-wrapper">
+        <img src="assets/shots/groupflix.png" width="1280" height="800" alt="GroupFlix cinema room with 4 active viewers, collaborative movie voting, and 91 percent consensus score">
+        <figcaption>Level 1-2 · GroupFlix: Real-time collaborative movie recommendation engine and room voting.</figcaption>
+      </figure>
+
+      <div class="project-body">
+        <div class="overview-box">
+          <h4>Overview</h4>
+          <p>
+            Picking a film when a group of friends gathers often leads to decision fatigue. GroupFlix creates synced virtual rooms where members cast votes and preferences, calculating an optimal consensus choice without spoiler friction.
+          </p>
+        </div>
+
+        <div class="highlights-box">
+          <h4>Highlights</h4>
+          <ul>
+            <li>Engineered a multi-user preference intersection algorithm with anti-veto threshold filtering.</li>
+            <li>Implemented real-time room synchronization for participants across mobile and desktop browsers.</li>
+            <li>Integrated TMDB API with genre clustering and popularity curve normalization.</li>
+          </ul>
+        </div>
+
+        <div class="stack-box">
+          <h4>Stack</h4>
+          <div class="tags-row">
+            <span class="tag">Python</span>
+            <span class="tag">Recommender Systems</span>
+            <span class="tag">Flask</span>
+            <span class="tag">WebSockets</span>
+          </div>
+        </div>
+
+        <div class="project-links">
+          <a class="btn pri" href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+          <a class="btn" href="#skillup">◂ Prev: SkillUp</a>
+          <a class="btn" href="#fishglob">Next: FishGlob ▸</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 3: FishGlob Detailed Article -->
+    <article class="page project" id="fishglob" data-page="fishglob" data-level="1-3" data-theme="water"
+             data-shot="assets/shots/fishglob.png" data-title="FishGlob" data-tagline="Current-aware fish analysis">
+      <div class="section-badge">
+        <span class="plaque">LEVEL 1-3</span>
+      </div>
+      <h2>FishGlob</h2>
+      <p class="tagline">Current-aware fish analysis</p>
+
+      <figure class="shot-wrapper">
+        <img src="assets/shots/fishglob.png" width="1280" height="800" alt="FishGlob oceanographic velocity fields, sea surface temperature, and fish concentration density map">
+        <figcaption>Level 1-3 · FishGlob: Marine hydrodynamic vector fields and pelagic fish migration analysis.</figcaption>
+      </figure>
+
+      <div class="project-body">
+        <div class="overview-box">
+          <h4>Overview</h4>
+          <p>
+            Traditional marine fisheries analysis ignores the impact of shifting ocean currents. FishGlob correlates hydrodynamic telemetry data with historical fish catch distributions to identify feeding zones and migration corridors.
+          </p>
+        </div>
+
+        <div class="highlights-box">
+          <h4>Highlights</h4>
+          <ul>
+            <li>Analyzes sea surface temperatures, chlorophyll-a density, and directional current velocities.</li>
+            <li>Predicts high-density pelagic fish corridors with 87% validation accuracy against sample datasets.</li>
+            <li>Visualizes vector velocity fields over oceanographic geospatial coordinate grids.</li>
+          </ul>
+        </div>
+
+        <div class="stack-box">
+          <h4>Stack</h4>
+          <div class="tags-row">
+            <span class="tag">Python</span>
+            <span class="tag">Data Analysis</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">Geospatial Mapping</span>
+          </div>
+        </div>
+
+        <div class="project-links">
+          <a class="btn pri" href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+          <a class="btn" href="#groupflix">◂ Prev: GroupFlix</a>
+          <a class="btn" href="#neoflash">Next: NeoFlash ▸</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Project 4: NeoFlash Detailed Article -->
+    <article class="page project" id="neoflash" data-page="neoflash" data-level="2-1" data-theme="study"
+             data-shot="assets/shots/neoflash.png" data-title="NeoFlash" data-tagline="Learning platform">
+      <div class="section-badge">
+        <span class="plaque">LEVEL 2-1</span>
+      </div>
+      <h2>NeoFlash</h2>
+      <p class="tagline">Learning platform</p>
+
+      <figure class="shot-wrapper">
+        <img src="assets/shots/neoflash.png" width="1280" height="800" alt="NeoFlash flashcard study screen for Distributed Systems with front/back cards and spaced repetition ratings">
+        <figcaption>Level 2-1 · NeoFlash: Spaced repetition web flashcard learning system for software engineering concepts.</figcaption>
+      </figure>
+
+      <div class="project-body">
+        <div class="overview-box">
+          <h4>Overview</h4>
+          <p>
+            A lightweight, distraction-free flashcard learning platform tailored for software developers mastering computer science theory, system design, and algorithmic problem-solving.
+          </p>
+        </div>
+
+        <div class="highlights-box">
+          <h4>Highlights</h4>
+          <ul>
+            <li>Implemented spaced repetition scheduler based on modified SuperMemo SM-2 algorithm.</li>
+            <li>Keyboard-first user interface with instant card flipping, difficulty rating, and retention tracking.</li>
+            <li>Zero-dependency local-first architecture with JSON deck import/export support.</li>
+          </ul>
+        </div>
+
+        <div class="stack-box">
+          <h4>Stack</h4>
+          <div class="tags-row">
+            <span class="tag">JavaScript</span>
+            <span class="tag">HTML5 / CSS3</span>
+            <span class="tag">LocalStorage</span>
+            <span class="tag">Web Components</span>
+          </div>
+        </div>
+
+        <div class="project-links">
+          <a class="btn pri" href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+          <a class="btn" href="#fishglob">◂ Prev: FishGlob</a>
+          <a class="btn" href="#contact">Level Complete: Contact ▸</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Awards Section -->
+    <section class="page" id="awards" data-page="awards" data-icon="trophy">
+      <div class="section-badge">
+        <span class="plaque">AWARDS</span>
+      </div>
+      <h2>Awards</h2>
+
+      <div class="award-card">
+        <div class="award-header">
+          <span class="award-tag plaque gold">Hack101</span>
+          <h3>Second place</h3>
+        </div>
+        <p class="award-desc">For SkillUp, an AI-based skill gap analyzer.</p>
+
+        <div class="award-case-study-row">
+          <span class="level-label">1-1</span>
+          <strong>SkillUp</strong>
+          <a class="entry-link" href="#skillup">view case study ▸</a>
+        </div>
+        <p class="award-note">
+          Competed in the intensive 36-hour Hack101 hackathon; built SkillUp from scratch to tackle workforce reskilling, evaluated by industry judges on technical depth and product viability.
+        </p>
+      </div>
+
+      <div class="action-row">
+        <a class="btn" href="#experience">Next: Experience ▸</a>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="page" id="experience" data-page="experience" data-icon="gear">
+      <div class="section-badge">
+        <span class="plaque">EXPERIENCE</span>
+      </div>
+      <h2>Experience</h2>
+
+      <article class="job-card">
+        <div class="job-header">
+          <h3>Software Development Engineer Intern</h3>
+          <span class="job-period">2024 – Present</span>
+        </div>
+        <p class="company-name">Tech Startup / SDE Intern <!-- TODO: insert specific company name if permitted --></p>
+        <ul class="job-bullets">
+          <li>Architected and deployed responsive full-stack features and high-throughput API endpoints.</li>
+          <li>Collaborated closely with cross-functional engineering teams to implement production features.</li>
+          <li>Optimized frontend rendering performance, reduced bundle size, and improved database query latencies.</li>
+        </ul>
+      </article>
+
+      <div class="education-block">
+        <h3>Education</h3>
+        <p><strong>Amrita Vishwa Vidyapeetham</strong> · B.Tech in Computer Science and Engineering (Expected 2026)</p>
+      </div>
+
+      <div class="action-row">
+        <a class="btn" href="#resume">Next: Resume ▸</a>
+      </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section class="page" id="resume" data-page="resume" data-icon="doc">
+      <div class="section-badge">
+        <span class="plaque">RESUME</span>
+      </div>
+      <h2>Resume</h2>
+      <p class="sub-desc">One page with education, experience, projects and awards.</p>
+
+      <div class="resume-table-card">
+        <table class="resume-table">
+          <tbody>
+            <tr>
+              <th scope="row">Education</th>
+              <td>CSE · Amrita Vishwa Vidyapeetham</td>
+            </tr>
+            <tr>
+              <th scope="row">Experience</th>
+              <td>SDE intern · <!-- TODO: company name -->Tech Startup</td>
+            </tr>
+            <tr>
+              <th scope="row">Projects</th>
+              <td>SkillUp, GroupFlix, FishGlob, NeoFlash</td>
+            </tr>
+            <tr>
+              <th scope="row">Awards</th>
+              <td>Hack101 · 2nd place</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="action-row">
+        <a class="btn pri" href="assets/resume.pdf" download>Download PDF ↓</a>
+        <a class="btn" href="#contact">Next: Contact ▸</a>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="page" id="contact" data-page="contact">
+      <div class="section-badge">
+        <span class="plaque">CONTACT</span>
+      </div>
+      <h2>Contact</h2>
+      <p class="sub-desc">
+        Let's build something extraordinary together. I'm open to SDE roles, collaborations, and discussions.
+      </p>
+
+      <div class="contact-links-grid">
+        <div class="contact-item">
+          <strong>Email:</strong>
+          <!-- TODO: update with preferred primary email address -->
+          <a href="mailto:nithin@example.com">nithin@example.com</a>
+        </div>
+        <div class="contact-item">
+          <strong>GitHub:</strong>
+          <a href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">github.com/Nithin0306</a>
+        </div>
+        <div class="contact-item">
+          <strong>LinkedIn:</strong>
+          <!-- TODO: update with exact linkedin profile slug -->
+          <a href="https://linkedin.com/in/nithin" target="_blank" rel="noopener noreferrer">linkedin.com/in/nithin</a>
+        </div>
+        <div class="contact-item">
+          <strong>Resume:</strong>
+          <a href="assets/resume.pdf" download>resume.pdf</a>
+        </div>
+      </div>
+
+      <!-- ASCII Castle -->
+      <pre aria-hidden="true" class="ascii-castle">
+       ▲
+      / \
+     |===|
+     |   |
+  ▲  |   |  ▲
+ / \ |   | / \
+|===||===||===|
+|   ||   ||   |
+|   ||   ||   |
+|===||===||===|
+      </pre>
+
+      <div class="end-brand">
+        <span class="end-name">NITHIN</span>
+        <p>Software Engineer in the making</p>
+      </div>
+    </section>
+
+    <!-- Help Section -->
+    <section class="page" data-page="help" id="help">
+      <h2>Terminal Help</h2>
+      <p class="sub-desc">Available commands in the terminal prompt:</p>
+      <div class="help-table-card">
+        <table class="help-table">
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>help</code></td><td>Display list of terminal commands</td></tr>
+            <tr><td><code>about</code></td><td>View background, education, and status</td></tr>
+            <tr><td><code>projects</code></td><td>List all four project levels</td></tr>
+            <tr><td><code>awards</code></td><td>View Hack101 2nd place achievement</td></tr>
+            <tr><td><code>experience</code></td><td>View internship and education history</td></tr>
+            <tr><td><code>resume</code></td><td>Download Nithin's resume PDF</td></tr>
+            <tr><td><code>contact</code></td><td>Get in touch via email, GitHub, or LinkedIn</td></tr>
+            <tr><td><code>skillup</code></td><td>Open Level 1-1: SkillUp case study</td></tr>
+            <tr><td><code>groupflix</code></td><td>Open Level 1-2: GroupFlix case study</td></tr>
+            <tr><td><code>fishglob</code></td><td>Open Level 1-3: FishGlob case study</td></tr>
+            <tr><td><code>neoflash</code></td><td>Open Level 2-1: NeoFlash case study</td></tr>
+            <tr><td><code>whoami</code></td><td>Display developer identity summary</td></tr>
+            <tr><td><code>hire</code></td><td>Jump directly to contact info</td></tr>
+            <tr><td><code>map</code></td><td>Show the ASCII level progression map</td></tr>
+            <tr><td><code>clear</code></td><td>Clear terminal screen</td></tr>
+            <tr><td><code>exit</code> / <code>up</code></td><td>Return to the surface world</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="page" data-page="map" id="map">
+      <h2>World Map</h2>
+      <pre aria-hidden="true" class="ascii-map">
+[START] ===> [1-1 SkillUp] ===> [1-2 GroupFlix] ===> [1-3 FishGlob] ===> [2-1 NeoFlash] ===> [🏁 CASTLE: Contact]
+      </pre>
+      <p><a class="btn" href="#projects">Back to Projects</a></p>
+    </section>
+
+    <!-- Error Section -->
+    <section class="page" data-page="error" id="error">
+      <h2>Command not found</h2>
+      <p>Unknown command or level. Try typing <b>help</b> or clicking one of the navigation links.</p>
+      <p><a class="btn" href="#about">Go to About</a></p>
+    </section>
+  </main>
+</body>
+</html>
