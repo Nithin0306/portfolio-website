@@ -13,8 +13,8 @@ export const PAL = {
   y: "#f5c451", // gold/yellow
   w: "#fff1b8", // pale highlight
   o: "#b5542a", // question block border orange
-  c: "#a8742f", // wood / used block
-  C: "#6e4817", // dark wood / used outline
+  c: "#8f5f25", // wood plank
+  C: "#3b2410", // dark wood join / outline
   b: "#c84c0c", // brick
   B: "#7a2a00", // brick dark
   d: "#5a1d00", // earth dark
@@ -57,6 +57,16 @@ export const MAPS = {
     "UUUUUUUU",
     "uuuuUuuu",
     "uuuuUuuu"
+  ],
+  plank: [
+    "cccccccc",
+    "cccccccc",
+    "cccccccc",
+    "cccccccc",
+    "cccccccc",
+    "cccccccc",
+    "cccccccc",
+    "CCCCCCCC"
   ],
   q: [
     "kooooook",
@@ -152,10 +162,10 @@ export const MAPS = {
     "ssssskksssss"
   ],
   flag: [
-    "kggggg..",
-    "kgggggg.",
-    "kggggg..",
-    "kgggg...",
+    "krrrrr..",
+    "krrrrrr.",
+    "krrrrr..",
+    "krrrr...",
     "k.......",
     "k.......",
     "k.......",

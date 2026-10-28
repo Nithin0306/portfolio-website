@@ -1,0 +1,502 @@
+/* ==========================================================================
+   WORLD SCENE & SURFACE LAYER (Phase 4)
+   Matches the approved reference:
+   750px scene, flat sky, sun, clouds, hills, hint, blocks, castle, flag, floor, prompt.
+   ========================================================================== */
+
+#world {
+  display: block;
+}
+
+.scene {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 720px;
+  max-height: 100svh;
+  overflow: hidden;
+  background-color: var(--ink);
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  transition: transform var(--t-slide);
+}
+
+.layer.over {
+  background-color: var(--sky);
+  z-index: 1;
+}
+
+.layer.under {
+  background-color: var(--wall-dark);
+  transform: translateY(100%);
+  z-index: 2;
+}
+
+.scene.down .layer.over {
+  transform: translateY(-100%);
+}
+
+.scene.down .layer.under {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   SCORE LINE
+   No bar, no plaque. Directly on sky.
+   ========================================================================== */
+
+.score {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  right: 14px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xs);
+  color: #ffffff;
+  text-shadow: 2px 2px 0 var(--ink);
+  pointer-events: none;
+  user-select: none;
+}
+
+.score .score-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.score .collected-icons {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.score .collected-icons img {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+}
+
+/* ==========================================================================
+   SUN & CLOUDS
+   ========================================================================== */
+
+.sun {
+  position: absolute;
+  top: 50px;
+  right: 6%;
+  width: 68px;
+  height: 68px;
+  background-color: var(--sun-ring);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sun i {
+  display: block;
+  width: 44px;
+  height: 44px;
+  background-color: var(--sun);
+  border: 4px solid #ffffff;
+}
+
+/* Pixel Clouds */
+.cloud {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: var(--cloud);
+  box-shadow:
+    20px 0 0 var(--cloud),
+    40px 0 0 var(--cloud),
+    60px 0 0 var(--cloud),
+    20px -20px 0 var(--cloud),
+    40px -20px 0 var(--cloud);
+  z-index: 2;
+  pointer-events: none;
+  animation: cloudDrift linear infinite;
+}
+
+.cloud.big {
+  top: 110px;
+  left: 62%;
+  transform: scale(1.5);
+  animation-duration: 90s;
+  animation-delay: -15s;
+}
+
+.cloud.sm {
+  top: 300px;
+  left: 52%;
+  transform: scale(0.7);
+  animation-duration: 130s;
+  animation-delay: -45s;
+}
+
+.cloud:not(.big):not(.sm) {
+  top: 200px;
+  left: 78%;
+  animation-duration: 110s;
+  animation-delay: -30s;
+}
+
+@keyframes cloudDrift {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(60px); }
+  100% { transform: translateX(0); }
+}
+
+/* ==========================================================================
+   HILLS
+   ========================================================================== */
+
+.hill {
+  position: absolute;
+  bottom: 96px;
+  background-color: var(--grass);
+  border: 3px solid var(--grass-dark);
+  border-bottom: none;
+  border-radius: 50% 50% 0 0;
+  z-index: 2;
+}
+
+.hill.h1 {
+  left: 42%;
+  width: 260px;
+  height: 92px;
+}
+
+.hill.h2 {
+  left: 70%;
+  width: 200px;
+  height: 64px;
+}
+
+/* Bush bumps inside hills */
+.hill::before,
+.hill::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  background-color: var(--grass);
+  border: 3px solid var(--grass-dark);
+  border-bottom: none;
+  border-radius: 50% 50% 0 0;
+}
+
+.hill.h1::before {
+  left: 36px;
+  width: 60px;
+  height: 48px;
+}
+
+.hill.h1::after {
+  right: 40px;
+  width: 50px;
+  height: 38px;
+}
+
+.hill.h2::before {
+  left: 30px;
+  width: 50px;
+  height: 36px;
+}
+
+/* ==========================================================================
+   CASTLE & FLAG BUTTON
+   ========================================================================== */
+
+.castle {
+  position: absolute;
+  right: 2%;
+  bottom: 96px;
+  width: 72px;
+  height: auto;
+  image-rendering: pixelated;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.flag-btn {
+  position: absolute;
+  right: 112px;
+  bottom: 96px;
+  width: 48px;
+  height: 120px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flag-btn span {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  color: #ffffff;
+  text-shadow: 1px 1px 0 var(--ink), 2px 2px 0 var(--ink);
+  margin-bottom: 2px;
+}
+
+.flag-pole {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 100px;
+  background-color: #e8e8e8;
+  border: 1px solid var(--ink);
+}
+
+.flag-sprite {
+  position: absolute;
+  top: 14px;
+  left: calc(50% + 2px);
+  width: 32px;
+  height: 36px;
+  image-rendering: pixelated;
+}
+
+.flag-btn:hover .flag-sprite {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   HINT & QUESTION BLOCKS
+   ========================================================================== */
+
+.hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 262px;
+  text-align: center;
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xs);
+  color: #ffffff;
+  text-shadow: 2px 2px 0 var(--ink);
+  z-index: 3;
+  pointer-events: none;
+  animation: hintBlink 2.4s steps(1) infinite;
+}
+
+@keyframes hintBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.blocks {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 196px;
+  display: flex;
+  justify-content: center;
+  gap: clamp(8px, 3vw, 40px);
+  padding: 0 6px;
+  z-index: 3;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform var(--t-fast);
+}
+
+.block .label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  color: #ffffff;
+  text-shadow: 1px 1px 0 var(--ink), 2px 2px 0 var(--ink);
+  margin-bottom: 6px;
+  pointer-events: none;
+}
+
+.block img {
+  width: 40px;
+  height: 40px;
+  image-rendering: pixelated;
+  transition: transform var(--t-fast);
+}
+
+.block:hover img {
+  transform: translateY(-4px);
+}
+
+.block.bump img {
+  animation: blockHop 250ms ease-out;
+}
+
+@keyframes blockHop {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+  100% { transform: translateY(0); }
+}
+
+/* Pop item from block */
+.pickup-item {
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+  animation: popFloat 900ms cubic-bezier(0.2, 0.8, 0.4, 1) forwards;
+}
+
+.pickup-item img {
+  width: 40px;
+  height: 40px;
+  image-rendering: pixelated;
+}
+
+@keyframes popFloat {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(-70px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-90px);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+
+.hero {
+  position: absolute;
+  bottom: 96px;
+  left: 6%;
+  width: 50px;
+  height: 60px;
+  image-rendering: pixelated;
+  transition: left 0.7s linear;
+  z-index: 4;
+}
+
+.hero.walk {
+  animation: heroBob 260ms steps(1) infinite;
+}
+
+.hero.jump {
+  animation: heroJump 450ms ease-in-out;
+}
+
+@keyframes heroBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes heroJump {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-46px); }
+  100% { transform: translateY(0); }
+}
+
+/* ==========================================================================
+   FLOOR & TERMINAL PROMPT (Surface)
+   96px total: 24px strip, 72px earth
+   ========================================================================== */
+
+.floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 96px;
+  z-index: 5;
+  user-select: none;
+}
+
+.floor .strip {
+  height: 24px;
+  border-top: 4px solid var(--brick-top);
+  background-repeat: repeat-x;
+  background-size: auto 24px;
+}
+
+.floor .earth {
+  height: 72px;
+  background-repeat: repeat;
+  position: relative;
+}
+
+.prompt {
+  display: flex;
+  align-items: center;
+  height: 72px;
+  padding: 0 16px;
+}
+
+.prompt .p {
+  font-family: var(--font-mono);
+  font-size: var(--fs-s);
+  color: var(--gold);
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+.prompt input {
+  flex: 1;
+  height: 36px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: var(--fs-s);
+  caret-color: var(--red);
+}
+
+.prompt input::placeholder {
+  color: #b8a58a;
+  opacity: 1;
+}
+
+/* Toast alert above floor */
+.toast-notice {
+  position: absolute;
+  bottom: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  padding: 8px 16px;
+  border: var(--border-ink);
+  box-shadow: var(--shadow-sm);
+  z-index: 20;
+  pointer-events: none;
+  animation: toastFade 3.2s ease-in-out forwards;
+}
+
+@keyframes toastFade {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  10%, 85% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -10px); }
+}

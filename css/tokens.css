@@ -1,8 +1,11 @@
 /* ==========================================================================
-   2. DESIGN TOKENS
-   Flat colour only. No smooth gradients, no blur, no glows, no translucent shadows.
-   Two typefaces (Press Start 2P, Inter) + JetBrains Mono for prompt.
-   Five type sizes: --fs-xs (12px), --fs-s (16px), --fs-m (24px), --fs-l (32px), --fs-xl.
+   2. DESIGN TOKENS (Updated Plan)
+   Flat colour only. The sky is one flat colour.
+   Three typefaces with fixed roles:
+     - Press Start 2P: name, score line, hint, level tags
+     - JetBrains Mono: terminal voice on world surface: sign text, chips, buttons, prompt
+     - Inter: reading content in the underground pages
+   Five type sizes: --fs-xs (12px), --fs-s (14px), --fs-m (16px), --fs-l (24px), --fs-xl (clamp(32px, 5vw, 56px))
    ========================================================================== */
 
 :root {
@@ -18,11 +21,12 @@
   --green: #2e9f4a;
 
   /* wood sign */
-  --wood: #a8742f;
-  --wood-2: #8f5f25;
+  --wood: #8f5f25;
+  --wood-2: #7a4f1c;
   --wood-dark: #3b2410;
   --wood-light: #c99350;
-  --sign-text: #fff4d6;
+  --sign-text: #ffffff;
+  --sign-soft: #f1e3c0;
 
   /* brick floor */
   --brick: #c84c0c;
@@ -39,13 +43,11 @@
   --stone: #b4b4b8;
   --stone-dark: #7a7a80;
 
-  /* sky: 4 flat bands, lightest at the horizon */
-  --sky-1: #4f87f0;
-  --sky-2: #5c94fc;
-  --sky-3: #6fa3ff;
-  --sky-4: #86b4ff;
+  /* sky: one flat colour */
+  --sky: #5c94fc;
   --cloud: #ffffff;
   --sun: #ffe36b;
+  --sun-ring: #9dc0ff;
 
   /* project worlds */
   --water-1: #0f4f8a;
@@ -59,14 +61,14 @@
 
   /* 2.2 Type tokens */
   --fs-xs: 12px;
-  --fs-s: 16px;
-  --fs-m: 24px;
-  --fs-l: 32px;
-  --fs-xl: clamp(40px, 8.5vw, 120px);
+  --fs-s: 14px;
+  --fs-m: 16px;
+  --fs-l: 24px;
+  --fs-xl: clamp(32px, 5vw, 56px);
 
   --font-pixel: "Press Start 2P", "Courier New", monospace;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
 
   /* 2.3 Space, borders, shadows */
   --m: clamp(16px, 3vw, 40px);
@@ -82,23 +84,19 @@
   --stagger-step: 70ms;
 }
 
-/* night variant: only sky, clouds, and sun change */
+/* night variant: only sky, clouds, sun and ring change */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --sky-1: #141f55;
-    --sky-2: #1b2a66;
-    --sky-3: #243480;
-    --sky-4: #34459a;
+    --sky: #1b2a66;
     --cloud: #8d9bd0;
     --sun: #e8ecf5;
+    --sun-ring: #34459a;
   }
 }
 
 :root[data-theme="dark"] {
-  --sky-1: #141f55;
-  --sky-2: #1b2a66;
-  --sky-3: #243480;
-  --sky-4: #34459a;
+  --sky: #1b2a66;
   --cloud: #8d9bd0;
   --sun: #e8ecf5;
+  --sun-ring: #34459a;
 }

@@ -8,30 +8,127 @@
   <meta property="og:title" content="Nithin · Software engineer in the making">
   <meta property="og:description" content="Projects, experience and resume.">
   <meta property="og:image" content="assets/og.png">
-  <meta name="theme-color" content="#4f87f0">
+  <meta name="theme-color" content="#5c94fc">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <!-- Google Fonts: Press Start 2P, Inter (400, 600, 700), JetBrains Mono (400) -->
+  <!-- Google Fonts: Press Start 2P, Inter (400, 600, 700), JetBrains Mono (400, 700) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
 
-  <!-- CSS tokens and base styles for Phase 1 & 2 -->
+  <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/world.css">
+  <link rel="stylesheet" href="css/sign.css">
 
   <script>
-    /* In Phase 1, we keep the page fully viewable without JS.
-       When Phase 4+ is activated, this class switches on the interactive world scene. */
-    // document.documentElement.classList.add('js');
+    // Mark JS as enabled so world scene renders
+    document.documentElement.classList.add('js');
   </script>
 </head>
 <body>
   <a class="skip" href="#pages">Skip to content</a>
 
-  <!-- Phase 4 and later container; empty at this stage as per plan -->
-  <div id="world"></div>
+  <!-- =======================================================================
+       WORLD SCENE (Phases 4 - 6)
+       Matches the approved reference screenshot (v8 page).
+       ======================================================================= -->
+  <div id="world" class="scene">
+    <!-- Score line: directly on sky, no plaque, no bar -->
+    <div class="score">
+      <span>NITHIN</span>
+      <span id="hc">0/6</span>
+      <span>WORLD 1-1</span>
+    </div>
 
+    <!-- Surface Layer -->
+    <div class="layer over" id="over">
+      <!-- Sun & Clouds on open right half -->
+      <div class="sun"><i></i></div>
+      <div class="cloud big"></div>
+      <div class="cloud"></div>
+      <div class="cloud sm"></div>
+
+      <!-- Scenery Hills -->
+      <div class="hill h1"></div>
+      <div class="hill h2"></div>
+
+      <!-- Hanging Wooden Sign (Phase 5) -->
+      <div class="sign" id="sign">
+        <div class="chain-left"></div>
+        <div class="chain-right"></div>
+        <div class="nail tl"></div>
+        <div class="nail tr"></div>
+        <div class="nail bl"></div>
+        <div class="nail br"></div>
+
+        <div class="chapter-label">CHAPTER 1 · THE DEVELOPER QUEST</div>
+        <div class="status-pill">
+          <span class="dot"></span>
+          <span>Open to opportunities</span>
+        </div>
+        <div class="whoami-line">
+          <span class="prompt-prefix">nithin@world-1:~$</span> <span class="prompt-cmd">whoami</span>
+        </div>
+        <h1 class="name">NITHIN</h1>
+        <div class="role-line">
+          <span id="roleText">SDE intern,</span><span class="cursor"></span>
+        </div>
+        <p class="summary">
+          CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into software people actually use.
+        </p>
+        <div class="chips-row">
+          <a class="chip" href="#/about">CSE @ Amrita</a>
+          <a class="chip" href="#/experience">SDE Intern</a>
+          <a class="chip" href="#/awards">Hack101 · 2nd place</a>
+          <a class="chip" href="#/projects">4 projects</a>
+        </div>
+        <div class="buttons-row">
+          <a class="btn-sign pri" href="assets/resume.pdf" download>Resume ↓</a>
+          <a class="btn-sign" href="#/projects">View projects</a>
+          <a class="btn-sign" href="#/contact">Contact</a>
+        </div>
+      </div>
+
+      <!-- Centered Hint -->
+      <div class="hint">▾ hit a block, or type on the floor</div>
+
+      <!-- Centered Question Blocks Row -->
+      <div class="blocks" id="blocks"></div>
+
+      <!-- Flag Button -->
+      <button class="flag-btn" data-go="contact" aria-label="Contact">
+        <span>contact</span>
+        <div class="flag-pole"></div>
+        <img class="flag-sprite" alt="Flag">
+      </button>
+
+      <!-- Castle -->
+      <img class="castle" alt="Castle" id="castleImg">
+
+      <!-- Hero (Developer with Monitor Head) -->
+      <img class="hero" id="hero" alt="Pixel developer with a terminal screen for a head">
+
+      <!-- Floor & Surface Terminal Prompt -->
+      <div class="floor">
+        <div class="strip"></div>
+        <div class="earth">
+          <form class="prompt" id="f1">
+            <span class="p">nithin@world-1:~$</span>
+            <input aria-label="Command prompt" autocomplete="off" spellcheck="false" placeholder="type help, projects, open skillup...">
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Underground Layer (Phase 7 and later) -->
+    <div class="layer under" id="under"></div>
+  </div>
+
+  <!-- =======================================================================
+       SEMANTIC HTML CONTENT (Phase 1 & Accessible Fallback)
+       ======================================================================= -->
   <main id="pages">
     <!-- Home Header -->
     <header class="page" data-page="home">
@@ -543,5 +640,7 @@
       <p><a class="btn" href="#about">Go to About</a></p>
     </section>
   </main>
+
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
