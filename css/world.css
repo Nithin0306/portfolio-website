@@ -43,6 +43,10 @@
   transform: translateY(0);
 }
 
+.scene.down .score {
+  display: none;
+}
+
 /* ==========================================================================
    SCORE LINE
    No bar, no plaque. Directly on sky.

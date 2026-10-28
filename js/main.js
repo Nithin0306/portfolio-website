@@ -1,18 +1,25 @@
 /**
- * WORLD//CLI: Main Entry Point
- * Initializes sprites, world scene, and event listeners.
+ * WORLD//CLI: Main Bootloader
+ * Initializes sprites, world scene, underground room, and client-side hash router.
  */
 
 import { initWorld, visit } from "./world.js";
+import { initRoom } from "./room.js";
+import { initRouter } from "./router.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize surface world scene (Phases 4 - 6)
+  // Boot sequence: sprites -> world -> room -> router
   initWorld();
+  initRoom();
+  initRouter();
 
-  // Handle direct sign chip & button clicks with hero movement
+  // Handle clicks on sign chips and buttons
   document.addEventListener("click", (e) => {
+    // Check if click is on surface layer (don't intercept underground links)
+    const isUnderground = Boolean(e.target.closest("#under"));
+
     const chip = e.target.closest(".chip");
-    if (chip) {
+    if (chip && !isUnderground) {
       const href = chip.getAttribute("href") || "";
       const id = href.replace(/^#\/?/, "");
       if (id) {
@@ -23,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const btnSign = e.target.closest(".btn-sign");
-    if (btnSign) {
+    if (btnSign && !isUnderground) {
       const href = btnSign.getAttribute("href") || "";
       if (href.startsWith("#")) {
         const id = href.replace(/^#\/?/, "");
@@ -36,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Handle form prompt enter on surface
+  // Handle surface prompt submission #f1
   const form1 = document.getElementById("f1");
   if (form1) {
     form1.addEventListener("submit", (e) => {
