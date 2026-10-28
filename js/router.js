@@ -13,10 +13,10 @@ export const PAGES = new Set([
   "experience",
   "resume",
   "contact",
+  "dayta",
+  "archivist",
+  "gocdc",
   "skillup",
-  "groupflix",
-  "fishglob",
-  "neoflash",
   "help",
   "map"
 ]);
@@ -24,10 +24,10 @@ export const PAGES = new Set([
 const TITLES = {
   about: "About",
   projects: "Projects",
-  skillup: "SkillUp (Level 1-1)",
-  groupflix: "GroupFlix (Level 1-2)",
-  fishglob: "FishGlob (Level 1-3)",
-  neoflash: "NeoFlash (Level 2-1)",
+  dayta: "Dayta (Level 1-1)",
+  archivist: "Archivist (Level 1-2)",
+  gocdc: "GoCDC (Level 1-3)",
+  skillup: "SkillUp (Level 2-1)",
   awards: "Awards",
   experience: "Experience",
   resume: "Resume",

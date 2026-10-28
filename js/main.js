@@ -1,16 +1,15 @@
-/**
- * WORLD//CLI: Main Bootloader
- * Initializes sprites, world scene, underground room, and client-side hash router.
- */
+// Main Bootloader: initializes world, room, terminal, router
 
 import { initWorld, visit } from "./world.js";
 import { initRoom } from "./room.js";
 import { initRouter } from "./router.js";
+import { initTerminal, run } from "./terminal.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Boot sequence: sprites -> world -> room -> router
+  // Boot sequence: sprites -> world -> room -> terminal -> router
   initWorld();
   initRoom();
+  initTerminal();
   initRouter();
 
   // Handle clicks on sign chips and buttons
@@ -43,18 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Handle surface prompt submission #f1
+  // Handle surface prompt submission #f1 via unified terminal runner
   const form1 = document.getElementById("f1");
   if (form1) {
     form1.addEventListener("submit", (e) => {
       e.preventDefault();
       const input = form1.querySelector("input");
       if (!input) return;
-      const val = input.value.trim().toLowerCase();
+      const val = input.value;
       input.value = "";
-      if (val) {
-        const cleaned = val.replace(/^(cd|cat|open|ls|goto)\s+/, "").replace(/^projects\//, "");
-        visit(cleaned);
+      if (val.trim()) {
+        run(val);
       }
     });
   }

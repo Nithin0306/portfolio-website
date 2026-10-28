@@ -1,11 +1,9 @@
-/**
- * WORLD//CLI: Room Controller (Phase 7 & 8)
- * Renders page content into the underground paper card,
- * manages the nav row, underground floor, warp pipe, and decor.
- */
+// Room Controller: underground paper card rendering, nav, and prompt #f2
 
 import { sprite, tile } from "./sprites.js";
 import { seen, updateScore } from "./world.js";
+import { mountProjectWorld } from "./projects.js";
+import { run } from "./terminal.js";
 
 const NEXT_SECTIONS = {
   about: "projects",
@@ -14,6 +12,8 @@ const NEXT_SECTIONS = {
   experience: "resume",
   resume: "contact"
 };
+
+const PROJECT_IDS = new Set(["dayta", "archivist", "gocdc", "skillup"]);
 
 let underEl = null;
 let paperEl = null;
@@ -28,28 +28,16 @@ export function initRoom() {
   // Background blue brick tile
   underEl.style.backgroundImage = tile("ubrick", 4);
 
-  // Build underground structure
   underEl.innerHTML = `
-    <!-- Top Nav Row -->
     <nav class="under-nav" id="underNav" aria-label="Underground navigation"></nav>
-
-    <!-- Wall Decor Bobbing Sprites -->
     <img class="under-decor bulb" src="${sprite("bulb", 4)}" alt="" aria-hidden="true">
     <img class="under-decor gear" src="${sprite("gear", 4)}" alt="" aria-hidden="true">
-
-    <!-- Paper Card Container -->
     <div class="paper" id="paperCard" role="region" aria-live="polite" tabindex="-1"></div>
-
-    <!-- Standing Hero (Decor) -->
     <img class="under-hero" src="${sprite("hero", 5)}" alt="" aria-hidden="true">
-
-    <!-- Warp Pipe (Surface Button) -->
     <button class="pipe-btn" id="pipeBtn" aria-label="Return to surface">
       <span class="label">surface</span>
       <img src="${sprite("pipe", 4)}" alt="">
     </button>
-
-    <!-- Underground Floor & Prompt #f2 -->
     <div class="under-floor">
       <div class="strip" style="background-image: ${tile("ubrick", 3)}"></div>
       <div class="earth">
@@ -58,8 +46,7 @@ export function initRoom() {
           <input aria-label="Underground command prompt" autocomplete="off" spellcheck="false" placeholder="type surface, back, or any command...">
         </form>
       </div>
-    </div>
-  `;
+    </div>`;
 
   paperEl = document.getElementById("paperCard");
   navRowEl = document.getElementById("underNav");
@@ -75,25 +62,16 @@ export function initRoom() {
     });
   }
 
-  // Wire Prompt #f2 form submission
+  // Wire Prompt #f2 form submission via unified terminal runner
   if (promptF2) {
     promptF2.addEventListener("submit", (e) => {
       e.preventDefault();
       const inp = promptF2.querySelector("input");
       if (!inp) return;
-      const val = inp.value.trim().toLowerCase();
+      const val = inp.value;
       inp.value = "";
-      if (!val) return;
-
-      if (["surface", "exit", "..", "back", "up"].includes(val)) {
-        location.hash = "#/";
-        return;
-      }
-      const cleaned = val.replace(/^(cd|cat|open|ls|goto)\s+/, "").replace(/^projects\//, "");
-      if (["skillup", "groupflix", "fishglob", "neoflash"].includes(cleaned)) {
-        location.hash = `#/projects/${cleaned}`;
-      } else {
-        location.hash = `#/${cleaned}`;
+      if (val.trim()) {
+        run(val);
       }
     });
   }
@@ -157,6 +135,11 @@ export function show(id) {
     });
   }
 
+  // Mount themed interactive mini-world band for project pages (Phase 9)
+  if (PROJECT_IDS.has(id)) {
+    mountProjectWorld(id, paperEl);
+  }
+
   // Append Next Section button if applicable
   const nextId = NEXT_SECTIONS[id];
   if (nextId) {
@@ -182,7 +165,8 @@ export function show(id) {
   // Update prompt path in #f2
   const f2Path = document.getElementById("f2Path");
   if (f2Path) {
-    f2Path.textContent = `nithin@world-1:~/${id}$`;
+    const prefix = PROJECT_IDS.has(id) ? `projects/${id}` : id;
+    f2Path.textContent = `nithin@world-1:~/${prefix}$`;
   }
 
   // Scroll underground view to top
@@ -204,7 +188,9 @@ function updateNavState(id) {
   if (!navRowEl) return;
   const navBtns = navRowEl.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => {
-    if (btn.dataset.id === id) {
+    // If inside a project subpage, highlight 'projects' in nav
+    const isProj = PROJECT_IDS.has(id) && btn.dataset.id === "projects";
+    if (btn.dataset.id === id || isProj) {
       btn.classList.add("active");
       btn.setAttribute("aria-current", "page");
     } else {

@@ -1,224 +1,229 @@
 import os
-import math
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
+
+def make_shot_dayta(path):
+    img = Image.new("RGB", (1280, 800), "#0f172a")
+    d = ImageDraw.Draw(img)
+    # Navbar
+    d.rectangle([(0, 0), (1280, 64)], fill="#1e293b")
+    d.rectangle([(32, 20), (52, 44)], fill="#3b82f6")
+    d.text((64, 22), "Dayta // Academic Document Ingestion & RAG Assistant", fill="#f8fafc")
+    d.rectangle([(1080, 16), (1240, 48)], fill="#2563eb")
+    d.text((1100, 24), "Vector DB Active", fill="#ffffff")
+    d.text((920, 24), "Pinecone + Gemini", fill="#38bdf8")
+
+    # Banner
+    d.rectangle([(32, 88), (1248, 180)], fill="#1e293b", outline="#334155", width=2)
+    d.text((60, 106), "DOCUMENT INGESTION PIPELINE: ACADEMIC SCHEDULES & SYLLABI", fill="#94a3b8")
+    d.text((60, 134), "Status: 142 Documents Ingested · Windowed Memory: Enabled · Hallucination Guardrails: 100%", fill="#4ade80")
+
+    # Left: Semantic Chat Query Interface
+    d.rectangle([(32, 204), (680, 760)], fill="#1e293b", outline="#334155", width=2)
+    d.text((60, 228), "Multi-Turn Scheduling Query Console", fill="#f1f5f9")
+    
+    # Query 1
+    d.rectangle([(60, 270), (650, 340)], fill="#334155")
+    d.text((80, 286), "Student: What is my schedule for Distributed Systems on Friday?", fill="#f8fafc")
+    d.text((80, 310), "Context: Class Timetable 2024-28 (Indexed in Pinecone)", fill="#94a3b8")
+
+    # Response 1
+    d.rectangle([(60, 360), (650, 470)], fill="#0f172a", outline="#3b82f6", width=2)
+    d.text((80, 376), "Dayta (Gemini RAG):", fill="#38bdf8")
+    d.text((80, 404), "• 10:15 AM - 11:45 AM: Distributed Systems Lecture (Hall CS-204)", fill="#f1f5f9")
+    d.text((80, 432), "• 02:00 PM - 04:00 PM: Systems Lab - Kafka CDC Pipeline Setup", fill="#f1f5f9")
+
+    # Query 2
+    d.rectangle([(60, 490), (650, 560)], fill="#334155")
+    d.text((80, 506), "Student: Are there any assignment deadlines before the lab?", fill="#f8fafc")
+    d.text((80, 530), "Windowed Memory applied (turn 2/10)", fill="#94a3b8")
+
+    # Response 2
+    d.rectangle([(60, 580), (650, 680)], fill="#0f172a", outline="#10b981", width=2)
+    d.text((80, 596), "Dayta: Assignment 2 (Raft Consensus) is due Thursday at 11:59 PM.", fill="#4ade80")
+    d.text((80, 624), "Confidence Score: 0.982 · Strict university dataset verified.", fill="#94a3b8")
+
+    # Right: High-Density Vector Metrics
+    d.rectangle([(710, 204), (1248, 760)], fill="#1e293b", outline="#334155", width=2)
+    d.text((740, 228), "Vector Embeddings & Latency Telemetry", fill="#f1f5f9")
+    metrics = [
+        ("Vector Dimension", "768-d (Cosine Similarity)"),
+        ("Index Throughput", "240 embeddings/sec"),
+        ("Query Latency (p99)", "182ms (FastAPI Async)"),
+        ("Guardrail Enforcement", "100% Strict Domain Filtering"),
+        ("Target Schedule Accuracy", "99.4% Verified Match")
+    ]
+    my = 280
+    for label, val in metrics:
+        d.rectangle([(740, my), (1216, my+74)], fill="#0f172a", outline="#334155")
+        d.text((760, my+16), label, fill="#38bdf8")
+        d.text((760, my+42), val, fill="#ffffff")
+        my += 92
+
+    img.save(path)
+
+def make_shot_archivist(path):
+    img = Image.new("RGB", (1280, 800), "#18181b")
+    d = ImageDraw.Draw(img)
+    # Navbar
+    d.rectangle([(0, 0), (1280, 64)], fill="#27272a")
+    d.rectangle([(32, 20), (52, 44)], fill="#a855f7")
+    d.text((64, 22), "Archivist // Autonomous ADR Enforcement GitHub Action", fill="#fafafa")
+    d.rectangle([(1050, 16), (1240, 48)], fill="#9333ea")
+    d.text((1070, 24), "LangGraph + MCP", fill="#ffffff")
+
+    # Banner
+    d.rectangle([(32, 88), (1248, 170)], fill="#27272a", outline="#3f3f46", width=2)
+    d.text((60, 106), "AUTONOMOUS CI/CD GOVERNANCE · PULL REQUEST #42 DIFF ANALYSIS", fill="#a1a1aa")
+    d.text((60, 134), "Architectural Review Loop: Reduced from 3 hours to 48s · Enforcement: 100% Automated", fill="#4ade80")
+
+    # Left: PR Diff & Violation Detection
+    d.rectangle([(32, 196), (640, 760)], fill="#27272a", outline="#3f3f46", width=2)
+    d.text((60, 220), "LangGraph Agent Inspection Pipeline", fill="#f4f4f5")
+    
+    stages = [
+        ("Step 1: Parse PR Diff via GitHub API", "Fetched 14 modified files across 3 microservices", "#3b82f6"),
+        ("Step 2: MCP Tool Query - Fetch Active ADRs", "Matched ADR-007 (Polyglot Persistence) & ADR-012 (Auth)", "#8b5cf6"),
+        ("Step 3: Security & Secret Leak Scanner", "PASS: Zero client-side keys detected in commit payload", "#10b981"),
+        ("Step 4: ADR Violation Engine", "ALERT: Direct DB call detected from UI Controller", "#ef4444"),
+        ("Step 5: Automated Bot PR Review Comment", "Posted remediation patch with webhook override token", "#f59e0b")
+    ]
+    sy = 260
+    for stitle, sdesc, col in stages:
+        d.rectangle([(60, sy), (612, sy+78)], fill="#18181b", outline=col, width=2)
+        d.text((80, sy+14), stitle, fill=col)
+        d.text((80, sy+42), sdesc, fill="#d4d4d8")
+        sy += 96
+
+    # Right: Autonomous Agent Graph Visualization
+    d.rectangle([(670, 196), (1248, 760)], fill="#27272a", outline="#3f3f46", width=2)
+    d.text((700, 220), "LangGraph Decision Workflow & State Graph", fill="#f4f4f5")
+    
+    # Node boxes
+    nodes = [
+        (900, 280, "PR Event Hook (GitHub Action)", "#3b82f6"),
+        (900, 380, "Diff Parser (AST + LangGraph)", "#8b5cf6"),
+        (760, 490, "Security Auditor (MCP)", "#10b981"),
+        (1040, 490, "ADR Pattern Checker", "#f59e0b"),
+        (900, 610, "Verdict & Automated PR Review Post", "#4ade80")
+    ]
+    for nx, ny, ntext, ncol in nodes:
+        d.rectangle([(nx-140, ny-24), (nx+140, ny+24)], fill="#18181b", outline=ncol, width=2)
+        d.text((nx-120, ny-8), ntext, fill="#ffffff")
+
+    # Connect lines
+    d.line([(900, 304), (900, 356)], fill="#a1a1aa", width=2)
+    d.line([(900, 404), (760, 466)], fill="#a1a1aa", width=2)
+    d.line([(900, 404), (1040, 466)], fill="#a1a1aa", width=2)
+    d.line([(760, 514), (900, 586)], fill="#a1a1aa", width=2)
+    d.line([(1040, 514), (900, 586)], fill="#a1a1aa", width=2)
+
+    img.save(path)
+
+def make_shot_gocdc(path):
+    img = Image.new("RGB", (1280, 800), "#082f49")
+    d = ImageDraw.Draw(img)
+    # Navbar
+    d.rectangle([(0, 0), (1280, 64)], fill="#0c4a6e")
+    d.rectangle([(32, 20), (52, 44)], fill="#0284c7")
+    d.text((64, 22), "GoCDC // High-Throughput Event-Driven CDC Pipeline", fill="#f0f9ff")
+    d.rectangle([(1060, 16), (1240, 48)], fill="#0369a1")
+    d.text((1080, 24), "1,400 events/sec", fill="#ffffff")
+
+    # Banner
+    d.rectangle([(32, 88), (1248, 170)], fill="#0c4a6e", outline="#0284c7", width=2)
+    d.text((60, 106), "POSTGRESQL WAL LOGICAL DECODING · ZERO-POLLING EVENT STREAMING", fill="#bae6fd")
+    d.text((60, 134), "Replication Lag: <140ms · 500-Concurrent-Transaction Benchmark: 0 Data Loss", fill="#4ade80")
+
+    # Left: Pipeline Topology
+    d.rectangle([(32, 196), (720, 760)], fill="#075985", outline="#0284c7", width=2)
+    d.text((60, 220), "Polyglot Replication Architecture", fill="#f0f9ff")
+    
+    stages = [
+        ("Source DB: PostgreSQL (WAL Logical Decoding)", "Zero polling overhead, streaming low-level DML mutations", "#38bdf8"),
+        ("Go Ingestion Engine (pglogrepl)", "High-throughput consumer parsing binary replication stream", "#0284c7"),
+        ("Message Broker: Apache Kafka / Redpanda", "Partitioned event log achieving 1,400 events/sec sustained", "#f59e0b"),
+        ("Sink Consumer 1: Redis In-Memory Cache", "Sub-millisecond key invalidation and cache warming", "#ef4444"),
+        ("Sink Consumer 2: MongoDB Document Store", "Denormalized polyglot persistence projection pipeline", "#10b981")
+    ]
+    py = 260
+    for ptitle, pdesc, pcol in stages:
+        d.rectangle([(60, py), (690, py+80)], fill="#0c4a6e", outline=pcol, width=2)
+        d.text((80, py+16), ptitle, fill=pcol)
+        d.text((80, py+44), pdesc, fill="#e0f2fe")
+        py += 96
+
+    # Right: Benchmark Metrics
+    d.rectangle([(750, 196), (1248, 760)], fill="#0c4a6e", outline="#0284c7", width=2)
+    d.text((780, 220), "500-Transaction Stress Benchmark", fill="#f0f9ff")
+    metrics = [
+        ("Throughput (Peak)", "1,420 DML events/sec"),
+        ("End-to-End Lag", "<145 ms (p95)"),
+        ("Docker Container Size", "19.8 MB (Multi-stage Go)"),
+        ("Data Consistency Check", "100% Match (Zero loss)"),
+        ("Ecosystem Nodes", "6 Microservices active")
+    ]
+    my = 280
+    for label, val in metrics:
+        d.rectangle([(780, my), (1216, my+74)], fill="#075985")
+        d.text((800, my+14), label, fill="#7dd3fc")
+        d.text((800, my+42), val, fill="#ffffff")
+        my += 92
+
+    img.save(path)
 
 def make_shot_skillup(path):
     img = Image.new("RGB", (1280, 800), "#0f172a")
     d = ImageDraw.Draw(img)
-    
-    # Top navbar
+    # Navbar
     d.rectangle([(0, 0), (1280, 64)], fill="#1e293b")
-    d.rectangle([(0, 63), (1280, 64)], fill="#334155")
-    d.rectangle([(32, 20), (52, 44)], fill="#6366f1")
+    d.rectangle([(32, 20), (52, 44)], fill="#f59e0b")
     d.text((64, 22), "SkillUp // AI Skill Gap Analyzer", fill="#f8fafc")
-    d.rectangle([(1100, 18), (1240, 46)], fill="#4f46e5")
-    d.text((1115, 24), "Analyze Role", fill="#ffffff")
-    d.text((950, 24), "Hack101 [2nd Place]", fill="#fbbf24")
-    
-    # Hero / Target Role Banner
-    d.rectangle([(32, 88), (1248, 200)], fill="#1e293b", outline="#334155", width=2)
-    d.text((60, 108), "TARGET ROLE: SENIOR AI & FULL-STACK ENGINEER", fill="#94a3b8")
-    d.text((60, 136), "Readiness Score: 82% (4 Gaps Identified)", fill="#38bdf8")
-    d.rectangle([(60, 172), (660, 184)], fill="#334155")
-    d.rectangle([(60, 172), (552, 184)], fill="#10b981") # 82%
-    
-    # Left Column: Radar / Gap Breakdown
-    d.rectangle([(32, 224), (620, 760)], fill="#1e293b", outline="#334155", width=2)
-    d.text((60, 248), "Skill Gap Matrix & Benchmark", fill="#f1f5f9")
+    d.rectangle([(1040, 16), (1240, 48)], fill="#d97706")
+    d.text((1060, 24), "Hack101 [2nd Place]", fill="#ffffff")
+
+    # Banner
+    d.rectangle([(32, 88), (1248, 170)], fill="#1e293b", outline="#334155", width=2)
+    d.text((60, 106), "TARGET ROLE: BACKEND & DISTRIBUTED SYSTEMS ENGINEER", fill="#94a3b8")
+    d.text((60, 134), "Resume Match Score: 88% · 3 Skill Gaps Identified · Personalized Roadmap Generated", fill="#4ade80")
+
+    # Left: Skill Matrix
+    d.rectangle([(32, 196), (640, 760)], fill="#1e293b", outline="#334155", width=2)
+    d.text((60, 220), "Competency Gap Analysis", fill="#f1f5f9")
     skills = [
-        ("Python & Asynchronous I/O", 92, 85, True),
-        ("PyTorch / LLM Fine-Tuning", 78, 80, False),
-        ("System Architecture & Vector DBs", 85, 75, True),
-        ("Kubernetes & Cloud Infra", 55, 75, False),
-        ("TypeScript & Modern Frontends", 88, 80, True),
-        ("API Security & Auth protocols", 65, 80, False),
+        ("Go & Concurrency Patterns", 94, 90, True),
+        ("PostgreSQL & WAL Logical Decoding", 90, 85, True),
+        ("Kafka / Event-Driven Architectures", 88, 80, True),
+        ("Distributed Consensus (Raft/Paxos)", 68, 85, False),
+        ("Kubernetes / Container Orchestration", 72, 80, False),
     ]
-    y = 290
-    for name, curr, target, passed in skills:
-        d.text((60, y), name, fill="#cbd5e1")
-        col = "#10b981" if passed else "#f59e0b"
-        d.text((500, y), f"{curr}% / {target}%", fill=col)
-        d.rectangle([(60, y+24), (580, y+34)], fill="#334155")
-        d.rectangle([(60, y+24), (60 + int(5.2*curr), y+34)], fill=col)
-        y += 68
+    sy = 270
+    for sname, scurr, starget, spass in skills:
+        d.text((60, sy), sname, fill="#cbd5e1")
+        col = "#10b981" if spass else "#f59e0b"
+        d.text((510, sy), f"{scurr}% / {starget}%", fill=col)
+        d.rectangle([(60, sy+24), (600, sy+34)], fill="#334155")
+        d.rectangle([(60, sy+24), (60 + int(5.4*scurr), sy+34)], fill=col)
+        sy += 88
 
-    # Right Column: Actionable Learning Roadmap
-    d.rectangle([(650, 224), (1248, 760)], fill="#1e293b", outline="#334155", width=2)
-    d.text((680, 248), "Recommended AI Curriculum & Projects", fill="#f1f5f9")
-    modules = [
-        ("Module 1: Vector Search & RAG Pipelines", "In Progress · 3/4 tasks done", "#6366f1"),
-        ("Module 2: Container Orchestration with K8s", "Next Up · Est. 6 hrs", "#0284c7"),
-        ("Module 3: Production Auth with OAuth2 / JWT", "Queued · Est. 4 hrs", "#64748b"),
-        ("Milestone Project: Full-stack LLM Agent Platform", "Deliverable for Hack101 Finals", "#10b981"),
+    # Right: Curated Roadmap
+    d.rectangle([(670, 196), (1248, 760)], fill="#1e293b", outline="#334155", width=2)
+    d.text((700, 220), "Personalized Course & Project Roadmap", fill="#f1f5f9")
+    steps = [
+        ("Milestone 1: Event-Driven Polyglot Streaming", "COMPLETED: GoCDC with Kafka & PostgreSQL", "#10b981"),
+        ("Milestone 2: Autonomous Agent Governance", "COMPLETED: Archivist LangGraph MCP Action", "#10b981"),
+        ("Milestone 3: Raft Consensus Implementation", "RECOMMENDED: Build a 3-node in-memory leader election", "#f59e0b"),
+        ("Milestone 4: Cloud-Native K8s Deployment", "RECOMMENDED: Helm charts and GitOps CD pipeline", "#3b82f6")
     ]
-    my = 300
-    for title, desc, clr in modules:
-        d.rectangle([(680, my), (1216, my+88)], fill="#0f172a", outline=clr, width=2)
-        d.rectangle([(696, my+16), (704, my+72)], fill=clr)
-        d.text((720, my+20), title, fill="#f8fafc")
-        d.text((720, my+50), desc, fill="#94a3b8")
-        my += 104
-        
+    ry = 270
+    for rtitle, rdesc, rcol in steps:
+        d.rectangle([(700, ry), (1216, ry+88)], fill="#0f172a", outline=rcol, width=2)
+        d.text((720, ry+18), rtitle, fill="#f8fafc")
+        d.text((720, ry+48), rdesc, fill="#94a3b8")
+        ry += 112
+
     img.save(path)
 
-def make_shot_groupflix(path):
-    img = Image.new("RGB", (1280, 800), "#18181b")
-    d = ImageDraw.Draw(img)
-    
-    # Top navbar
-    d.rectangle([(0, 0), (1280, 64)], fill="#27272a")
-    d.rectangle([(32, 20), (52, 44)], fill="#ef4444")
-    d.text((64, 22), "GroupFlix // Collaborative Group Movie Matcher", fill="#fafafa")
-    d.rectangle([(1050, 16), (1240, 48)], fill="#ef4444")
-    d.text((1070, 24), "Sync Room [4 Active]", fill="#ffffff")
-    
-    # Room Banner
-    d.rectangle([(32, 88), (1248, 170)], fill="#27272a", outline="#3f3f46", width=2)
-    d.text((60, 106), "ROOM: 'FRIDAY MOVIE NIGHT' · HOST: NITHIN", fill="#a1a1aa")
-    d.text((60, 134), "Matched 14 candidates · Consensus Agreement: 91% Sci-Fi / Thriller", fill="#4ade80")
-    
-    # Movie Posters Grid
-    movies = [
-        ("Interstellar", "98% Match", "Sci-Fi · Nolan", "#3b82f6"),
-        ("Inception", "94% Match", "Thriller · Mind-bend", "#8b5cf6"),
-        ("Arrival", "91% Match", "Sci-Fi · Linguistics", "#ec4899"),
-        ("The Matrix", "88% Match", "Cyberpunk · Classic", "#10b981"),
-    ]
-    for i, (mtitle, match, genre, color) in enumerate(movies):
-        x = 32 + i * 308
-        d.rectangle([(x, 196), (x+288, 520)], fill="#27272a", outline="#3f3f46", width=2)
-        d.rectangle([(x+16, 212), (x+272, 380)], fill=color)
-        d.text((x+30, 280), mtitle, fill="#ffffff")
-        d.text((x+20, 400), mtitle, fill="#fafafa")
-        d.text((x+20, 430), genre, fill="#a1a1aa")
-        d.rectangle([(x+20, 464), (x+160, 496)], fill="#ef4444")
-        d.text((x+32, 474), match, fill="#ffffff")
-
-    # Group Voting breakdown panel
-    d.rectangle([(32, 544), (1248, 760)], fill="#27272a", outline="#3f3f46", width=2)
-    d.text((60, 568), "Live Preference Overlap Across 4 Viewers", fill="#f4f4f5")
-    d.text((60, 608), "Nithin: Sci-Fi (95%), Thriller (90%), Comedy (60%)", fill="#d4d4d8")
-    d.text((60, 638), "Alex: Sci-Fi (90%), Action (85%), Thriller (80%)", fill="#d4d4d8")
-    d.text((60, 668), "Priya: Drama (85%), Sci-Fi (88%), Thriller (75%)", fill="#d4d4d8")
-    d.text((60, 698), "Kiran: Sci-Fi (92%), Mystery (85%), Horror (20%)", fill="#d4d4d8")
-    d.rectangle([(850, 600), (1200, 710)], fill="#18181b", outline="#ef4444", width=2)
-    d.text((880, 630), "VOTING RESULT:", fill="#ef4444")
-    d.text((880, 660), "WATCH: INTERSTELLAR (4/4 Agree)", fill="#4ade80")
-    
-    img.save(path)
-
-def make_shot_fishglob(path):
-    img = Image.new("RGB", (1280, 800), "#082f49")
-    d = ImageDraw.Draw(img)
-    
-    # Navbar
-    d.rectangle([(0, 0), (1280, 64)], fill="#0c4a6e")
-    d.rectangle([(32, 20), (52, 44)], fill="#38bdf8")
-    d.text((64, 22), "FishGlob // Ocean Current-Aware Fish Analysis", fill="#f0f9ff")
-    d.rectangle([(1080, 16), (1240, 48)], fill="#0284c7")
-    d.text((1100, 24), "Indian Ocean Data", fill="#ffffff")
-    
-    # Map & Vector Field simulation
-    d.rectangle([(32, 88), (800, 760)], fill="#075985", outline="#0284c7", width=2)
-    d.text((60, 112), "Ocean Current Velocities & Migration Pathways", fill="#e0f2fe")
-    # Draw vector arrows
-    for vy in range(160, 720, 60):
-        for vx in range(80, 760, 80):
-            d.line([(vx, vy), (vx+30, vy-10)], fill="#38bdf8", width=2)
-            d.polygon([(vx+30, vy-10), (vx+22, vy-16), (vx+24, vy-4)], fill="#38bdf8")
-    # Draw fish concentration zones
-    d.ellipse([(200, 280), (380, 460)], outline="#facc15", width=3)
-    d.text((220, 360), "High Density Zone (Tuna)", fill="#fef08a")
-    d.ellipse([(480, 420), (680, 620)], outline="#4ade80", width=3)
-    d.text((500, 510), "Upwelling Feeding Area", fill="#bbf7d0")
-    
-    # Right Metrics Panel
-    d.rectangle([(832, 88), (1248, 760)], fill="#0c4a6e", outline="#0284c7", width=2)
-    d.text((860, 112), "Hydrodynamic Parameters", fill="#f0f9ff")
-    metrics = [
-        ("Sea Surface Temp (SST)", "28.4 °C (Optimal)"),
-        ("Current Velocity (Max)", "1.82 m/s Eastward"),
-        ("Chlorophyll-a Index", "0.45 mg/m³ (Rich)"),
-        ("Depth Stratification", "Thermocline at 65m"),
-        ("Predicted Catch Density", "87.3% Accuracy"),
-    ]
-    my = 160
-    for label, val in metrics:
-        d.rectangle([(860, my), (1220, my+80)], fill="#075985")
-        d.text((880, my+16), label, fill="#7dd3fc")
-        d.text((880, my+46), val, fill="#ffffff")
-        my += 100
-        
-    img.save(path)
-
-def make_shot_neoflash(path):
-    img = Image.new("RGB", (1280, 800), "#134e4a")
-    d = ImageDraw.Draw(img)
-    
-    # Navbar
-    d.rectangle([(0, 0), (1280, 64)], fill="#115e59")
-    d.rectangle([(32, 20), (52, 44)], fill="#2dd4bf")
-    d.text((64, 22), "NeoFlash // Spaced Repetition Learning System", fill="#f0fdfa")
-    d.rectangle([(1080, 16), (1240, 48)], fill="#0d9488")
-    d.text((1100, 24), "Deck: Web Arch", fill="#ffffff")
-    
-    # Deck Status Banner
-    d.rectangle([(32, 88), (1248, 160)], fill="#115e59", outline="#14b8a6", width=2)
-    d.text((60, 104), "DECK: DISTRIBUTED SYSTEMS & PERFORMANCE", fill="#ccfbf1")
-    d.text((60, 130), "Card 18 of 64 · Retention Rate: 94.2% · Interval: 6 Days", fill="#5eead4")
-    
-    # Main Active Flashcard
-    d.rectangle([(240, 190), (1040, 560)], fill="#fbf6e6", outline="#1a1208", width=4)
-    d.text((280, 230), "FLASHCARD #18 [FRONT]", fill="#5c5546")
-    d.text((280, 280), "What is Cache Stampede and how do you prevent it?", fill="#1a1208")
-    d.text((280, 330), "(Click or press Space to reveal answer)", fill="#5c5546")
-    
-    # Answer reveal preview
-    d.rectangle([(280, 380), (1000, 520)], fill="#f1e9cf", outline="#a8742f", width=2)
-    d.text((300, 400), "Answer / Key Concepts:", fill="#1a1208")
-    d.text((300, 430), "• High concurrent misses when a popular cache key expires.", fill="#1a1208")
-    d.text((300, 460), "• Prevention: Mutex locks, Probabilistic early expiration (XFetch).", fill="#1a1208")
-    d.text((300, 490), "• Background async re-warming before TTL.", fill="#1a1208")
-    
-    # Rating Buttons
-    ratings = [
-        ("1: Again (< 10m)", "#ef4444"),
-        ("2: Hard (1 day)", "#f59e0b"),
-        ("3: Good (3 days)", "#3b82f6"),
-        ("4: Easy (6 days)", "#10b981")
-    ]
-    for i, (rtitle, color) in enumerate(ratings):
-        rx = 240 + i * 205
-        d.rectangle([(rx, 600), (rx+190, 660)], fill=color)
-        d.text((rx+20, 624), rtitle, fill="#ffffff")
-        
-    img.save(path)
-
-def make_og_image(path):
-    img = Image.new("RGB", (1200, 630), "#4f87f0")
-    d = ImageDraw.Draw(img)
-    # Sky bands
-    d.rectangle([(0, 0), (1200, 157)], fill="#4f87f0")
-    d.rectangle([(0, 157), (1200, 315)], fill="#5c94fc")
-    d.rectangle([(0, 315), (1200, 472)], fill="#6fa3ff")
-    d.rectangle([(0, 472), (1200, 630)], fill="#86b4ff")
-    # Sun
-    d.rectangle([(1020, 40), (1100, 120)], fill="#ffe36b")
-    # Wood Sign
-    d.rectangle([(100, 60), (740, 420)], fill="#a8742f", outline="#3b2410", width=4)
-    d.rectangle([(120, 80), (720, 400)], fill="#8f5f25")
-    d.text((150, 110), "NITHIN", fill="#fbf6e6")
-    d.text((150, 160), "Software engineer in the making", fill="#fff4d6")
-    d.text((150, 210), "CSE @ Amrita · SDE Intern · Hack101 2nd place", fill="#fff4d6")
-    d.text((150, 270), "Interactive Mario & Terminal Portfolio", fill="#f5c451")
-    # Floor
-    d.rectangle([(0, 520), (1200, 544)], fill="#c84c0c")
-    d.rectangle([(0, 544), (1200, 630)], fill="#7a2a00")
-    d.text((40, 570), "nithin@world-1:~$ type help, projects, open skillup...", fill="#f5c451")
-    img.save(path)
-
-def make_dummy_pdf(path):
-    # Minimal standard conforming PDF with Nithin's resume
+def make_real_resume_pdf(path):
     content = b"""%PDF-1.4
 1 0 obj
 << /Type /Catalog /Pages 2 0 R >>
@@ -230,33 +235,63 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
 endobj
 4 0 obj
-<< /Length 580 >>
+<< /Length 1200 >>
 stream
 BT
-/F1 24 Tf
-50 720 Td
-(NITHIN - SOFTWARE ENGINEER RESUME) Tj
-/F1 12 Tf
-0 -30 Td
-(Email: nithin@example.com | GitHub: github.com/Nithin0306 | LinkedIn: linkedin.com/in/nithin) Tj
-0 -40 Td
-(EDUCATION: Amrita Vishwa Vidyapeetham - B.Tech Computer Science and Engineering) Tj
-0 -30 Td
-(EXPERIENCE: Software Development Engineer Intern) Tj
-0 -20 Td
-(- Architected full-stack web applications and AI integration pipelines) Tj
-0 -20 Td
-(- Optimized database query latencies and responsive user interface components) Tj
-0 -30 Td
+/F1 18 Tf
+50 740 Td
+(Nithin Venkat Sharma P M) Tj
+/F1 10 Tf
+0 -18 Td
+(Coimbatore, Tamil Nadu | nithin.p.m2006@gmail.com | +91 73730 93900) Tj
+0 -14 Td
+(LinkedIn: linkedin.com/in/nithin-p-m- | GitHub: github.com/nithin0306) Tj
+0 -24 Td
+(EDUCATION: Amrita Vishwa Vidyapeetham, Coimbatore | Aug 2024 - May 2028) Tj
+0 -14 Td
+(B.Tech in Computer Science and Engineering | CGPA: 8.85 / 10) Tj
+0 -22 Td
+(EXPERIENCE:) Tj
+0 -14 Td
+(Web Developer, Tensor Club, Amrita Vishwa Vidyapeetham [Jul 2025 - Apr 2026]) Tj
+0 -12 Td
+(- Built Featured Projects & All Projects with React/Tailwind, 99 Lighthouse score, 0.3s FCP) Tj
+0 -12 Td
+(- Implemented terminal-style interactive card layouts contributing to 98 a11y & 100 SEO) Tj
+0 -16 Td
+(Automation Intern, The Pedagogy Community [Apr 2026 - Jun 2026]) Tj
+0 -12 Td
+(- Architected AI pipeline converting raw webinars into structured courses: 8hrs to <15 mins) Tj
+0 -12 Td
+(- Multi-threaded chunking engine for 20-min parallel audio slices with timestamp alignment) Tj
+0 -22 Td
 (PROJECTS:) Tj
-0 -20 Td
-(- SkillUp: AI Skill Gap Analyzer - Hack101 2nd Place Runner-Up) Tj
-0 -20 Td
-(- GroupFlix: Collaborative Movie Recommendation Engine with Consensus Algorithm) Tj
-0 -20 Td
-(- FishGlob: Ocean Current-Aware Marine Fisheries Analytics) Tj
-0 -20 Td
-(- NeoFlash: Web-Based Spaced Repetition Flashcard Learning System) Tj
+0 -14 Td
+(Dayta | React, Vite, TypeScript, FastAPI, Pinecone, Google Gemini API [Live]) Tj
+0 -12 Td
+(- Automated academic document ingestion storing high-density vector embeddings in Pinecone) Tj
+0 -12 Td
+(- Conversational guardrails with windowed session memory eliminating hallucinations) Tj
+0 -16 Td
+(Archivist | Python, LangGraph, GitHub Actions, LLMs, MCP [GitHub]) Tj
+0 -12 Td
+(- Autonomous GitHub Action dynamically enforcing Architecture Decision Records [ADRs]) Tj
+0 -12 Td
+(- Enforced CI/CD governance via GitHub API, cutting review loop from hours to <60 seconds) Tj
+0 -16 Td
+(GoCDC | Go, PostgreSQL, Apache Kafka, Redis, MongoDB, Docker [GitHub]) Tj
+0 -12 Td
+(- Go CDC engine with PostgreSQL WAL logical decoding streaming 1,400 events/sec to Kafka) Tj
+0 -12 Td
+(- Polyglot persistence pipeline with <150ms replication lag & 0 data loss under 500-tx load) Tj
+0 -22 Td
+(ACHIEVEMENTS:) Tj
+0 -14 Td
+(- 2nd Place at Hack101 [30+ teams] for SkillUp AI skill gap analyzer) Tj
+0 -12 Td
+(- 3rd Place at Build2Break [80+ teams] for VITA-CARE healthcare microservice) Tj
+0 -12 Td
+(- Merged 4 PRs across independent repositories in GirlScript Summer of Code [GSSoC]) Tj
 ET
 endstream
 endobj
@@ -270,21 +305,20 @@ xref
 0000000058 00000 n 
 0000000115 00000 n 
 0000000244 00000 n 
-0000000877 00000 n 
+0000001497 00000 n 
 trailer
 << /Size 6 /Root 1 0 R >>
 startxref
-947
+1567
 %%EOF
 """
     with open(path, "wb") as f:
         f.write(content)
 
 os.makedirs("assets/shots", exist_ok=True)
+make_shot_dayta("assets/shots/dayta.png")
+make_shot_archivist("assets/shots/archivist.png")
+make_shot_gocdc("assets/shots/gocdc.png")
 make_shot_skillup("assets/shots/skillup.png")
-make_shot_groupflix("assets/shots/groupflix.png")
-make_shot_fishglob("assets/shots/fishglob.png")
-make_shot_neoflash("assets/shots/neoflash.png")
-make_og_image("assets/og.png")
-make_dummy_pdf("assets/resume.pdf")
-print("Assets generated successfully!")
+make_real_resume_pdf("assets/resume.pdf")
+print("Resume assets updated successfully!")

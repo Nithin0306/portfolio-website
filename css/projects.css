@@ -1,0 +1,328 @@
+/* ==========================================================================
+   PROJECT WORLDS & CASE STUDIES (Phase 9)
+   World band (interactive themed mini-world) + arcade bezel screenshot
+   + two-column responsive layout for Dayta, Archivist, GoCDC, and SkillUp.
+   ========================================================================== */
+
+/* Project World Band Container */
+.world-band {
+  position: relative;
+  width: 100%;
+  height: clamp(180px, 26vh, 260px);
+  border: var(--border-ink);
+  overflow: hidden;
+  margin-bottom: 24px;
+  user-select: none;
+}
+
+/* Hero inside world band */
+.world-band .band-hero {
+  position: absolute;
+  bottom: 24px;
+  left: 32px;
+  width: 40px;
+  height: 48px;
+  image-rendering: pixelated;
+  z-index: 5;
+  transition: transform 1.4s cubic-bezier(0.2, 0.8, 0.3, 1), left 1.4s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   THEME 1: STUDY / INGESTION (Dayta)
+   -------------------------------------------------------------------------- */
+.world-band.theme-study {
+  background-color: var(--study-1);
+}
+
+.world-band.theme-study .study-floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background-color: var(--study-2);
+  border-top: 3px solid var(--ink);
+}
+
+.world-band.theme-study .doc-node {
+  position: absolute;
+  top: 36px;
+  padding: 6px 12px;
+  background-color: var(--paper);
+  border: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  box-shadow: 2px 2px 0 var(--ink);
+  animation: docFloat 3s ease-in-out infinite alternate;
+}
+
+.world-band.theme-study .doc-node.n1 { left: 24%; animation-delay: 0s; }
+.world-band.theme-study .doc-node.n2 { left: 52%; animation-delay: -1s; }
+.world-band.theme-study .doc-node.n3 { left: 78%; animation-delay: -2s; }
+
+@keyframes docFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+/* --------------------------------------------------------------------------
+   THEME 2: CINEMA / AGENT GRAPH (Archivist)
+   -------------------------------------------------------------------------- */
+.world-band.theme-cinema {
+  background-color: var(--cine-wall);
+}
+
+.world-band.theme-cinema .curtain-left,
+.world-band.theme-cinema .curtain-right {
+  position: absolute;
+  top: 0;
+  bottom: 28px;
+  width: 18%;
+  background-color: var(--curtain);
+  border: 3px solid var(--ink);
+  z-index: 2;
+}
+
+.world-band.theme-cinema .curtain-left { left: 0; border-left: none; }
+.world-band.theme-cinema .curtain-right { right: 0; border-right: none; }
+
+.world-band.theme-cinema .cinema-screen {
+  position: absolute;
+  top: 24px;
+  left: 24%;
+  right: 24%;
+  height: 120px;
+  background-color: #f1e3c0;
+  border: 3px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--curtain-dark);
+}
+
+.world-band.theme-cinema .seats-row {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background-repeat: repeat-x;
+  background-color: var(--curtain-dark);
+  border-top: 3px solid var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   THEME 3: WATER / HIGH-THROUGHPUT STREAM (GoCDC)
+   -------------------------------------------------------------------------- */
+.world-band.theme-water {
+  display: flex;
+  flex-direction: column;
+}
+
+.world-band.theme-water .water-band {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.world-band.theme-water .w1 { background-color: var(--water-1); }
+.world-band.theme-water .w2 { background-color: var(--water-2); }
+.world-band.theme-water .w3 { background-color: var(--water-3); }
+
+.world-band.theme-water .stream-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: #fff;
+  opacity: 0.85;
+  white-space: nowrap;
+  animation: streamRun 4s linear infinite;
+}
+
+.world-band.theme-water .w1 .stream-arrow { animation-duration: 4s; }
+.world-band.theme-water .w2 .stream-arrow { animation-duration: 2.8s; animation-delay: -1s; }
+.world-band.theme-water .w3 .stream-arrow { animation-duration: 3.4s; animation-delay: -2s; }
+
+@keyframes streamRun {
+  0% { transform: translate(-100px, -50%); }
+  100% { transform: translate(800px, -50%); }
+}
+
+/* --------------------------------------------------------------------------
+   THEME 4: GAP / SKILL GAP ANALYZER (SkillUp)
+   -------------------------------------------------------------------------- */
+.world-band.theme-gap {
+  background-color: var(--sky);
+}
+
+.world-band.theme-gap .ledge {
+  position: absolute;
+  bottom: 0;
+  height: 48px;
+  background-color: var(--brick);
+  border: 3px solid var(--ink);
+  z-index: 2;
+}
+
+.world-band.theme-gap .ledge.left-ledge {
+  left: 0;
+  width: 35%;
+  border-left: none;
+}
+
+.world-band.theme-gap .ledge.right-ledge {
+  right: 0;
+  width: 35%;
+  border-right: none;
+}
+
+.world-band.theme-gap .ledge .ledge-tag {
+  position: absolute;
+  top: -24px;
+  left: 8px;
+  background-color: var(--paper);
+  border: 2px solid var(--ink);
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  padding: 2px 6px;
+  color: var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.world-band.theme-gap .stepping-blocks {
+  position: absolute;
+  bottom: 54px;
+  left: 36%;
+  width: 28%;
+  display: flex;
+  justify-content: space-around;
+  z-index: 3;
+}
+
+.world-band.theme-gap .step-block {
+  padding: 4px 6px;
+  background-color: var(--gold);
+  border: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.world-band.theme-gap .cross-gap-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 6;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  padding: 6px 12px;
+  background-color: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  cursor: pointer;
+}
+
+.world-band.theme-gap .cross-gap-btn:hover {
+  background-color: var(--gold);
+}
+
+/* --------------------------------------------------------------------------
+   PROJECT PAGE CONTENT: TWO COLUMNS & ARCADE BEZEL
+   -------------------------------------------------------------------------- */
+
+.project-details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin-top: 20px;
+}
+
+@media (min-width: 820px) {
+  .project-details-grid {
+    grid-template-columns: 1.1fr 1fr;
+    align-items: start;
+  }
+}
+
+.project-info-col h4 {
+  font-family: var(--font-body);
+  font-size: var(--fs-s);
+  font-weight: 700;
+  margin: 16px 0 6px 0;
+  color: var(--ink);
+}
+
+.project-info-col h4:first-child {
+  margin-top: 0;
+}
+
+.project-info-col p {
+  font-size: var(--fs-s);
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.project-info-col ul {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.project-info-col ul li {
+  font-size: var(--fs-s);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+/* Arcade Bezel Screenshot Frame */
+.arcade-bezel {
+  background-color: var(--stone-dark);
+  border: 4px solid var(--ink);
+  padding: 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.arcade-screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 3px solid var(--ink);
+  overflow: hidden;
+  background-color: #000;
+}
+
+.arcade-screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.arcade-caption {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--paper);
+  background-color: var(--stone-dark);
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Project Level Navigation Footer */
+.project-level-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 3px solid var(--paper-2);
+}

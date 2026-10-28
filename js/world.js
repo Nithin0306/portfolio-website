@@ -1,14 +1,9 @@
-/**
- * WORLD//CLI: World Controller (Phase 6)
- * Handles surface interactive logic:
- * - Populates question blocks and castle/flag sprites
- * - Hero movement (walk, jump, bump)
- * - Item pop animation
- * - Score line collection updates
- * - Role line typewriter effect on the hanging sign
- */
+// World Controller: surface interaction, hero, blocks, score, sounds, typewriter
 
 import { sprite, tile } from "./sprites.js";
+import { PROFILE } from "./portfolio-data.js";
+import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js";
+import { toast } from "./terminal.js";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -20,12 +15,7 @@ const SECTION_ICONS = {
   resume: "doc"
 };
 
-const ROLE_LINES = [
-  "SDE intern,",
-  "Builds AI tools and web apps,",
-  "Hack101 runner-up,",
-  "Turning ideas into software,"
-];
+const ROLE_LINES = PROFILE.roles;
 
 export const seen = new Set();
 let busy = false;
@@ -43,6 +33,15 @@ export function initWorld() {
   scoreCenterEl = document.getElementById("hc");
 
   if (!sceneEl || !heroEl || !blocksEl) return;
+
+  // Initialize sound toggle
+  updateSoundButton();
+  const soundBtn = document.getElementById("soundToggle");
+  if (soundBtn) {
+    soundBtn.addEventListener("click", () => {
+      toggleSound();
+    });
+  }
 
   // Set up background tiles
   const floorStrip = sceneEl.querySelector(".floor .strip");
@@ -135,10 +134,21 @@ export async function visit(id) {
     return;
   }
 
-  // Check reduced motion preference
+  // Check reduced motion preference or phone screen (Phase 12: Hero walk skipped on phone)
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (prefersReduced) {
-    markSeen(id, el);
+  const isPhone = window.innerWidth <= 720;
+
+  if (prefersReduced || isPhone) {
+    if (el.classList.contains("block")) {
+      playBump();
+      el.classList.add("bump");
+      popItem(id, el.getBoundingClientRect());
+      markSeen(id, el);
+      setTimeout(() => el.classList.remove("bump"), 250);
+    } else {
+      markSeen(id, el);
+    }
+    await sleep(prefersReduced ? 50 : 250);
     location.hash = "#/" + id;
     busy = false;
     focusPrompt();
@@ -162,6 +172,7 @@ export async function visit(id) {
     heroEl.classList.add("jump");
     await sleep(230);
 
+    playBump();
     el.classList.add("bump");
     popItem(id, r);
     markSeen(id, el);
@@ -193,6 +204,8 @@ function markSeen(id, el) {
 function popItem(id, rect) {
   const iconName = SECTION_ICONS[id];
   if (!iconName) return;
+
+  playPickup();
 
   const s = sceneEl.getBoundingClientRect();
   const item = document.createElement("div");
@@ -232,13 +245,44 @@ export function updateScore() {
     count++;
   }
 
+  const isAllClear = count === 6;
+
   scoreCenterEl.innerHTML = `
-    <div class="score-center">
+    <div class="score-center ${isAllClear ? "gold-score" : ""}">
       <span class="collected-icons">${iconsHtml}</span>
       <span>${count}/6</span>
     </div>
   `;
+
+  if (isAllClear) {
+    const flagBtn = sceneEl ? sceneEl.querySelector(".flag-btn") : null;
+    if (flagBtn) {
+      flagBtn.classList.add("flag-raised");
+    }
+  }
 }
+
+// Konami Code Easter Egg (Phase 14)
+const KONAMI_CODE = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+let konamiPos = 0;
+
+window.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+
+  const key = e.key;
+  if (key === KONAMI_CODE[konamiPos] || key.toLowerCase() === KONAMI_CODE[konamiPos]) {
+    konamiPos++;
+    if (konamiPos === KONAMI_CODE.length) {
+      konamiPos = 0;
+      toast("★ 30 LIVES GRANTED! UNLIMITED DEVELOPER POWER ACTIVATED ★");
+      playVictory();
+      const sc = document.querySelector(".score-center");
+      if (sc) sc.classList.add("gold-score");
+    }
+  } else {
+    konamiPos = 0;
+  }
+});
 
 function focusPrompt() {
   const inp = document.querySelector("#f1 input");

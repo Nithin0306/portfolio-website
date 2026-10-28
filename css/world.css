@@ -69,10 +69,54 @@
   user-select: none;
 }
 
+.score .sound-toggle {
+  pointer-events: auto;
+  background-color: var(--ink);
+  color: var(--paper);
+  border: 2px solid var(--paper);
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  padding: 4px 8px;
+  cursor: pointer;
+  text-shadow: none;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform var(--t-fast), background-color var(--t-fast);
+}
+
+.score .sound-toggle:hover {
+  background-color: var(--gold);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.score .sound-toggle.on {
+  background-color: var(--gold);
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
 .score .score-center {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  transition: background-color var(--t-med), color var(--t-med);
+}
+
+.score .score-center.gold-score {
+  background-color: var(--gold);
+  color: var(--ink);
+  padding: 3px 8px;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  text-shadow: none;
+  animation: scoreGlow 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes scoreGlow {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06); }
 }
 
 .score .collected-icons {
@@ -251,7 +295,10 @@
   font-weight: 700;
   font-size: var(--fs-xs);
   color: #ffffff;
-  text-shadow: 1px 1px 0 var(--ink), 2px 2px 0 var(--ink);
+  background-color: rgba(26, 18, 8, 0.88);
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   margin-bottom: 2px;
 }
 
@@ -273,10 +320,16 @@
   width: 32px;
   height: 36px;
   image-rendering: pixelated;
+  transition: transform var(--t-fast);
 }
 
 .flag-btn:hover .flag-sprite {
   transform: scale(1.1);
+}
+
+.flag-btn.flag-raised .flag-sprite {
+  transform: translateY(-56px) !important;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.3, 1) !important;
 }
 
 /* ==========================================================================
@@ -301,6 +354,10 @@
 @keyframes hintBlink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.35; }
+}
+
+.blocks-container {
+  display: contents;
 }
 
 .blocks {
@@ -331,7 +388,10 @@
   font-weight: 700;
   font-size: var(--fs-xs);
   color: #ffffff;
-  text-shadow: 1px 1px 0 var(--ink), 2px 2px 0 var(--ink);
+  background-color: rgba(26, 18, 8, 0.88);
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   margin-bottom: 6px;
   pointer-events: none;
 }
@@ -504,3 +564,314 @@
   10%, 85% { opacity: 1; transform: translate(-50%, 0); }
   100% { opacity: 0; transform: translate(-50%, -10px); }
 }
+
+/* ==========================================================================
+   TABLET RESPONSIVE (721px to 1099px)
+   ========================================================================== */
+@media (min-width: 721px) and (max-width: 1099px) {
+  .scene {
+    height: auto !important;
+    min-height: 100svh !important;
+  }
+  #world .sign,
+  .sign {
+    width: calc(100% - 28px) !important;
+    left: 14px !important;
+  }
+  .castle {
+    display: none !important;
+  }
+  .flag-btn {
+    right: 28px !important;
+  }
+}
+
+/* ==========================================================================
+   PHONE COMPOSITION (<= 720px)
+   A dedicated phone layout, not a shrunken desktop:
+   - Full width wooden sign with short chains
+   - Hint centered directly beneath the sign
+   - Question blocks in a 3 x 2 touch-friendly grid (5 blocks + flag as 6th block)
+   - Sticky floor with iOS-safe 16px prompt
+   - Full width underground card, horizontally scrolling nav row
+   ========================================================================== */
+@media (max-width: 720px) {
+  .scene {
+    height: auto !important;
+    min-height: 100svh !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .layer.over {
+    position: relative !important;
+    inset: auto !important;
+    min-height: 100svh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding-bottom: 96px !important;
+    overflow-x: hidden !important;
+  }
+
+  #world:not(.down) .layer.under {
+    display: none !important;
+  }
+
+  #world.down .layer.over {
+    display: none !important;
+  }
+
+  /* Sun and clouds as small decoration at top-right */
+  .sun {
+    top: 14px !important;
+    right: 14px !important;
+    width: 36px !important;
+    height: 36px !important;
+    z-index: 1 !important;
+  }
+  .sun i {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .cloud.big {
+    top: 18px !important;
+    right: 56px !important;
+    left: auto !important;
+    width: 72px !important;
+    height: 28px !important;
+    z-index: 1 !important;
+  }
+  .cloud:not(.big) {
+    display: none !important;
+  }
+
+  /* Score line fits neatly */
+  .score {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    padding: 10px 14px !important;
+    font-size: 10px !important;
+    background-color: rgba(26, 18, 8, 0.45) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    z-index: 5 !important;
+  }
+  .score .sound-toggle {
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+  }
+
+  /* 1. Sign is full width (chains kept short) */
+  #world .sign,
+  .sign {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: calc(100% - 24px) !important;
+    margin: 32px auto 8px auto !important;
+    padding: 14px 16px !important;
+    box-sizing: border-box !important;
+    z-index: 3 !important;
+  }
+  .sign .chain-left,
+  .sign .chain-right {
+    top: -24px !important;
+    height: 24px !important;
+  }
+  .sign h1.name {
+    font-size: 28px !important;
+  }
+  .sign .chips-row {
+    gap: 6px !important;
+  }
+  .sign .chip {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+  }
+  .sign .buttons-row {
+    gap: 8px !important;
+  }
+  .sign .btn-sign {
+    flex: 1 1 auto !important;
+    min-height: 44px !important;
+    font-size: 11px !important;
+    padding: 8px 10px !important;
+  }
+
+  /* 2. Hint sits under the sign */
+  .hint {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    margin: 14px 0 16px 0 !important;
+    font-size: 10px !important;
+    padding: 0 12px !important;
+    text-align: center !important;
+    z-index: 3 !important;
+  }
+
+  /* 3. Blocks as a 3 x 2 grid */
+  .blocks-container {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 12px !important;
+    width: min(340px, calc(100% - 28px)) !important;
+    margin: 0 auto 28px auto !important;
+    position: relative !important;
+    z-index: 4 !important;
+  }
+
+  .blocks {
+    display: contents !important;
+    position: static !important;
+  }
+
+  .block {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 60px !important;
+    min-width: 48px !important;
+    padding: 6px 4px !important;
+  }
+
+  .flag-btn {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 60px !important;
+    min-width: 48px !important;
+    padding: 6px 4px !important;
+  }
+
+  .flag-btn .flag-pole {
+    display: none !important;
+  }
+
+  .flag-btn .flag-sprite {
+    position: static !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  /* Castle & Hills hidden on phone */
+  .castle,
+  .hill {
+    display: none !important;
+  }
+
+  /* 4. Hero hidden on phone */
+  .hero {
+    display: none !important;
+  }
+
+  /* 5. Floor sticky at bottom */
+  .floor {
+    position: sticky !important;
+    bottom: 0 !important;
+    margin-top: auto !important;
+    width: 100% !important;
+    z-index: 10 !important;
+  }
+
+  .prompt input {
+    font-size: 16px !important; /* Prevents iOS Safari auto-zoom on focus */
+  }
+
+  /* Underground on phone */
+  .layer.under {
+    padding: 12px 10px 110px 10px !important;
+  }
+
+  .paper {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px 14px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .under-nav {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start !important;
+    padding: 4px 6px 8px 6px !important;
+    width: 100% !important;
+  }
+
+  .under-nav .nav-btn {
+    flex-shrink: 0 !important;
+    min-height: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+  }
+
+  .pipe-btn,
+  .under-decor,
+  .under-hero {
+    display: none !important;
+  }
+
+  .under-floor {
+    position: fixed !important;
+  }
+
+  .under-floor .prompt input {
+    font-size: 16px !important;
+  }
+
+  /* Project pages on phone */
+  .world-band {
+    height: 140px !important;
+  }
+
+  .project-details-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION (Phase 13)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cloud {
+    animation: none !important;
+  }
+  .hint {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .hero {
+    animation: none !important;
+    transition: none !important;
+  }
+  .layer {
+    transition: none !important;
+  }
+  .cursor {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .score-center.gold-score {
+    animation: none !important;
+  }
+}
+

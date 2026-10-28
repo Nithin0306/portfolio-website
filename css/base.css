@@ -127,6 +127,22 @@ a:hover {
   outline-offset: 3px !important;
 }
 
+/* Visually hidden for screen readers and SEO */
+.sr-only {
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 /* Skip link for screen reader / keyboard navigation */
 .skip {
   position: absolute;
@@ -596,6 +612,18 @@ article.project figcaption {
   padding: 32px 0 16px 0;
 }
 
+.end-brand .the-end-heading {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-xl);
+  color: var(--brick);
+  -webkit-text-stroke: 0.05em var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 0.06em 0.06em 0 var(--ink);
+  display: block;
+  margin-bottom: 14px;
+  letter-spacing: 0.06em;
+}
+
 .end-brand .end-name {
   font-family: var(--font-pixel);
   font-size: var(--fs-l);
@@ -614,4 +642,64 @@ article.project figcaption {
 /* JS State - used in Phase 8 to switch rendering to underground card */
 html.js #pages {
   display: none;
+}
+
+/* ==========================================================================
+   PRINT STYLESHEET (Phase 14)
+   Hides the game world and prints #pages as a clean one-page profile.
+   ========================================================================== */
+@media print {
+  #world,
+  #under,
+  .score,
+  .under-nav,
+  .under-floor,
+  .toast-notice,
+  .skip,
+  nav.sr-only {
+    display: none !important;
+  }
+
+  html.js #pages {
+    display: block !important;
+  }
+
+  body {
+    background-color: #ffffff !important;
+    color: #111111 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+  }
+
+  .page {
+    display: block !important;
+    page-break-inside: avoid;
+    margin-bottom: 20pt;
+    padding: 0 !important;
+  }
+
+  .name-hero {
+    font-size: 18pt !important;
+    color: #000000 !important;
+    -webkit-text-stroke: 0 !important;
+    text-shadow: none !important;
+  }
+
+  .btn,
+  .quick-nav {
+    display: none !important;
+  }
+
+  .project-card,
+  .contact-links-grid,
+  .job-card {
+    border: 1pt solid #cccccc !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: underline !important;
+  }
 }

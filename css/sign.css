@@ -216,3 +216,56 @@
 .sign .btn-sign.pri {
   background-color: var(--gold);
 }
+
+/* ==========================================================================
+   RESPONSIVE SIGN STYLES (Phase 12)
+   ========================================================================== */
+@media (min-width: 721px) and (max-width: 1099px) {
+  .sign {
+    width: calc(100% - 28px);
+    left: 14px;
+  }
+}
+
+@media (max-width: 720px) {
+  .sign {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    width: calc(100% - 24px) !important;
+    margin: 32px auto 10px auto !important;
+    padding: 14px 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  .chain-left,
+  .chain-right {
+    top: -24px !important;
+    height: 24px !important;
+  }
+
+  .sign h1.name {
+    font-size: 28px !important;
+  }
+
+  .sign .chips-row {
+    gap: 6px !important;
+  }
+
+  .sign .chip {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+  }
+
+  .sign .buttons-row {
+    gap: 8px !important;
+  }
+
+  .sign .btn-sign {
+    flex: 1 1 auto !important;
+    min-height: 44px !important;
+    font-size: 11px !important;
+    padding: 8px 10px !important;
+  }
+}
+

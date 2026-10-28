@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Nithin · Software engineer in the making</title>
-  <meta name="description" content="Nithin: CSE student at Amrita, SDE intern, Hack101 runner-up. Projects in AI and web.">
+  <meta name="description" content="Nithin Venkat Sharma P M: CSE undergraduate at Amrita Vishwa Vidyapeetham, SDE intern, Hack101 runner-up. Distributed systems, backend engineering, and AI-driven architectures.">
   <meta property="og:title" content="Nithin · Software engineer in the making">
-  <meta property="og:description" content="Projects, experience and resume.">
+  <meta property="og:description" content="Nithin's interactive Mario + Terminal portfolio: projects, experience, achievements, and resume.">
   <meta property="og:image" content="assets/og.png">
   <meta name="theme-color" content="#5c94fc">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/world.css">
   <link rel="stylesheet" href="css/sign.css">
   <link rel="stylesheet" href="css/room.css">
+  <link rel="stylesheet" href="css/projects.css">
 
   <script>
     // Mark JS as enabled so world scene renders
@@ -31,15 +32,29 @@
 <body>
   <a class="skip" href="#pages">Skip to content</a>
 
+  <!-- Phase 11: Accessible Primary Navigation for Screen Readers & SEO -->
+  <nav aria-label="Primary" class="sr-only">
+    <ul>
+      <li><a href="#/">Home</a></li>
+      <li><a href="#/about">About</a></li>
+      <li><a href="#/projects">Projects</a></li>
+      <li><a href="#/awards">Awards</a></li>
+      <li><a href="#/experience">Experience</a></li>
+      <li><a href="#/resume">Resume</a></li>
+      <li><a href="#/contact">Contact</a></li>
+    </ul>
+  </nav>
+
   <!-- =======================================================================
-       WORLD SCENE (Phases 4 - 6)
+       WORLD SCENE (Surface Layer: Phases 4 - 6)
        Matches the approved reference screenshot (v8 page).
        ======================================================================= -->
   <div id="world" class="scene">
     <!-- Score line: directly on sky, no plaque, no bar -->
-    <div class="score">
+    <div class="score" id="score">
       <span>NITHIN</span>
       <span id="hc">0/6</span>
+      <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound effects">SFX: OFF</button>
       <span>WORLD 1-1</span>
     </div>
 
@@ -95,15 +110,18 @@
       <!-- Centered Hint -->
       <div class="hint">▾ hit a block, or type on the floor</div>
 
-      <!-- Centered Question Blocks Row -->
-      <div class="blocks" id="blocks"></div>
+      <!-- Blocks Stage Container (Phone 3x2 Grid & Desktop centered blocks) -->
+      <div class="blocks-container" id="blocksContainer">
+        <!-- Centered Question Blocks Row -->
+        <div class="blocks" id="blocks"></div>
 
-      <!-- Flag Button -->
-      <button class="flag-btn" data-go="contact" aria-label="Contact">
-        <span>contact</span>
-        <div class="flag-pole"></div>
-        <img class="flag-sprite" alt="Flag">
-      </button>
+        <!-- Flag Button -->
+        <button class="flag-btn" data-go="contact" aria-label="Contact">
+          <span>contact</span>
+          <div class="flag-pole"></div>
+          <img class="flag-sprite" alt="Flag">
+        </button>
+      </div>
 
       <!-- Castle -->
       <img class="castle" alt="Castle" id="castleImg">
@@ -117,18 +135,19 @@
         <div class="earth">
           <form class="prompt" id="f1">
             <span class="p">nithin@world-1:~$</span>
-            <input aria-label="Command prompt" autocomplete="off" spellcheck="false" placeholder="type help, projects, open skillup...">
+            <input aria-label="Command prompt" autocomplete="off" spellcheck="false" placeholder="type help, projects, open dayta...">
           </form>
         </div>
       </div>
     </div>
 
-    <!-- Underground Layer (Phase 7 and later) -->
+    <!-- Underground Layer (Phases 7 - 9) -->
     <div class="layer under" id="under"></div>
   </div>
 
   <!-- =======================================================================
-       SEMANTIC HTML CONTENT (Phase 1 & Accessible Fallback)
+       SEMANTIC HTML CONTENT (Single source of truth & accessible fallback)
+       Contains Nithin Venkat Sharma P M's genuine resume information.
        ======================================================================= -->
   <main id="pages">
     <!-- Home Header -->
@@ -136,8 +155,8 @@
       <div class="status-badge" aria-label="Current status">
         <span class="status-dot" aria-hidden="true"></span> Open to opportunities
       </div>
-      <h1 class="name-hero">Nithin</h1>
-      <p class="lead-statement">Software engineer in the making: CSE student at Amrita, SDE intern, Hack101 runner-up.</p>
+      <h1 class="name-hero">Nithin Venkat Sharma P M</h1>
+      <p class="lead-statement">Computer Science undergraduate with full-stack development experience, growing focus on backend engineering, system design, and AI-driven architectures.</p>
       <nav class="quick-nav" aria-label="Direct quick links">
         <a class="btn pri" href="assets/resume.pdf" download>Download Resume ↓</a>
         <a class="btn" href="#projects">View Projects</a>
@@ -152,15 +171,16 @@
       </div>
       <h2>About</h2>
       <p class="about-summary">
-        CSE student at Amrita and SDE intern. I build AI tools and web apps, turning ideas into reliable software people actually use.
+        Computer Science undergraduate at Amrita Vishwa Vidyapeetham with full-stack and backend engineering experience. Quick to pick up new tools and passionate about scalable software architecture.
       </p>
 
       <div class="facts-card">
         <ul class="facts-list">
-          <li><strong>Education:</strong> Amrita Vishwa Vidyapeetham · B.Tech in Computer Science and Engineering (Expected 2026)</li>
-          <li><strong>Role:</strong> Software Development Engineer Intern <!-- TODO: company name --></li>
-          <li><strong>Focus:</strong> Full-Stack Web Development, Applied AI &amp; Recommender Systems</li>
-          <li><strong>Status:</strong> Available for SDE Internship &amp; New Grad Opportunities</li>
+          <li><strong>Education:</strong> Amrita Vishwa Vidyapeetham, Coimbatore · B.Tech in CSE (Aug 2024 – May 2028)</li>
+          <li><strong>Academic Standing:</strong> CGPA: 8.85 / 10</li>
+          <li><strong>Focus:</strong> Backend Engineering, Event-Driven Architecture, Distributed Systems &amp; LLM Agents</li>
+          <li><strong>Location:</strong> Coimbatore, Tamil Nadu</li>
+          <li><strong>Status:</strong> Open to SDE Internships &amp; New Grad Roles</li>
         </ul>
       </div>
 
@@ -179,107 +199,268 @@
       <p class="sub-desc">Four levels so far. Open one for the case study.</p>
 
       <div class="projects-list">
+        <!-- Level 1-1: Dayta -->
         <article class="project-entry">
           <div class="level-label">1-1</div>
           <div class="project-info">
             <div class="project-title-row">
-              <h3><a href="#skillup">SkillUp · AI skill gap analyzer</a></h3>
-              <span class="plaque gold">Hack101 · 2nd</span>
+              <h3><a href="#/projects/dayta">Dayta · Academic Ingestion &amp; RAG Assistant</a></h3>
+              <span class="plaque gold">Live</span>
             </div>
-            <p>Shows what to learn next for a target role based on automated resume parsing and job requirements.</p>
+            <p>Automated document ingestion storing high-density vector embeddings in Pinecone for semantic schedule search.</p>
             <div class="tags-row">
-              <span class="tag">Python</span>
-              <span class="tag">ML</span>
+              <span class="tag">React</span>
               <span class="tag">FastAPI</span>
+              <span class="tag">Pinecone</span>
+              <span class="tag">Gemini API</span>
             </div>
           </div>
-          <a class="entry-link" href="#skillup" aria-label="Open SkillUp case study">open ▸</a>
+          <a class="entry-link" href="#/projects/dayta" aria-label="Open Dayta case study">open ▸</a>
         </article>
 
+        <!-- Level 1-2: Archivist -->
         <article class="project-entry">
           <div class="level-label">1-2</div>
           <div class="project-info">
             <div class="project-title-row">
-              <h3><a href="#groupflix">GroupFlix · Movie recommendation</a></h3>
+              <h3><a href="#/projects/archivist">Archivist · Autonomous ADR Enforcement Agent</a></h3>
+              <span class="plaque">GitHub</span>
             </div>
-            <p>Recommends movies a whole group can agree on through real-time preference voting and consensus algorithms.</p>
+            <p>Autonomous GitHub Action with LangGraph and MCP dynamically enforcing Architecture Decision Records on PR diffs.</p>
             <div class="tags-row">
               <span class="tag">Python</span>
-              <span class="tag">Recommender</span>
-              <span class="tag">WebSockets</span>
+              <span class="tag">LangGraph</span>
+              <span class="tag">GitHub Actions</span>
+              <span class="tag">MCP</span>
             </div>
           </div>
-          <a class="entry-link" href="#groupflix" aria-label="Open GroupFlix case study">open ▸</a>
+          <a class="entry-link" href="#/projects/archivist" aria-label="Open Archivist case study">open ▸</a>
         </article>
 
+        <!-- Level 1-3: GoCDC -->
         <article class="project-entry">
           <div class="level-label">1-3</div>
           <div class="project-info">
             <div class="project-title-row">
-              <h3><a href="#fishglob">FishGlob · Current-aware fish analysis</a></h3>
+              <h3><a href="#/projects/gocdc">GoCDC · High-Throughput Event-Driven CDC Pipeline</a></h3>
+              <span class="plaque">1,400 ev/s</span>
             </div>
-            <p>Analyses fish distribution data with ocean-current context and hydrodynamics.</p>
+            <p>Go Change Data Capture engine streaming PostgreSQL WAL logical decoding events to Kafka, Redis, and MongoDB.</p>
             <div class="tags-row">
-              <span class="tag">Python</span>
-              <span class="tag">Data analysis</span>
-              <span class="tag">Geospatial</span>
+              <span class="tag">Go</span>
+              <span class="tag">PostgreSQL WAL</span>
+              <span class="tag">Kafka</span>
+              <span class="tag">Docker</span>
             </div>
           </div>
-          <a class="entry-link" href="#fishglob" aria-label="Open FishGlob case study">open ▸</a>
+          <a class="entry-link" href="#/projects/gocdc" aria-label="Open GoCDC case study">open ▸</a>
         </article>
 
+        <!-- Level 2-1: SkillUp -->
         <article class="project-entry">
           <div class="level-label">2-1</div>
           <div class="project-info">
             <div class="project-title-row">
-              <h3><a href="#neoflash">NeoFlash · Learning platform</a></h3>
+              <h3><a href="#/projects/skillup">SkillUp · AI Skill Gap Analyzer</a></h3>
+              <span class="plaque gold">Hack101 · 2nd</span>
             </div>
-            <p>A web platform for learning with flashcards and spaced repetition algorithms.</p>
+            <p>AI-powered resume analyzer detecting skill gaps and generating personalized learning milestones for target roles.</p>
             <div class="tags-row">
-              <span class="tag">JavaScript</span>
-              <span class="tag">HTML/CSS</span>
-              <span class="tag">Local-First</span>
+              <span class="tag">Python</span>
+              <span class="tag">NLP</span>
+              <span class="tag">FastAPI</span>
+              <span class="tag">Vector Search</span>
             </div>
           </div>
-          <a class="entry-link" href="#neoflash" aria-label="Open NeoFlash case study">open ▸</a>
+          <a class="entry-link" href="#/projects/skillup" aria-label="Open SkillUp case study">open ▸</a>
         </article>
       </div>
     </section>
 
-    <!-- Project 1: SkillUp Detailed Article -->
-    <article class="page project" id="skillup" data-page="skillup" data-level="1-1" data-theme="gap"
-             data-shot="assets/shots/skillup.png" data-title="SkillUp" data-tagline="AI skill gap analyzer"
-             data-skills="Python,PyTorch,System Design">
+    <!-- Project 1: Dayta Detailed Article -->
+    <article class="page project" id="dayta" data-page="dayta" data-level="1-1" data-theme="study"
+             data-shot="assets/shots/dayta.png" data-title="Dayta" data-tagline="Academic Ingestion & RAG Assistant">
       <div class="section-badge">
         <span class="plaque">LEVEL 1-1</span>
+        <span class="plaque gold">Live Application</span>
+      </div>
+      <h2>Dayta</h2>
+      <p class="tagline">Academic Document Ingestion &amp; RAG Assistant</p>
+
+      <div class="project-details-grid">
+        <div class="project-info-col">
+          <h4>Overview</h4>
+          <p>
+            Students and faculty frequently struggle to extract reliable scheduling insights from complex, multi-page university PDFs. Dayta automates document ingestion, creates high-density vector embeddings in Pinecone, and delivers grounded question answering powered by Google Gemini.
+          </p>
+
+          <h4>Key Highlights</h4>
+          <ul>
+            <li>Engineered an automated document ingestion pipeline processing multi-page academic schedules into high-density vector embeddings.</li>
+            <li>Implemented conversational guardrails with windowed session memory, confining responses strictly to official university data to prevent hallucinations.</li>
+            <li>Built a lightweight, modular backend architecture using FastAPI and asynchronous pipeline execution for sub-second query latency.</li>
+          </ul>
+
+          <h4>Stack</h4>
+          <div class="tags-row">
+            <span class="tag">React (Vite)</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Pinecone</span>
+            <span class="tag">Google Gemini API</span>
+          </div>
+
+          <div class="project-links">
+            <a class="btn pri" href="https://github.com/nithin0306/dayta" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+            <a class="btn" href="#/projects">All Projects</a>
+          </div>
+        </div>
+
+        <div class="arcade-bezel">
+          <div class="arcade-screen">
+            <img src="assets/shots/dayta.png" width="1280" height="800" alt="Dayta conversational RAG scheduling interface">
+          </div>
+          <div class="arcade-caption">Level 1-1 · Dayta: High-density vector semantic search &amp; conversational RAG console</div>
+        </div>
+      </div>
+
+      <div class="project-level-nav">
+        <a class="btn" href="#/projects">◂ All Projects</a>
+        <a class="btn" href="#/projects/archivist">Next Level: Archivist ▸</a>
+      </div>
+    </article>
+
+    <!-- Project 2: Archivist Detailed Article -->
+    <article class="page project" id="archivist" data-page="archivist" data-level="1-2" data-theme="cinema"
+             data-shot="assets/shots/archivist.png" data-title="Archivist" data-tagline="Autonomous ADR Enforcement Agent">
+      <div class="section-badge">
+        <span class="plaque">LEVEL 1-2</span>
+        <span class="plaque">GitHub Action</span>
+      </div>
+      <h2>Archivist</h2>
+      <p class="tagline">Autonomous ADR Enforcement Agent</p>
+
+      <div class="project-details-grid">
+        <div class="project-info-col">
+          <h4>Overview</h4>
+          <p>
+            Architectural erosion occurs when code changes bypass established Architecture Decision Records (ADRs). Archivist is an autonomous GitHub Action that inspects PR diffs via LangGraph and MCP to verify architectural compliance before code is merged.
+          </p>
+
+          <h4>Key Highlights</h4>
+          <ul>
+            <li>Engineered an autonomous GitHub Action using LangGraph and MCP to dynamically parse PR diffs, achieving 100% automated enforcement of configured ADRs.</li>
+            <li>Enforced CI/CD governance via GitHub API, catching and blocking injected violations such as client-side secret leaks during pipeline simulations.</li>
+            <li>Reduced architectural review feedback loop from hours of manual inspection to under 60 seconds with a secure webhook-driven override command.</li>
+          </ul>
+
+          <h4>Stack</h4>
+          <div class="tags-row">
+            <span class="tag">Python</span>
+            <span class="tag">LangGraph</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">LLMs</span>
+            <span class="tag">Model Context Protocol</span>
+          </div>
+
+          <div class="project-links">
+            <a class="btn pri" href="https://github.com/nithin0306/archivist" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+            <a class="btn" href="#/projects">All Projects</a>
+          </div>
+        </div>
+
+        <div class="arcade-bezel">
+          <div class="arcade-screen">
+            <img src="assets/shots/archivist.png" width="1280" height="800" alt="Archivist LangGraph agent state graph and PR diff inspection console">
+          </div>
+          <div class="arcade-caption">Level 1-2 · Archivist: LangGraph state machine &amp; automated PR review governance</div>
+        </div>
+      </div>
+
+      <div class="project-level-nav">
+        <a class="btn" href="#/projects/dayta">◂ Prev: Dayta</a>
+        <a class="btn" href="#/projects/gocdc">Next Level: GoCDC ▸</a>
+      </div>
+    </article>
+
+    <!-- Project 3: GoCDC Detailed Article -->
+    <article class="page project" id="gocdc" data-page="gocdc" data-level="1-3" data-theme="water"
+             data-shot="assets/shots/gocdc.png" data-title="GoCDC" data-tagline="Event-Driven CDC Pipeline">
+      <div class="section-badge">
+        <span class="plaque">LEVEL 1-3</span>
+        <span class="plaque gold">1,400 events/sec</span>
+      </div>
+      <h2>GoCDC</h2>
+      <p class="tagline">High-Throughput Event-Driven Change Data Capture Pipeline</p>
+
+      <div class="project-details-grid">
+        <div class="project-info-col">
+          <h4>Overview</h4>
+          <p>
+            Database polling creates massive overhead in high-throughput microservices. GoCDC taps directly into PostgreSQL's Write-Ahead Log (WAL) via logical replication to stream mutations asynchronously into Apache Kafka with zero query overhead on the source database.
+          </p>
+
+          <h4>Key Highlights</h4>
+          <ul>
+            <li>Engineered a Go-based CDC engine utilizing PostgreSQL WAL logical decoding, streaming DML events to Redpanda at 1,400 events/sec.</li>
+            <li>Architected a fault-tolerant polyglot persistence pipeline routing data from Postgres to Redis and MongoDB via Kafka with &lt;150ms replication lag and zero data loss.</li>
+            <li>Containerized the 6-node microservice ecosystem using multi-stage Docker builds, reducing Go binary image sizes to 20MB.</li>
+          </ul>
+
+          <h4>Stack</h4>
+          <div class="tags-row">
+            <span class="tag">Go (Golang)</span>
+            <span class="tag">PostgreSQL WAL</span>
+            <span class="tag">Apache Kafka</span>
+            <span class="tag">Redis</span>
+            <span class="tag">MongoDB</span>
+            <span class="tag">Docker</span>
+          </div>
+
+          <div class="project-links">
+            <a class="btn pri" href="https://github.com/nithin0306/gocdc" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+            <a class="btn" href="#/projects">All Projects</a>
+          </div>
+        </div>
+
+        <div class="arcade-bezel">
+          <div class="arcade-screen">
+            <img src="assets/shots/gocdc.png" width="1280" height="800" alt="GoCDC polyglot replication pipeline topology and benchmark metrics">
+          </div>
+          <div class="arcade-caption">Level 1-3 · GoCDC: WAL logical decoding stream and 500-transaction stress benchmark</div>
+        </div>
+      </div>
+
+      <div class="project-level-nav">
+        <a class="btn" href="#/projects/archivist">◂ Prev: Archivist</a>
+        <a class="btn" href="#/projects/skillup">Next Level: SkillUp ▸</a>
+      </div>
+    </article>
+
+    <!-- Project 4: SkillUp Detailed Article -->
+    <article class="page project" id="skillup" data-page="skillup" data-level="2-1" data-theme="gap"
+             data-shot="assets/shots/skillup.png" data-title="SkillUp" data-tagline="AI Skill Gap Analyzer">
+      <div class="section-badge">
+        <span class="plaque">LEVEL 2-1</span>
         <span class="plaque gold">Hack101 · 2nd Place</span>
       </div>
       <h2>SkillUp</h2>
-      <p class="tagline">AI skill gap analyzer</p>
+      <p class="tagline">AI-Powered Skill Gap Analyzer</p>
 
-      <figure class="shot-wrapper">
-        <img src="assets/shots/skillup.png" width="1280" height="800" alt="SkillUp interface showing skill gap matrix, readiness score of 82 percent, and recommended learning curriculum">
-        <figcaption>Level 1-1 · SkillUp: Automated AI requirement parsing and curriculum recommendation dashboard.</figcaption>
-      </figure>
-
-      <div class="project-body">
-        <div class="overview-box">
+      <div class="project-details-grid">
+        <div class="project-info-col">
           <h4>Overview</h4>
           <p>
-            Job descriptions and candidate resumes often speak completely different vocabularies. SkillUp extracts requirement matrices from target roles, identifies missing competencies, and maps out an actionable milestone roadmap.
+            Job requirements and candidate resumes often misalign. SkillUp automatically parses target job descriptions, maps candidate competencies, identifies critical technical gaps, and compiles an actionable project-based roadmap.
           </p>
-        </div>
 
-        <div class="highlights-box">
-          <h4>Highlights</h4>
+          <h4>Key Highlights</h4>
           <ul>
-            <li>Placed 2nd out of 100+ competing engineering teams at Hack101.</li>
+            <li>Secured 2nd place out of 30+ engineering teams at Hack101.</li>
             <li>Built an automated parser extracting requirement matrices across 50+ technology stacks.</li>
             <li>Generates milestone-driven learning roadmaps with step-by-step project suggestions.</li>
           </ul>
-        </div>
 
-        <div class="stack-box">
           <h4>Stack</h4>
           <div class="tags-row">
             <span class="tag">Python</span>
@@ -287,189 +468,77 @@
             <span class="tag">FastAPI</span>
             <span class="tag">Vector Search</span>
           </div>
-        </div>
 
-        <div class="project-links">
-          <a class="btn pri" href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
-          <a class="btn" href="#projects">All Projects</a>
-          <a class="btn" href="#groupflix">Next Level: GroupFlix ▸</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Project 2: GroupFlix Detailed Article -->
-    <article class="page project" id="groupflix" data-page="groupflix" data-level="1-2" data-theme="cinema"
-             data-shot="assets/shots/groupflix.png" data-title="GroupFlix" data-tagline="Movie recommendation">
-      <div class="section-badge">
-        <span class="plaque">LEVEL 1-2</span>
-      </div>
-      <h2>GroupFlix</h2>
-      <p class="tagline">Movie recommendation</p>
-
-      <figure class="shot-wrapper">
-        <img src="assets/shots/groupflix.png" width="1280" height="800" alt="GroupFlix cinema room with 4 active viewers, collaborative movie voting, and 91 percent consensus score">
-        <figcaption>Level 1-2 · GroupFlix: Real-time collaborative movie recommendation engine and room voting.</figcaption>
-      </figure>
-
-      <div class="project-body">
-        <div class="overview-box">
-          <h4>Overview</h4>
-          <p>
-            Picking a film when a group of friends gathers often leads to decision fatigue. GroupFlix creates synced virtual rooms where members cast votes and preferences, calculating an optimal consensus choice without spoiler friction.
-          </p>
-        </div>
-
-        <div class="highlights-box">
-          <h4>Highlights</h4>
-          <ul>
-            <li>Engineered a multi-user preference intersection algorithm with anti-veto threshold filtering.</li>
-            <li>Implemented real-time room synchronization for participants across mobile and desktop browsers.</li>
-            <li>Integrated TMDB API with genre clustering and popularity curve normalization.</li>
-          </ul>
-        </div>
-
-        <div class="stack-box">
-          <h4>Stack</h4>
-          <div class="tags-row">
-            <span class="tag">Python</span>
-            <span class="tag">Recommender Systems</span>
-            <span class="tag">Flask</span>
-            <span class="tag">WebSockets</span>
+          <div class="project-links">
+            <a class="btn pri" href="https://github.com/nithin0306/SkillUp" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+            <a class="btn" href="#/projects">All Projects</a>
           </div>
         </div>
 
-        <div class="project-links">
-          <a class="btn pri" href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
-          <a class="btn" href="#skillup">◂ Prev: SkillUp</a>
-          <a class="btn" href="#fishglob">Next: FishGlob ▸</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Project 3: FishGlob Detailed Article -->
-    <article class="page project" id="fishglob" data-page="fishglob" data-level="1-3" data-theme="water"
-             data-shot="assets/shots/fishglob.png" data-title="FishGlob" data-tagline="Current-aware fish analysis">
-      <div class="section-badge">
-        <span class="plaque">LEVEL 1-3</span>
-      </div>
-      <h2>FishGlob</h2>
-      <p class="tagline">Current-aware fish analysis</p>
-
-      <figure class="shot-wrapper">
-        <img src="assets/shots/fishglob.png" width="1280" height="800" alt="FishGlob oceanographic velocity fields, sea surface temperature, and fish concentration density map">
-        <figcaption>Level 1-3 · FishGlob: Marine hydrodynamic vector fields and pelagic fish migration analysis.</figcaption>
-      </figure>
-
-      <div class="project-body">
-        <div class="overview-box">
-          <h4>Overview</h4>
-          <p>
-            Traditional marine fisheries analysis ignores the impact of shifting ocean currents. FishGlob correlates hydrodynamic telemetry data with historical fish catch distributions to identify feeding zones and migration corridors.
-          </p>
-        </div>
-
-        <div class="highlights-box">
-          <h4>Highlights</h4>
-          <ul>
-            <li>Analyzes sea surface temperatures, chlorophyll-a density, and directional current velocities.</li>
-            <li>Predicts high-density pelagic fish corridors with 87% validation accuracy against sample datasets.</li>
-            <li>Visualizes vector velocity fields over oceanographic geospatial coordinate grids.</li>
-          </ul>
-        </div>
-
-        <div class="stack-box">
-          <h4>Stack</h4>
-          <div class="tags-row">
-            <span class="tag">Python</span>
-            <span class="tag">Data Analysis</span>
-            <span class="tag">NumPy</span>
-            <span class="tag">Geospatial Mapping</span>
+        <div class="arcade-bezel">
+          <div class="arcade-screen">
+            <img src="assets/shots/skillup.png" width="1280" height="800" alt="SkillUp skill gap matrix and curriculum roadmap">
           </div>
-        </div>
-
-        <div class="project-links">
-          <a class="btn pri" href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
-          <a class="btn" href="#groupflix">◂ Prev: GroupFlix</a>
-          <a class="btn" href="#neoflash">Next: NeoFlash ▸</a>
+          <div class="arcade-caption">Level 2-1 · SkillUp: Automated AI requirement parsing and curriculum roadmap</div>
         </div>
       </div>
-    </article>
 
-    <!-- Project 4: NeoFlash Detailed Article -->
-    <article class="page project" id="neoflash" data-page="neoflash" data-level="2-1" data-theme="study"
-             data-shot="assets/shots/neoflash.png" data-title="NeoFlash" data-tagline="Learning platform">
-      <div class="section-badge">
-        <span class="plaque">LEVEL 2-1</span>
-      </div>
-      <h2>NeoFlash</h2>
-      <p class="tagline">Learning platform</p>
-
-      <figure class="shot-wrapper">
-        <img src="assets/shots/neoflash.png" width="1280" height="800" alt="NeoFlash flashcard study screen for Distributed Systems with front/back cards and spaced repetition ratings">
-        <figcaption>Level 2-1 · NeoFlash: Spaced repetition web flashcard learning system for software engineering concepts.</figcaption>
-      </figure>
-
-      <div class="project-body">
-        <div class="overview-box">
-          <h4>Overview</h4>
-          <p>
-            A lightweight, distraction-free flashcard learning platform tailored for software developers mastering computer science theory, system design, and algorithmic problem-solving.
-          </p>
-        </div>
-
-        <div class="highlights-box">
-          <h4>Highlights</h4>
-          <ul>
-            <li>Implemented spaced repetition scheduler based on modified SuperMemo SM-2 algorithm.</li>
-            <li>Keyboard-first user interface with instant card flipping, difficulty rating, and retention tracking.</li>
-            <li>Zero-dependency local-first architecture with JSON deck import/export support.</li>
-          </ul>
-        </div>
-
-        <div class="stack-box">
-          <h4>Stack</h4>
-          <div class="tags-row">
-            <span class="tag">JavaScript</span>
-            <span class="tag">HTML5 / CSS3</span>
-            <span class="tag">LocalStorage</span>
-            <span class="tag">Web Components</span>
-          </div>
-        </div>
-
-        <div class="project-links">
-          <a class="btn pri" href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
-          <a class="btn" href="#fishglob">◂ Prev: FishGlob</a>
-          <a class="btn" href="#contact">Level Complete: Contact ▸</a>
-        </div>
+      <div class="project-level-nav">
+        <a class="btn" href="#/projects/gocdc">◂ Prev: GoCDC</a>
+        <a class="btn" href="#/contact">Level Complete: Contact ▸</a>
       </div>
     </article>
 
     <!-- Awards Section -->
     <section class="page" id="awards" data-page="awards" data-icon="trophy">
       <div class="section-badge">
-        <span class="plaque">AWARDS</span>
+        <span class="plaque">AWARDS &amp; OPEN SOURCE</span>
       </div>
-      <h2>Awards</h2>
+      <h2>Achievements &amp; Open Source</h2>
 
+      <!-- Hack101 -->
       <div class="award-card">
         <div class="award-header">
           <span class="award-tag plaque gold">Hack101</span>
-          <h3>Second place</h3>
+          <h3>Second Place (out of 30+ teams)</h3>
         </div>
-        <p class="award-desc">For SkillUp, an AI-based skill gap analyzer.</p>
-
+        <p class="award-desc">For SkillUp, an AI-powered resume and skill gap analyzer.</p>
         <div class="award-case-study-row">
-          <span class="level-label">1-1</span>
+          <span class="level-label">2-1</span>
           <strong>SkillUp</strong>
-          <a class="entry-link" href="#skillup">view case study ▸</a>
+          <a class="entry-link" href="#/projects/skillup">view case study ▸</a>
         </div>
         <p class="award-note">
-          Competed in the intensive 36-hour Hack101 hackathon; built SkillUp from scratch to tackle workforce reskilling, evaluated by industry judges on technical depth and product viability.
+          Built during the 36-hour Hack101 hackathon; evaluated on architectural depth, automated parsing capabilities, and curriculum generation.
+        </p>
+      </div>
+
+      <!-- Build2Break -->
+      <div class="award-card">
+        <div class="award-header">
+          <span class="award-tag plaque gold">Build2Break</span>
+          <h3>Third Place (out of 80+ teams)</h3>
+        </div>
+        <p class="award-desc">For VITA-CARE, a voice-integrated healthcare assistant.</p>
+        <p class="award-note">
+          Architected a voice-integrated, Gemini AI-powered microservice ecosystem automating healthcare appointment scheduling and WhatsApp medication reminders.
+        </p>
+      </div>
+
+      <!-- GSSoC -->
+      <div class="award-card">
+        <div class="award-header">
+          <span class="award-tag plaque">GSSoC</span>
+          <h3>Open Source Contributor</h3>
+        </div>
+        <p class="award-desc">GirlScript Summer of Code</p>
+        <p class="award-note">
+          Merged 4 pull requests across independent repositories, spanning Redis-backed setup automation, API unit test coverage, and SEO metadata improvements.
         </p>
       </div>
 
       <div class="action-row">
-        <a class="btn" href="#experience">Next: Experience ▸</a>
+        <a class="btn" href="#/experience">Next: Experience ▸</a>
       </div>
     </section>
 
@@ -480,26 +549,41 @@
       </div>
       <h2>Experience</h2>
 
+      <!-- Tensor Club -->
       <article class="job-card">
         <div class="job-header">
-          <h3>Software Development Engineer Intern</h3>
-          <span class="job-period">2024 – Present</span>
+          <h3>Web Developer</h3>
+          <span class="job-period">Jul 2025 – Apr 2026</span>
         </div>
-        <p class="company-name">Tech Startup / SDE Intern <!-- TODO: insert specific company name if permitted --></p>
+        <p class="company-name">Tensor Club, Amrita Vishwa Vidyapeetham</p>
         <ul class="job-bullets">
-          <li>Architected and deployed responsive full-stack features and high-throughput API endpoints.</li>
-          <li>Collaborated closely with cross-functional engineering teams to implement production features.</li>
-          <li>Optimized frontend rendering performance, reduced bundle size, and improved database query latencies.</li>
+          <li>Built the 'Featured Projects' and 'All Projects' pages with React and Tailwind CSS, achieving a 99 Lighthouse performance score with 0.3s First Contentful Paint and zero cumulative layout shift.</li>
+          <li>Implemented responsive, terminal-style interactive card layouts with uniform rendering across mobile and desktop viewports, contributing to 98 accessibility and 100 SEO scores for the pages.</li>
+        </ul>
+      </article>
+
+      <!-- The Pedagogy Community -->
+      <article class="job-card">
+        <div class="job-header">
+          <h3>Automation Intern</h3>
+          <span class="job-period">Apr 2026 – Jun 2026</span>
+        </div>
+        <p class="company-name">The Pedagogy Community</p>
+        <ul class="job-bullets">
+          <li>Architected an AI pipeline that transforms raw webinar recordings into structured courses, reducing manual production time from 8 hours to under 15 minutes.</li>
+          <li>Bypassed API file-size constraints by building a multi-threaded chunking engine that runs 20-minute audio slices in parallel, maintaining perfect timestamp alignment.</li>
+          <li>Developed an automated speech-stitching and MCQ generation system that strips awkward Q&amp;A pauses via FFmpeg and builds 5 scenario-based quizzes per lesson.</li>
         </ul>
       </article>
 
       <div class="education-block">
         <h3>Education</h3>
-        <p><strong>Amrita Vishwa Vidyapeetham</strong> · B.Tech in Computer Science and Engineering (Expected 2026)</p>
+        <p><strong>Amrita Vishwa Vidyapeetham, Coimbatore</strong> · B.Tech in Computer Science and Engineering (Aug 2024 – May 2028)</p>
+        <p><strong>CGPA:</strong> 8.85 / 10</p>
       </div>
 
       <div class="action-row">
-        <a class="btn" href="#resume">Next: Resume ▸</a>
+        <a class="btn" href="#/resume">Next: Resume ▸</a>
       </div>
     </section>
 
@@ -509,26 +593,34 @@
         <span class="plaque">RESUME</span>
       </div>
       <h2>Resume</h2>
-      <p class="sub-desc">One page with education, experience, projects and awards.</p>
+      <p class="sub-desc">One page summary with education, experience, projects and technical skills.</p>
 
       <div class="resume-table-card">
         <table class="resume-table">
           <tbody>
             <tr>
+              <th scope="row">Candidate</th>
+              <td>Nithin Venkat Sharma P M · Coimbatore, Tamil Nadu</td>
+            </tr>
+            <tr>
               <th scope="row">Education</th>
-              <td>CSE · Amrita Vishwa Vidyapeetham</td>
+              <td>B.Tech CSE · Amrita Vishwa Vidyapeetham (CGPA: 8.85 / 10)</td>
             </tr>
             <tr>
               <th scope="row">Experience</th>
-              <td>SDE intern · <!-- TODO: company name -->Tech Startup</td>
+              <td>Web Developer (Tensor Club) · Automation Intern (The Pedagogy Community)</td>
             </tr>
             <tr>
               <th scope="row">Projects</th>
-              <td>SkillUp, GroupFlix, FishGlob, NeoFlash</td>
+              <td>Dayta (RAG Assistant), Archivist (ADR Agent), GoCDC (1400 ev/s), SkillUp (AI Gap)</td>
+            </tr>
+            <tr>
+              <th scope="row">Skills</th>
+              <td>Go, Python, React, TypeScript, FastAPI, PostgreSQL, Kafka, Redis, Docker</td>
             </tr>
             <tr>
               <th scope="row">Awards</th>
-              <td>Hack101 · 2nd place</td>
+              <td>Hack101 (2nd Place), Build2Break (3rd Place), GSSoC Contributor</td>
             </tr>
           </tbody>
         </table>
@@ -536,7 +628,7 @@
 
       <div class="action-row">
         <a class="btn pri" href="assets/resume.pdf" download>Download PDF ↓</a>
-        <a class="btn" href="#contact">Next: Contact ▸</a>
+        <a class="btn" href="#/contact">Next: Contact ▸</a>
       </div>
     </section>
 
@@ -547,23 +639,25 @@
       </div>
       <h2>Contact</h2>
       <p class="sub-desc">
-        Let's build something extraordinary together. I'm open to SDE roles, collaborations, and discussions.
+        Let's build something extraordinary together. I'm open to SDE internships, distributed systems projects, and collaborations.
       </p>
 
       <div class="contact-links-grid">
         <div class="contact-item">
           <strong>Email:</strong>
-          <!-- TODO: update with preferred primary email address -->
-          <a href="mailto:nithin@example.com">nithin@example.com</a>
+          <a href="mailto:nithin.p.m2006@gmail.com">nithin.p.m2006@gmail.com</a>
         </div>
         <div class="contact-item">
-          <strong>GitHub:</strong>
-          <a href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">github.com/Nithin0306</a>
+          <strong>Phone:</strong>
+          <a href="tel:+917373093900">+91 73730 93900</a>
         </div>
         <div class="contact-item">
           <strong>LinkedIn:</strong>
-          <!-- TODO: update with exact linkedin profile slug -->
-          <a href="https://linkedin.com/in/nithin" target="_blank" rel="noopener noreferrer">linkedin.com/in/nithin</a>
+          <a href="https://linkedin.com/in/nithin-p-m-" target="_blank" rel="noopener noreferrer">linkedin.com/in/nithin-p-m-</a>
+        </div>
+        <div class="contact-item">
+          <strong>GitHub:</strong>
+          <a href="https://github.com/nithin0306" target="_blank" rel="noopener noreferrer">github.com/nithin0306</a>
         </div>
         <div class="contact-item">
           <strong>Resume:</strong>
@@ -586,8 +680,9 @@
       </pre>
 
       <div class="end-brand">
+        <h3 class="the-end-heading">THE END</h3>
         <span class="end-name">NITHIN</span>
-        <p>Software Engineer in the making</p>
+        <p>Software Engineer in the making · Amrita Vishwa Vidyapeetham</p>
       </div>
     </section>
 
@@ -607,19 +702,19 @@
             <tr><td><code>help</code></td><td>Display list of terminal commands</td></tr>
             <tr><td><code>about</code></td><td>View background, education, and status</td></tr>
             <tr><td><code>projects</code></td><td>List all four project levels</td></tr>
-            <tr><td><code>awards</code></td><td>View Hack101 2nd place achievement</td></tr>
-            <tr><td><code>experience</code></td><td>View internship and education history</td></tr>
+            <tr><td><code>dayta</code></td><td>Open Level 1-1: Dayta RAG Assistant case study</td></tr>
+            <tr><td><code>archivist</code></td><td>Open Level 1-2: Archivist ADR Agent case study</td></tr>
+            <tr><td><code>gocdc</code></td><td>Open Level 1-3: GoCDC 1,400 ev/s pipeline case study</td></tr>
+            <tr><td><code>skillup</code></td><td>Open Level 2-1: SkillUp AI Skill Gap Analyzer</td></tr>
+            <tr><td><code>awards</code></td><td>View Hack101 2nd place &amp; Build2Break 3rd place</td></tr>
+            <tr><td><code>experience</code></td><td>View Tensor Club and Pedagogy Community roles</td></tr>
             <tr><td><code>resume</code></td><td>Download Nithin's resume PDF</td></tr>
-            <tr><td><code>contact</code></td><td>Get in touch via email, GitHub, or LinkedIn</td></tr>
-            <tr><td><code>skillup</code></td><td>Open Level 1-1: SkillUp case study</td></tr>
-            <tr><td><code>groupflix</code></td><td>Open Level 1-2: GroupFlix case study</td></tr>
-            <tr><td><code>fishglob</code></td><td>Open Level 1-3: FishGlob case study</td></tr>
-            <tr><td><code>neoflash</code></td><td>Open Level 2-1: NeoFlash case study</td></tr>
+            <tr><td><code>contact</code></td><td>Get in touch via email, phone, or LinkedIn</td></tr>
             <tr><td><code>whoami</code></td><td>Display developer identity summary</td></tr>
             <tr><td><code>hire</code></td><td>Jump directly to contact info</td></tr>
             <tr><td><code>map</code></td><td>Show the ASCII level progression map</td></tr>
-            <tr><td><code>clear</code></td><td>Clear terminal screen</td></tr>
-            <tr><td><code>exit</code> / <code>up</code></td><td>Return to the surface world</td></tr>
+            <tr><td><code>clear</code></td><td>Clear terminal status toast</td></tr>
+            <tr><td><code>exit</code> / <code>surface</code></td><td>Return to the surface world</td></tr>
           </tbody>
         </table>
       </div>
@@ -629,16 +724,16 @@
     <section class="page" data-page="map" id="map">
       <h2>World Map</h2>
       <pre aria-hidden="true" class="ascii-map">
-[START] ===> [1-1 SkillUp] ===> [1-2 GroupFlix] ===> [1-3 FishGlob] ===> [2-1 NeoFlash] ===> [🏁 CASTLE: Contact]
+[START] ===> [1-1 Dayta] ===> [1-2 Archivist] ===> [1-3 GoCDC] ===> [2-1 SkillUp] ===> [🏁 CASTLE: Contact]
       </pre>
-      <p><a class="btn" href="#projects">Back to Projects</a></p>
+      <p><a class="btn" href="#/projects">Back to Projects</a></p>
     </section>
 
     <!-- Error Section -->
     <section class="page" data-page="error" id="error">
       <h2>Command not found</h2>
-      <p>Unknown command or level. Try typing <b>help</b> or clicking one of the navigation links.</p>
-      <p><a class="btn" href="#about">Go to About</a></p>
+      <p>Unknown command or level. Try typing <b>help</b>, <b>projects</b>, or clicking one of the navigation links.</p>
+      <p><a class="btn" href="#/about">Go to About</a></p>
     </section>
   </main>
 
