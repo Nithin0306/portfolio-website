@@ -4,7 +4,7 @@
  * deep linking, and transitions between surface and underground.
  */
 
-import { show, up } from "./room.js";
+import { show, up } from "./room.js?v=7";
 
 export const PAGES = new Set([
   "about",
@@ -17,24 +17,22 @@ export const PAGES = new Set([
   "archivist",
   "gocdc",
   "skillup",
-  "help",
   "map"
 ]);
 
 const TITLES = {
   about: "About",
   projects: "Projects",
-  dayta: "Dayta (Level 1-1)",
-  archivist: "Archivist (Level 1-2)",
-  gocdc: "GoCDC (Level 1-3)",
-  skillup: "SkillUp (Level 2-1)",
+  dayta: "Dayta (Level 1)",
+  archivist: "Archivist (Level 2)",
+  gocdc: "GoCDC (Level 3)",
+  skillup: "SkillUp (Level 4)",
   awards: "Awards",
   experience: "Experience",
   resume: "Resume",
   contact: "Contact",
-  help: "Terminal Help",
   map: "World Map",
-  error: "Command Not Found"
+  error: "Page Not Found"
 };
 
 const DEFAULT_TITLE = "Nithin · Software engineer in the making";
@@ -45,7 +43,7 @@ export function parse(hash) {
 }
 
 export function titleFor(id) {
-  return TITLES[id] || "Terminal";
+  return TITLES[id] || "Portfolio";
 }
 
 export function route() {

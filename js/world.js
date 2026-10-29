@@ -1,9 +1,6 @@
-// World Controller: surface interaction, hero, blocks, score, sounds, typewriter
-
-import { sprite, tile } from "./sprites.js";
-import { PROFILE } from "./portfolio-data.js";
-import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js";
-import { toast } from "./terminal.js";
+import { sprite, tile } from "./sprites.js?v=7";
+import { PROFILE } from "./portfolio-data.js?v=7";
+import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=7";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -151,7 +148,6 @@ export async function visit(id) {
     await sleep(prefersReduced ? 50 : 250);
     location.hash = "#/" + id;
     busy = false;
-    focusPrompt();
     return;
   }
 
@@ -187,18 +183,28 @@ export async function visit(id) {
   location.hash = "#/" + id;
   await sleep(850);
   busy = false;
-  focusPrompt();
+}
+
+export function syncBlockSprites() {
+  if (!blocksEl) return;
+  const blocks = blocksEl.querySelectorAll(".block");
+  blocks.forEach((b) => {
+    const id = b.dataset.go;
+    const img = b.querySelector("img");
+    if (img && seen.has(id)) {
+      img.src = sprite("used", 5);
+    }
+  });
 }
 
 function markSeen(id, el) {
-  if (!seen.has(id)) {
-    seen.add(id);
-    if (el && el.classList.contains("block")) {
-      const img = el.querySelector("img");
-      if (img) img.src = sprite("used", 5);
-    }
-    updateScore();
+  seen.add(id);
+  if (el && el.classList.contains("block")) {
+    const img = el.querySelector("img");
+    if (img) img.src = sprite("used", 5);
   }
+  syncBlockSprites();
+  updateScore();
 }
 
 function popItem(id, rect) {
@@ -274,7 +280,6 @@ window.addEventListener("keydown", (e) => {
     konamiPos++;
     if (konamiPos === KONAMI_CODE.length) {
       konamiPos = 0;
-      toast("★ 30 LIVES GRANTED! UNLIMITED DEVELOPER POWER ACTIVATED ★");
       playVictory();
       const sc = document.querySelector(".score-center");
       if (sc) sc.classList.add("gold-score");
@@ -283,13 +288,6 @@ window.addEventListener("keydown", (e) => {
     konamiPos = 0;
   }
 });
-
-function focusPrompt() {
-  const inp = document.querySelector("#f1 input");
-  if (inp && document.activeElement !== inp) {
-    inp.focus();
-  }
-}
 
 // Typewriter for the role line in the hanging sign
 let typeIndex = 0;

@@ -1,15 +1,13 @@
-// Main Bootloader: initializes world, room, terminal, router
+// Main Bootloader: initializes world, room, router
 
-import { initWorld, visit } from "./world.js";
-import { initRoom } from "./room.js";
-import { initRouter } from "./router.js";
-import { initTerminal, run } from "./terminal.js";
+import { initWorld, visit } from "./world.js?v=7";
+import { initRoom } from "./room.js?v=7";
+import { initRouter } from "./router.js?v=7";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Boot sequence: sprites -> world -> room -> terminal -> router
+  // Boot sequence: sprites -> world -> room -> router
   initWorld();
   initRoom();
-  initTerminal();
   initRouter();
 
   // Handle clicks on sign chips and buttons
@@ -41,19 +39,4 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
   });
-
-  // Handle surface prompt submission #f1 via unified terminal runner
-  const form1 = document.getElementById("f1");
-  if (form1) {
-    form1.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const input = form1.querySelector("input");
-      if (!input) return;
-      const val = input.value;
-      input.value = "";
-      if (val.trim()) {
-        run(val);
-      }
-    });
-  }
 });

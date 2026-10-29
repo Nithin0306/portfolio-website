@@ -4,7 +4,9 @@
    five type sizes, hard offset solid ink shadows, and clean No-JS styling.
    ========================================================================== */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -46,7 +48,14 @@ img {
 }
 
 /* Headings (Strictly conforming to the 5 font sizes) */
-h1, h2, h3, h4, p, ul, ol, figure {
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
   margin: 0;
   padding: 0;
 }
@@ -123,8 +132,8 @@ a:hover {
 
 /* High contrast pixel focus indicator */
 :focus-visible {
-  outline: 3px solid var(--red) !important;
-  outline-offset: 3px !important;
+  outline: 2px solid var(--gold) !important;
+  outline-offset: 2px !important;
 }
 
 /* Visually hidden for screen readers and SEO */
@@ -453,7 +462,7 @@ article.project figcaption {
   border-top: var(--border-ink);
 }
 
-.project-body > div {
+.project-body>div {
   margin-bottom: 20px;
 }
 
@@ -649,6 +658,7 @@ html.js #pages {
    Hides the game world and prints #pages as a clean one-page profile.
    ========================================================================== */
 @media print {
+
   #world,
   #under,
   .score,

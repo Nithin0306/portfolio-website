@@ -7,7 +7,7 @@ export const PROFILE = {
   location: "Coimbatore, Tamil Nadu",
   tagline: "Software engineer in the making",
   lead: "CSE student at Amrita, SDE intern, and Hack101 2nd place runner-up. Focused on backend engineering, distributed systems, and AI-driven architectures.",
-  
+
   // Rotating titles for typewriter on the hanging wooden sign
   roles: [
     "SDE intern,",
@@ -66,7 +66,7 @@ export const PROFILE = {
   projects: [
     {
       id: "dayta",
-      level: "1-1",
+      level: "1",
       title: "Dayta",
       tagline: "Academic Document Ingestion & RAG Assistant",
       status: "Live",
@@ -87,7 +87,7 @@ export const PROFILE = {
     },
     {
       id: "archivist",
-      level: "1-2",
+      level: "2",
       title: "Archivist",
       tagline: "Autonomous ADR Enforcement Agent",
       status: "GitHub",
@@ -107,7 +107,7 @@ export const PROFILE = {
     },
     {
       id: "gocdc",
-      level: "1-3",
+      level: "3",
       title: "GoCDC",
       tagline: "High-Throughput Event-Driven CDC Pipeline",
       status: "GitHub",
@@ -127,7 +127,7 @@ export const PROFILE = {
     },
     {
       id: "skillup",
-      level: "2-1",
+      level: "4",
       title: "SkillUp",
       tagline: "AI-Powered Skill Gap Analyzer",
       status: "Awarded",

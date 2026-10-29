@@ -182,6 +182,16 @@ export const MAPS = {
     ".kggKgggggk.",
     ".kggKgggggk."
   ],
+  coin: [
+    "..yyyy..",
+    ".yyyyyy.",
+    "yywwyyyy",
+    "yywwyyyy",
+    "yyyyyyyy",
+    "yyyyyyyy",
+    ".yyyyyy.",
+    "..yyyy.."
+  ],
   fish: [
     "..kkoo...",
     ".koooook.",

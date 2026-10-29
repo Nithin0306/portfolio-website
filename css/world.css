@@ -59,8 +59,9 @@
   right: 14px;
   z-index: 10;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  gap: 24px;
   font-family: var(--font-pixel);
   font-size: var(--fs-xs);
   color: #ffffff;
@@ -265,9 +266,9 @@
 
 .castle {
   position: absolute;
-  right: 2%;
+  right: 36px;
   bottom: 96px;
-  width: 72px;
+  width: 76px;
   height: auto;
   image-rendering: pixelated;
   z-index: 4;
@@ -276,10 +277,10 @@
 
 .flag-btn {
   position: absolute;
-  right: 112px;
+  right: 124px;
   bottom: 96px;
-  width: 48px;
-  height: 120px;
+  width: 54px;
+  height: 126px;
   background: transparent;
   border: none;
   padding: 0;
@@ -288,18 +289,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
 }
 
-.flag-btn span {
+.flag-btn .flag-label {
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: var(--fs-xs);
   color: #ffffff;
-  background-color: rgba(26, 18, 8, 0.88);
-  padding: 2px 6px;
+  background-color: var(--ink);
+  padding: 3px 8px;
   border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  margin-bottom: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 2px 2px 0 var(--ink);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: transform var(--t-fast), background-color var(--t-fast);
+}
+
+.flag-btn:hover .flag-label {
+  background-color: var(--gold);
+  color: var(--ink);
 }
 
 .flag-pole {
@@ -308,14 +319,14 @@
   left: 50%;
   transform: translateX(-50%);
   width: 5px;
-  height: 100px;
-  background-color: #e8e8e8;
+  height: 98px;
+  background-color: #f0f0f0;
   border: 1px solid var(--ink);
 }
 
 .flag-sprite {
   position: absolute;
-  top: 14px;
+  top: 28px;
   left: calc(50% + 2px);
   width: 32px;
   height: 36px;
@@ -340,7 +351,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 262px;
+  bottom: 300px;
   text-align: center;
   font-family: var(--font-pixel);
   font-size: var(--fs-xs);
@@ -367,9 +378,10 @@
   bottom: 196px;
   display: flex;
   justify-content: center;
-  gap: clamp(8px, 3vw, 40px);
-  padding: 0 6px;
+  gap: clamp(14px, 3.5vw, 44px);
+  padding: 0 16px;
   z-index: 3;
+  align-items: flex-end;
 }
 
 .block {
@@ -381,6 +393,15 @@
   padding: 0;
   cursor: pointer;
   transition: transform var(--t-fast);
+  position: relative;
+}
+
+.block:focus-visible {
+  outline: none;
+}
+
+.block:focus-visible img {
+  box-shadow: 0 0 0 3px var(--gold);
 }
 
 .block .label {
@@ -388,17 +409,26 @@
   font-weight: 700;
   font-size: var(--fs-xs);
   color: #ffffff;
-  background-color: rgba(26, 18, 8, 0.88);
-  padding: 2px 6px;
+  background-color: var(--ink);
+  padding: 3px 8px;
   border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  margin-bottom: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 2px 2px 0 var(--ink);
+  margin-bottom: 8px;
   pointer-events: none;
+  white-space: nowrap;
+  transition: background-color var(--t-fast), transform var(--t-fast);
+}
+
+.block:hover .label {
+  background-color: var(--gold);
+  color: var(--ink);
+  transform: translateY(-2px);
 }
 
 .block img {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   image-rendering: pixelated;
   transition: transform var(--t-fast);
 }
@@ -481,7 +511,7 @@
 }
 
 /* ==========================================================================
-   FLOOR & TERMINAL PROMPT (Surface)
+   FLOOR (Surface)
    96px total: 24px strip, 72px earth
    ========================================================================== */
 
@@ -506,63 +536,6 @@
   height: 72px;
   background-repeat: repeat;
   position: relative;
-}
-
-.prompt {
-  display: flex;
-  align-items: center;
-  height: 72px;
-  padding: 0 16px;
-}
-
-.prompt .p {
-  font-family: var(--font-mono);
-  font-size: var(--fs-s);
-  color: var(--gold);
-  white-space: nowrap;
-  margin-right: 8px;
-}
-
-.prompt input {
-  flex: 1;
-  height: 36px;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  font-family: var(--font-mono);
-  font-size: var(--fs-s);
-  caret-color: var(--red);
-}
-
-.prompt input::placeholder {
-  color: #b8a58a;
-  opacity: 1;
-}
-
-/* Toast alert above floor */
-.toast-notice {
-  position: absolute;
-  bottom: 110px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  padding: 8px 16px;
-  border: var(--border-ink);
-  box-shadow: var(--shadow-sm);
-  z-index: 20;
-  pointer-events: none;
-  animation: toastFade 3.2s ease-in-out forwards;
-}
-
-@keyframes toastFade {
-  0% { opacity: 0; transform: translate(-50%, 10px); }
-  10%, 85% { opacity: 1; transform: translate(-50%, 0); }
-  100% { opacity: 0; transform: translate(-50%, -10px); }
 }
 
 /* ==========================================================================
@@ -710,7 +683,7 @@
     bottom: auto !important;
     left: auto !important;
     right: auto !important;
-    margin: 14px 0 16px 0 !important;
+    margin: 6px 0 24px 0 !important;
     font-size: 10px !important;
     padding: 0 12px !important;
     text-align: center !important;

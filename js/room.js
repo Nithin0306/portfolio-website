@@ -1,24 +1,14 @@
-// Room Controller: underground paper card rendering, nav, and prompt #f2
+// Room Controller: underground blue brick room, paper card, and floor Mario teleport patrol
 
-import { sprite, tile } from "./sprites.js";
-import { seen, updateScore } from "./world.js";
-import { mountProjectWorld } from "./projects.js";
-import { run } from "./terminal.js";
-
-const NEXT_SECTIONS = {
-  about: "projects",
-  projects: "awards",
-  awards: "experience",
-  experience: "resume",
-  resume: "contact"
-};
+import { sprite, tile } from "./sprites.js?v=7";
+import { seen, updateScore, syncBlockSprites } from "./world.js?v=7";
+import { mountProjectWorld } from "./projects.js?v=7";
 
 const PROJECT_IDS = new Set(["dayta", "archivist", "gocdc", "skillup"]);
 
 let underEl = null;
 let paperEl = null;
 let navRowEl = null;
-let promptF2 = null;
 let currentShowing = "";
 
 export function initRoom() {
@@ -29,50 +19,44 @@ export function initRoom() {
   underEl.style.backgroundImage = tile("ubrick", 4);
 
   underEl.innerHTML = `
+    <!-- Top Nav Row -->
     <nav class="under-nav" id="underNav" aria-label="Underground navigation"></nav>
-    <img class="under-decor bulb" src="${sprite("bulb", 4)}" alt="" aria-hidden="true">
-    <img class="under-decor gear" src="${sprite("gear", 4)}" alt="" aria-hidden="true">
+
+    <!-- Wall Coins -->
+    <img class="under-decor coin-left" src="${sprite("coin", 4)}" alt="" aria-hidden="true">
+    <img class="under-decor coin-right" src="${sprite("coin", 4)}" alt="" aria-hidden="true">
+
+    <!-- Paper Card Container -->
     <div class="paper" id="paperCard" role="region" aria-live="polite" tabindex="-1"></div>
-    <img class="under-hero" src="${sprite("hero", 5)}" alt="" aria-hidden="true">
-    <button class="pipe-btn" id="pipeBtn" aria-label="Return to surface">
-      <span class="label">surface</span>
-      <img src="${sprite("pipe", 4)}" alt="">
-    </button>
+    <div class="under-scroll-spacer" aria-hidden="true"></div>
+
+    <!-- Underground Floor with Left Pipe, Right Pipe, and Patrol Mario -->
     <div class="under-floor">
       <div class="strip" style="background-image: ${tile("ubrick", 3)}"></div>
-      <div class="earth">
-        <form class="prompt" id="f2">
-          <span class="p" id="f2Path">nithin@world-1:~$</span>
-          <input aria-label="Underground command prompt" autocomplete="off" spellcheck="false" placeholder="type surface, back, or any command...">
-        </form>
+      <div class="earth" style="background-image: ${tile("ubrick", 4)}">
+        <div class="floor-pipe pipe-left">
+          <img src="${sprite("pipe", 4)}" alt="">
+        </div>
+        <div class="floor-mario" id="floorMario" aria-hidden="true">
+          <img src="${sprite("hero", 4)}" alt="">
+        </div>
+        <button class="pipe-btn pipe-right" id="pipeBtn" aria-label="Return to surface">
+          <span class="label">surface ↑</span>
+          <img src="${sprite("pipe", 4)}" alt="">
+        </button>
       </div>
     </div>`;
 
   paperEl = document.getElementById("paperCard");
   navRowEl = document.getElementById("underNav");
-  promptF2 = document.getElementById("f2");
 
   buildNav();
 
-  // Wire Warp Pipe
+  // Wire Warp Pipe to return to surface
   const pipeBtn = document.getElementById("pipeBtn");
   if (pipeBtn) {
     pipeBtn.addEventListener("click", () => {
       location.hash = "#/";
-    });
-  }
-
-  // Wire Prompt #f2 form submission via unified terminal runner
-  if (promptF2) {
-    promptF2.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const inp = promptF2.querySelector("input");
-      if (!inp) return;
-      const val = inp.value;
-      inp.value = "";
-      if (val.trim()) {
-        run(val);
-      }
     });
   }
 
@@ -96,7 +80,7 @@ function buildNav() {
     { id: "experience", label: "experience" },
     { id: "resume", label: "resume" },
     { id: "contact", label: "contact" },
-    { id: "surface", label: "surface", action: "up" }
+    { id: "surface", label: "↑ surface", action: "up" }
   ];
 
   navRowEl.innerHTML = "";
@@ -135,22 +119,9 @@ export function show(id) {
     });
   }
 
-  // Mount themed interactive mini-world band for project pages (Phase 9)
+  // Mount themed interactive mini-world band for project pages
   if (PROJECT_IDS.has(id)) {
     mountProjectWorld(id, paperEl);
-  }
-
-  // Append Next Section button if applicable
-  const nextId = NEXT_SECTIONS[id];
-  if (nextId) {
-    const nextBar = document.createElement("div");
-    nextBar.className = "next-section-bar";
-    const nextBtn = document.createElement("a");
-    nextBtn.className = "btn";
-    nextBtn.href = `#/${nextId}`;
-    nextBtn.textContent = `Next: ${nextId} ▸`;
-    nextBar.appendChild(nextBtn);
-    paperEl.appendChild(nextBar);
   }
 
   // Mark as seen and update score line
@@ -162,19 +133,12 @@ export function show(id) {
   // Update nav row highlighting
   updateNavState(id);
 
-  // Update prompt path in #f2
-  const f2Path = document.getElementById("f2Path");
-  if (f2Path) {
-    const prefix = PROJECT_IDS.has(id) ? `projects/${id}` : id;
-    f2Path.textContent = `nithin@world-1:~/${prefix}$`;
-  }
-
   // Scroll underground view to top
   if (underEl) {
     underEl.scrollTop = 0;
   }
 
-  // Move focus to first heading for screen reader / keyboard accessibility
+  // Move focus to first heading for accessibility
   const h2 = paperEl.querySelector("h2");
   if (h2) {
     h2.setAttribute("tabindex", "-1");
@@ -206,16 +170,5 @@ export function up() {
   if (sceneEl) {
     sceneEl.classList.remove("down");
   }
-
-  // Reset surface prompt path
-  const f1Path = document.querySelector("#f1 .p");
-  if (f1Path) {
-    f1Path.textContent = "nithin@world-1:~$";
-  }
-
-  // Focus surface prompt
-  const f1Input = document.querySelector("#f1 input");
-  if (f1Input) {
-    setTimeout(() => f1Input.focus(), 350);
-  }
+  syncBlockSprites();
 }
