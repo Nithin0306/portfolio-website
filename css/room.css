@@ -229,8 +229,8 @@
 
 /* ==========================================================================
    UNDERGROUND FLOOR & MARIO TELEPORTING PATROL
-   Permanently docked to bottom of viewport (Fix #2).
-   Left pipe, right pipe, question block, reward coin, and Mario teleport patrol.
+   Seamless blue brick floor matching the background (Fix #1).
+   Enlarged pipes, raised question block moved to left, and pipe jumping choreography.
    ========================================================================== */
 
 .under-floor {
@@ -239,59 +239,39 @@
   right: 0;
   bottom: 0;
   height: 96px;
+  background-repeat: repeat;
+  background-color: var(--wall-dark);
+  border-top: 3px solid #06153d; /* Clean dark mortar top line matching brick wall */
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.08);
   z-index: 10;
   user-select: none;
   pointer-events: auto;
 }
 
-.under-floor .strip {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 24px;
-  border-top: 4px solid #3a6fe8;
-  background-repeat: repeat-x;
-  background-size: auto 24px;
-  z-index: 2;
-}
-
-.under-floor .earth {
-  position: absolute;
-  top: 24px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 72px;
-  background-color: var(--wall-dark);
-  background-repeat: repeat;
-  z-index: 3;
-}
-
-/* Left Pipe */
+/* Left Pipe (Enlarged) */
 .floor-pipe.pipe-left {
   position: absolute;
   left: 80px;
-  bottom: 18px;
+  bottom: 0;
   z-index: 6;
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
 }
 
 .floor-pipe.pipe-left img {
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
   image-rendering: pixelated;
   display: block;
 }
 
-/* Right Pipe with Surface Button */
+/* Right Pipe with Surface Button (Enlarged) */
 .pipe-btn.pipe-right {
   position: absolute;
   right: 48px;
-  bottom: 18px;
-  width: 56px;
-  height: 64px;
+  bottom: 0;
+  width: 68px;
+  height: 78px;
   background: transparent;
   border: none;
   padding: 0;
@@ -314,8 +294,8 @@
 }
 
 .pipe-btn.pipe-right img {
-  width: 48px;
-  height: 48px;
+  width: 60px;
+  height: 60px;
   image-rendering: pixelated;
   transition: transform var(--t-fast);
   display: block;
@@ -325,20 +305,20 @@
   transform: translateY(-3px);
 }
 
-/* Floating Question Block near Right Pipe */
+/* Floating Question Block (Moved further left & raised higher) */
 .floor-qblock {
   position: absolute;
-  right: 144px;
-  bottom: 58px;
-  width: 34px;
-  height: 34px;
+  right: 230px; /* Moved further left from right pipe */
+  bottom: 92px; /* Raised above floor */
+  width: 46px;  /* Enlarged size */
+  height: 46px;
   z-index: 5;
   pointer-events: none;
 }
 
 .floor-qblock img {
-  width: 34px;
-  height: 34px;
+  width: 46px;
+  height: 46px;
   image-rendering: pixelated;
   display: block;
   transition: transform 0.2s ease-out;
@@ -350,25 +330,25 @@
 
 @keyframes floorBlockHop {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50% { transform: translateY(-14px); }
   100% { transform: translateY(0); }
 }
 
 /* Reward Coin popping out of Question Block */
 .floor-reward {
   position: absolute;
-  right: 147px;
-  bottom: 60px;
-  width: 28px;
-  height: 28px;
+  right: 235px;
+  bottom: 96px;
+  width: 36px;
+  height: 36px;
   z-index: 4;
   pointer-events: none;
   opacity: 0;
 }
 
 .floor-reward img {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   image-rendering: pixelated;
   display: block;
 }
@@ -384,24 +364,24 @@
   }
   40% {
     opacity: 1;
-    transform: translateY(-36px) scale(1.15);
+    transform: translateY(-44px) scale(1.2);
   }
   75% {
     opacity: 1;
-    transform: translateY(-46px) scale(1);
+    transform: translateY(-56px) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateY(-54px) scale(0.75);
+    transform: translateY(-66px) scale(0.75);
   }
 }
 
 /* Floor Mario Actor */
 .floor-mario {
   position: absolute;
-  bottom: 20px;
-  width: 40px;
-  height: 48px;
+  bottom: 0;
+  width: 48px;
+  height: 58px;
   z-index: 5;
   pointer-events: none;
   transform-origin: bottom center;
@@ -417,20 +397,20 @@
 }
 
 .floor-mario.pipe-trans {
-  transition: transform 0.52s ease-in-out, clip-path 0.52s ease-in-out, -webkit-clip-path 0.52s ease-in-out;
+  transition: transform 0.48s ease-in-out, clip-path 0.48s ease-in-out, -webkit-clip-path 0.48s ease-in-out;
 }
 
 .floor-mario.jump-trans {
-  transition: transform 0.22s ease-out;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.3, 1), left 0.28s linear, right 0.28s linear;
 }
 
 .floor-mario.fall-trans {
-  transition: transform 0.24s ease-in;
+  transition: transform 0.24s cubic-bezier(0.5, 0, 0.8, 0.5), left 0.24s linear, right 0.24s linear;
 }
 
 .floor-mario img {
-  width: 40px;
-  height: 48px;
+  width: 48px;
+  height: 58px;
   image-rendering: pixelated;
   display: block;
   transform: scaleX(var(--face, 1));
@@ -438,7 +418,7 @@
 }
 
 .floor-mario.walking img {
-  animation: floorMarioStep 220ms steps(1) infinite;
+  animation: floorMarioStep 200ms steps(1) infinite;
 }
 
 @keyframes floorMarioStep {

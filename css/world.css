@@ -240,59 +240,42 @@
 }
 
 /* ==========================================================================
-   HILLS
+   SCENERY: AUTHENTIC PIXEL HILL & BUSHES
    ========================================================================== */
 
-.hill {
+.scenery-container {
+  display: contents;
+}
+
+.scenery-hill {
   position: absolute;
   bottom: 96px;
-  background-color: var(--grass);
-  border: 3px solid var(--grass-dark);
-  border-bottom: none;
-  border-radius: 50% 50% 0 0;
+  left: 36%;
+  width: 220px;
+  height: auto;
+  image-rendering: pixelated;
   z-index: 2;
+  pointer-events: none;
 }
 
-.hill.h1 {
-  left: 42%;
-  width: 260px;
-  height: 92px;
-}
-
-.hill.h2 {
-  left: 70%;
-  width: 200px;
-  height: 64px;
-}
-
-/* Bush bumps inside hills */
-.hill::before,
-.hill::after {
-  content: "";
+.scenery-bush {
   position: absolute;
-  bottom: 0;
-  background-color: var(--grass);
-  border: 3px solid var(--grass-dark);
-  border-bottom: none;
-  border-radius: 50% 50% 0 0;
+  bottom: 96px;
+  image-rendering: pixelated;
+  z-index: 3;
+  pointer-events: none;
 }
 
-.hill.h1::before {
-  left: 36px;
-  width: 60px;
-  height: 48px;
+.scenery-bush.b1 {
+  left: 18%;
+  width: 145px;
+  height: auto;
 }
 
-.hill.h1::after {
-  right: 40px;
-  width: 50px;
-  height: 38px;
-}
-
-.hill.h2::before {
-  left: 30px;
-  width: 50px;
-  height: 36px;
+.scenery-bush.b2 {
+  left: 68%;
+  width: 125px;
+  height: auto;
 }
 
 /* ==========================================================================
@@ -386,7 +369,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 316px;
+  bottom: 370px; /* Raised above blocks (Fix #4) */
   text-align: center;
   font-family: var(--font-pixel);
   font-size: var(--fs-xs);
@@ -410,7 +393,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 196px;
+  bottom: 245px; /* Raised above floor (Fix #4) */
   display: flex;
   justify-content: center;
   gap: clamp(18px, 4.2vw, 52px);
@@ -543,13 +526,13 @@
 
 @keyframes heroJump {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-54px); }
+  50% { transform: translateY(-88px); } /* Reaches raised blocks */
   100% { transform: translateY(0); }
 }
 
 /* ==========================================================================
    FLOOR (Surface)
-   96px total: 24px strip, 72px earth
+   Entire floor uses solid brick texture to bottom (Fix #2)
    ========================================================================== */
 
 .floor {
@@ -565,13 +548,14 @@
 .floor .strip {
   height: 24px;
   border-top: 4px solid var(--brick-top);
-  background-repeat: repeat-x;
+  background-repeat: repeat;
   background-size: auto 24px;
 }
 
 .floor .earth {
   height: 72px;
   background-repeat: repeat;
+  background-size: auto 24px;
   position: relative;
 }
 

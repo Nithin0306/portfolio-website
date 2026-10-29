@@ -1,6 +1,6 @@
-import { sprite, tile } from "./sprites.js?v=8";
-import { PROFILE } from "./portfolio-data.js?v=8";
-import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=8";
+import { sprite, tile } from "./sprites.js?v=9";
+import { PROFILE } from "./portfolio-data.js?v=9";
+import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=9";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -44,7 +44,7 @@ export function initWorld() {
   const floorStrip = sceneEl.querySelector(".floor .strip");
   const floorEarth = sceneEl.querySelector(".floor .earth");
   if (floorStrip) floorStrip.style.backgroundImage = tile("brick", 3);
-  if (floorEarth) floorEarth.style.backgroundImage = tile("earth", 3);
+  if (floorEarth) floorEarth.style.backgroundImage = tile("brick", 3); // Fix #2: brick color all the way to bottom
 
   // Set up sign plank background and chains
   const signEl = document.getElementById("sign");
@@ -55,6 +55,17 @@ export function initWorld() {
     if (chainLeft) chainLeft.style.backgroundImage = tile("chain", 2);
     if (chainRight) chainRight.style.backgroundImage = tile("chain", 2);
   }
+
+  // Set up pixel scenery hill & bushes (Fix #4)
+  const sceneryHill = document.getElementById("sceneryHill");
+  if (sceneryHill) sceneryHill.src = sprite("hill", 6);
+  const sceneryBush1 = document.getElementById("sceneryBush1");
+  if (sceneryBush1) sceneryBush1.src = sprite("bush", 5);
+  const sceneryBush2 = document.getElementById("sceneryBush2");
+  if (sceneryBush2) sceneryBush2.src = sprite("bush", 4);
+
+  // Set up randomized clouds (Fix #3)
+  buildClouds();
 
   // Set up sprites
   heroEl.src = sprite("hero", 5);
@@ -113,6 +124,41 @@ function buildBlocks() {
     btn.appendChild(img);
     blocksEl.appendChild(btn);
   });
+}
+
+function buildClouds() {
+  const container = document.getElementById("cloudsContainer");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const count = 7;
+  for (let i = 0; i < count; i++) {
+    const cloud = document.createElement("div");
+    cloud.className = "cloud";
+
+    // Jittered staggered vertical heights (35px to 310px)
+    const baseTop = 35 + (i * 38);
+    const jitter = Math.floor((Math.random() - 0.5) * 24);
+    const top = Math.max(30, Math.min(320, baseTop + jitter));
+
+    // Randomized scales (1.05 to 2.15)
+    const scales = [1.05, 1.3, 1.5, 1.75, 1.95, 2.15];
+    const scale = (scales[i % scales.length] + (Math.random() * 0.2 - 0.1)).toFixed(2);
+
+    // Randomized drift speed (85s to 145s)
+    const speed = Math.round(85 + (Math.random() * 55));
+
+    // Randomized initial position so they start spread across the sky
+    const delay = -(Math.random() * speed).toFixed(1);
+
+    cloud.style.top = `${top}px`;
+    cloud.style.left = "0px";
+    cloud.style.setProperty("--cloud-scale", scale);
+    cloud.style.animationDuration = `${speed}s`;
+    cloud.style.animationDelay = `${delay}s`;
+
+    container.appendChild(cloud);
+  }
 }
 
 export function targetFor(id) {

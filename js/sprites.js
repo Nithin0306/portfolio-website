@@ -24,7 +24,11 @@ export const PAL = {
   S: "#7a7a80", // stone dark
   G: "#8d8f94", // metal / chain grey
   W: "#f2f0e8", // paper white
-  D: "#5a1420"  // curtain dark (for cinema seats)
+  D: "#5a1420", // curtain dark (for cinema seats)
+  e: "#2ea82e", // mid foliage green
+  E: "#0e4a0e", // dark green outline
+  l: "#7ae028", // bright lime highlight
+  h: "#b8ff50"  // pale lime top highlight
 };
 
 export const MAPS = {
@@ -225,6 +229,46 @@ export const MAPS = {
     ".G..G.",
     "..GG..",
     "..GG.."
+  ],
+  bush: [
+    "...........kkkkkkkkk...........",
+    ".........kkhhhhhhhhhkk.........",
+    ".......kkhhhhhhhhhhhhhkk.......",
+    "..kkkkkkhhhhhhhhhhhhhhhkkkkkk..",
+    ".khhhhhkhhhhhhhhhhhhhhhkhhhhhk.",
+    "khhhhhhkhhhhhhhhhhhhhhhkhhhhhhk",
+    "khhhhhhkkkkkkkkkkkkkkkkkhhhhhhk",
+    "khhhhheeeeeeeeeeeeeeeeeeehhhhhk",
+    "kheeeeeeeeeeeeeeeeeeeeeeeeeeehk",
+    "kleeeeeeeekkkkkkkkkkkkeeeeeeelk",
+    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
+    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
+    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
+    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
+    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
+    "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
+  ],
+  hill: [
+    ".............kkkkkk.............",
+    "...........kkhhhhhhkk...........",
+    ".........kkhhhhhhhhhhkk.........",
+    ".......kkhhhhhhhhhhhhhhkk.......",
+    "......kkhhhhhhhhhhhhhhhhkk......",
+    "....kkhhhhhhhhhhhhhhhhhhhhkk....",
+    "...kkhhhhhhkkkkkkhhhhhhhhhhkk...",
+    "..kkhhhhhhhkk..kkhhhhhhhhhhhkk..",
+    ".kkhhhhhhhhkk..kkhhhhhhhhhhhhhk.",
+    ".khhhhhhhhhkk..kkhhhhhhhhhhhhhk.",
+    "khhhhhhhhhhkk..kkhhhhhhhhhhhhhhk",
+    "khhhhhhhhhheeeeeeehhhhhhhhhhhhhk",
+    "khhhhhhhhhheeeeeeehhhhhhhhhhhhhk",
+    "khhhhhhhhhheeeeeeehhhhhhhhhhhhhk",
+    "kheeeeeeeeeeeeeeeeeeeeeeeeeeeehk",
+    "kleeeeeeeeeeeeeeeeeeeeeeeeeeeelk",
+    "kleeeeeeeeeeeeeeeeeeeeeeeeeeeelk",
+    "kleeeeeeeeeeeeeeeeeeeeeeeeeeeelk",
+    "kleeeeeeeeeeeeeeeeeeeeeeeeeeeelk",
+    "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
   ]
 };
 

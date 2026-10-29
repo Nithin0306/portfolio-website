@@ -1,9 +1,9 @@
 // Room Controller: underground blue brick room, paper card, and floor Mario teleport patrol
 
-import { sprite, tile } from "./sprites.js?v=8";
-import { seen, updateScore, syncBlockSprites } from "./world.js?v=8";
-import { mountProjectWorld } from "./projects.js?v=8";
-import { playBump, playPickup } from "./audio.js?v=8";
+import { sprite, tile } from "./sprites.js?v=9";
+import { seen, updateScore, syncBlockSprites } from "./world.js?v=9";
+import { mountProjectWorld } from "./projects.js?v=9";
+import { playBump, playPickup } from "./audio.js?v=9";
 
 const PROJECT_IDS = new Set(["dayta", "archivist", "gocdc", "skillup"]);
 
@@ -40,35 +40,32 @@ export function initRoom() {
       <div class="under-scroll-spacer" aria-hidden="true"></div>
     </div>
 
-    <!-- Underground Floor: permanently anchored to viewport bottom -->
-    <div class="under-floor" id="underFloor">
-      <div class="strip" style="background-image: ${tile("ubrick", 3)}"></div>
-      <div class="earth" style="background-image: ${tile("ubrick", 4)}">
-        <!-- Left Pipe -->
-        <div class="floor-pipe pipe-left" id="floorPipeLeft">
-          <img src="${sprite("pipe", 4)}" alt="" aria-hidden="true">
-        </div>
+    <!-- Underground Floor: seamless blue brick floor matching background (Fix #1) -->
+    <div class="under-floor" id="underFloor" style="background-image: ${tile("ubrick", 4)}">
+      <!-- Left Pipe (Enlarged to 60x60) -->
+      <div class="floor-pipe pipe-left" id="floorPipeLeft">
+        <img src="${sprite("pipe", 5)}" alt="" aria-hidden="true">
+      </div>
 
-        <!-- Right Pipe with Surface Button -->
-        <button class="pipe-btn pipe-right" id="pipeBtn" aria-label="Return to surface">
-          <span class="label">surface ↑</span>
-          <img src="${sprite("pipe", 4)}" alt="" aria-hidden="true">
-        </button>
+      <!-- Right Pipe with Surface Button (Enlarged) -->
+      <button class="pipe-btn pipe-right" id="pipeBtn" aria-label="Return to surface">
+        <span class="label">surface ↑</span>
+        <img src="${sprite("pipe", 5)}" alt="" aria-hidden="true">
+      </button>
 
-        <!-- Question Block near Right Pipe -->
-        <div class="floor-qblock" id="floorQBlock" aria-hidden="true">
-          <img id="floorQBlockImg" src="${sprite("q", 4)}" alt="">
-        </div>
+      <!-- Question Block near Right Pipe (Raised higher & moved to left) -->
+      <div class="floor-qblock" id="floorQBlock" aria-hidden="true">
+        <img id="floorQBlockImg" src="${sprite("q", 5)}" alt="">
+      </div>
 
-        <!-- Reward Coin popping out of Question Block -->
-        <div class="floor-reward" id="floorReward" aria-hidden="true">
-          <img src="${sprite("coin", 4)}" alt="">
-        </div>
+      <!-- Reward Coin popping out of Question Block -->
+      <div class="floor-reward" id="floorReward" aria-hidden="true">
+        <img src="${sprite("coin", 5)}" alt="">
+      </div>
 
-        <!-- Mario Teleporting Actor -->
-        <div class="floor-mario" id="floorMario" aria-hidden="true">
-          <img id="floorMarioImg" src="${sprite("hero", 4)}" alt="">
-        </div>
+      <!-- Mario Teleporting Actor -->
+      <div class="floor-mario" id="floorMario" aria-hidden="true">
+        <img id="floorMarioImg" src="${sprite("hero", 5)}" alt="">
       </div>
     </div>`;
 
@@ -241,7 +238,7 @@ async function runFloorMarioPatrol(cycleId) {
 
   while (isCurrent()) {
     // 0. Ensure Question Block is restored to '?'
-    qBlockImg.src = sprite("q", 4);
+    qBlockImg.src = sprite("q", 5);
     qBlockEl.classList.remove("bump");
     rewardEl.classList.remove("pop");
 
@@ -249,70 +246,95 @@ async function runFloorMarioPatrol(cycleId) {
     marioEl.className = "floor-mario";
     marioEl.style.left = "20px";
     marioEl.style.right = "auto";
+    marioEl.style.transform = "none";
     marioEl.style.setProperty("--face", "1");
     marioEl.style.setProperty("--pipe-sink", "0px");
     marioEl.style.opacity = "1";
 
-    // Stand still to the left of left pipe for 1.4s
-    await sleep(1400);
+    // Stand still to the left of left pipe for 1.2s
+    await sleep(1200);
     if (!isCurrent()) break;
 
-    // 2. Mario walks onto the left pipe (left: 84px)
+    // 2. Mario walks toward left pipe
     marioEl.className = "floor-mario moving-pos walking";
-    marioEl.style.left = "84px";
-    await sleep(750);
+    marioEl.style.left = "48px";
+    await sleep(380);
     if (!isCurrent()) break;
 
     marioEl.classList.remove("walking");
 
-    // 3. Mario slides down into the left pipe
+    // 3. Mario JUMPS onto the left pipe (jump into pipe!)
+    marioEl.className = "floor-mario jump-trans";
+    marioEl.style.left = "88px";
+    marioEl.style.transform = "translateY(-48px)";
+    await sleep(280);
+    if (!isCurrent()) break;
+
+    // Lands on pipe rim
+    marioEl.className = "floor-mario fall-trans";
+    marioEl.style.transform = "translateY(-30px)";
+    await sleep(200);
+    if (!isCurrent()) break;
+
+    // Slides down into pipe
     marioEl.className = "floor-mario pipe-trans";
-    marioEl.style.setProperty("--pipe-sink", "48px");
-    await sleep(520);
+    marioEl.style.setProperty("--pipe-sink", "60px");
+    marioEl.style.transform = "translateY(30px)";
+    await sleep(480);
     if (!isCurrent()) break;
 
     marioEl.style.opacity = "0";
 
     // 4. Teleporting through pipes to right pipe (vanished)
-    await sleep(1600);
+    await sleep(1500);
     if (!isCurrent()) break;
 
-    // 5. Position inside right pipe, prepare to emerge facing left
+    // 5. Position inside right pipe, prepare to JUMP OUT facing left
     marioEl.className = "floor-mario";
     marioEl.style.left = "auto";
-    marioEl.style.right = "52px";
+    marioEl.style.right = "56px";
     marioEl.style.setProperty("--face", "-1");
-    marioEl.style.setProperty("--pipe-sink", "48px");
+    marioEl.style.setProperty("--pipe-sink", "60px");
+    marioEl.style.transform = "translateY(30px)";
     marioEl.style.opacity = "1";
     void marioEl.offsetHeight; // Force reflow
 
-    // Emerge UP out of right pipe
-    marioEl.className = "floor-mario pipe-trans";
+    // 6. Mario JUMPS UP out of right pipe!
+    marioEl.className = "floor-mario jump-trans";
     marioEl.style.setProperty("--pipe-sink", "0px");
-    await sleep(520);
+    marioEl.style.transform = "translateY(-54px)";
+    marioEl.style.right = "92px";
+    await sleep(300);
     if (!isCurrent()) break;
 
-    // 6. Mario walks left from right pipe (right: 52px) to under Question Block (right: 140px)
+    // Arcs down and lands on floor
+    marioEl.className = "floor-mario fall-trans";
+    marioEl.style.transform = "translateY(0px)";
+    marioEl.style.right = "128px";
+    await sleep(240);
+    if (!isCurrent()) break;
+
+    // 7. Mario walks left to under raised Question Block (right: 230px)
     marioEl.className = "floor-mario moving-pos walking";
-    marioEl.style.right = "140px";
-    await sleep(850);
+    marioEl.style.right = "230px";
+    await sleep(750);
     if (!isCurrent()) break;
 
     marioEl.classList.remove("walking");
     await sleep(150);
     if (!isCurrent()) break;
 
-    // 7. Mario jumps up to hit the block!
+    // 8. Mario jumps high up to hit the block!
     marioEl.className = "floor-mario jump-trans";
-    marioEl.style.transform = "translateY(-28px)";
-    await sleep(220);
+    marioEl.style.transform = "translateY(-54px)";
+    await sleep(240);
     if (!isCurrent()) break;
 
     // Apex: hit block, collect reward!
     playBump();
     playPickup();
     qBlockEl.classList.add("bump");
-    qBlockImg.src = sprite("used", 4);
+    qBlockImg.src = sprite("used", 5);
     rewardEl.classList.add("pop");
 
     // Mario lands back down
@@ -327,60 +349,77 @@ async function runFloorMarioPatrol(cycleId) {
 
     qBlockEl.classList.remove("bump");
 
-    // 8. Mario turns around to the right and walks back to right pipe
+    // 9. Mario turns around to the right and walks toward right pipe
     marioEl.style.setProperty("--face", "1");
     await sleep(100);
     if (!isCurrent()) break;
 
     marioEl.className = "floor-mario moving-pos walking";
-    marioEl.style.right = "52px";
-    await sleep(850);
-    if (!isCurrent()) break;
-
-    marioEl.classList.remove("walking");
-
-    // 9. Mario enters the right pipe (slides down into it)
-    marioEl.className = "floor-mario pipe-trans";
-    marioEl.style.setProperty("--pipe-sink", "48px");
-    await sleep(520);
-    if (!isCurrent()) break;
-
-    marioEl.style.opacity = "0";
-
-    // 10. Teleporting through pipes back to left pipe (vanished)
-    // While Mario is teleporting back, the question block restores to '?'!
-    await sleep(800);
-    if (!isCurrent()) break;
-    qBlockImg.src = sprite("q", 4);
-    rewardEl.classList.remove("pop");
-    await sleep(800);
-    if (!isCurrent()) break;
-
-    // 11. Position inside left pipe, prepare to emerge facing left
-    marioEl.className = "floor-mario";
-    marioEl.style.right = "auto";
-    marioEl.style.left = "84px";
-    marioEl.style.setProperty("--face", "-1");
-    marioEl.style.setProperty("--pipe-sink", "48px");
-    marioEl.style.opacity = "1";
-    void marioEl.offsetHeight; // Force reflow
-
-    // Emerge UP out of left pipe
-    marioEl.className = "floor-mario pipe-trans";
-    marioEl.style.setProperty("--pipe-sink", "0px");
-    await sleep(520);
-    if (!isCurrent()) break;
-
-    // 12. Mario steps down to the left of the left pipe (left: 20px)
-    marioEl.className = "floor-mario moving-pos walking";
-    marioEl.style.left = "20px";
+    marioEl.style.right = "100px";
     await sleep(650);
     if (!isCurrent()) break;
 
     marioEl.classList.remove("walking");
+
+    // 10. Mario JUMPS onto top of right pipe
+    marioEl.className = "floor-mario jump-trans";
+    marioEl.style.right = "56px";
+    marioEl.style.transform = "translateY(-48px)";
+    await sleep(280);
+    if (!isCurrent()) break;
+
+    // Lands on pipe rim
+    marioEl.className = "floor-mario fall-trans";
+    marioEl.style.transform = "translateY(-30px)";
+    await sleep(200);
+    if (!isCurrent()) break;
+
+    // Slides down into right pipe
+    marioEl.className = "floor-mario pipe-trans";
+    marioEl.style.setProperty("--pipe-sink", "60px");
+    marioEl.style.transform = "translateY(30px)";
+    await sleep(480);
+    if (!isCurrent()) break;
+
+    marioEl.style.opacity = "0";
+
+    // 11. Teleporting through pipes back to left pipe (vanished)
+    // While Mario is teleporting back, the question block restores to '?'!
+    await sleep(750);
+    if (!isCurrent()) break;
+    qBlockImg.src = sprite("q", 5);
+    rewardEl.classList.remove("pop");
+    await sleep(750);
+    if (!isCurrent()) break;
+
+    // 12. Position inside left pipe, prepare to JUMP OUT facing left
+    marioEl.className = "floor-mario";
+    marioEl.style.right = "auto";
+    marioEl.style.left = "88px";
+    marioEl.style.setProperty("--face", "-1");
+    marioEl.style.setProperty("--pipe-sink", "60px");
+    marioEl.style.transform = "translateY(30px)";
+    marioEl.style.opacity = "1";
+    void marioEl.offsetHeight; // Force reflow
+
+    // 13. Mario JUMPS UP out of left pipe!
+    marioEl.className = "floor-mario jump-trans";
+    marioEl.style.setProperty("--pipe-sink", "0px");
+    marioEl.style.transform = "translateY(-54px)";
+    marioEl.style.left = "54px";
+    await sleep(300);
+    if (!isCurrent()) break;
+
+    // Arcs down and lands on floor to the left of the left pipe
+    marioEl.className = "floor-mario fall-trans";
+    marioEl.style.transform = "translateY(0px)";
+    marioEl.style.left = "20px";
+    await sleep(240);
+    if (!isCurrent()) break;
+
     marioEl.style.setProperty("--face", "1"); // faces forward/right again
 
-    // 13. Rest at starting position before starting the next loop
-    await sleep(1800);
+    // 14. Rest at starting position before starting the next loop
+    await sleep(2000);
   }
 }
