@@ -27,6 +27,12 @@ body {
   overflow-x: hidden;
 }
 
+html.js,
+html.js body {
+  height: 100%;
+  overflow: hidden;
+}
+
 img {
   display: block;
   max-width: 100%;

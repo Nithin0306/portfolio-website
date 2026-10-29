@@ -1,6 +1,6 @@
-import { sprite, tile } from "./sprites.js?v=7";
-import { PROFILE } from "./portfolio-data.js?v=7";
-import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=7";
+import { sprite, tile } from "./sprites.js?v=8";
+import { PROFILE } from "./portfolio-data.js?v=8";
+import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=8";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -60,10 +60,10 @@ export function initWorld() {
   heroEl.src = sprite("hero", 5);
 
   const castleImg = document.getElementById("castleImg");
-  if (castleImg) castleImg.src = sprite("castle", 6);
+  if (castleImg) castleImg.src = sprite("castle", 7);
 
   const flagSprite = sceneEl.querySelector(".flag-sprite");
-  if (flagSprite) flagSprite.src = sprite("flag", 4);
+  if (flagSprite) flagSprite.src = sprite("flag", 5);
 
   // Build 5 question blocks in order
   buildBlocks();

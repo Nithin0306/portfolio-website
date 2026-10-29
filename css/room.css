@@ -6,16 +6,28 @@
    ========================================================================== */
 
 .layer.under {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 24px var(--m) 160px var(--m);
-  overflow-y: auto;
-  overflow-x: hidden;
+  position: absolute;
+  inset: 0;
+  overflow: hidden; /* Fix #2: Layer itself does NOT scroll */
   background-repeat: repeat;
   background-color: var(--wall-dark);
   box-sizing: border-box;
+}
+
+.under-scroll-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 96px; /* Exactly clears the 96px floor so it never overlaps */
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px var(--m) 20px var(--m);
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ==========================================================================
@@ -217,11 +229,12 @@
 
 /* ==========================================================================
    UNDERGROUND FLOOR & MARIO TELEPORTING PATROL
-   Left pipe, right pipe, Mario patrol animation
+   Permanently docked to bottom of viewport (Fix #2).
+   Left pipe, right pipe, question block, reward coin, and Mario teleport patrol.
    ========================================================================== */
 
 .under-floor {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
@@ -232,40 +245,50 @@
 }
 
 .under-floor .strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 24px;
   border-top: 4px solid #3a6fe8;
   background-repeat: repeat-x;
   background-size: auto 24px;
+  z-index: 2;
 }
 
 .under-floor .earth {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 72px;
   background-color: var(--wall-dark);
   background-repeat: repeat;
-  position: relative;
+  z-index: 3;
 }
 
-.floor-pipe {
+/* Left Pipe */
+.floor-pipe.pipe-left {
   position: absolute;
+  left: 80px;
   bottom: 18px;
   z-index: 6;
   width: 48px;
   height: 48px;
 }
 
-.floor-pipe.pipe-left {
-  left: 36px;
-}
-
-.floor-pipe img {
+.floor-pipe.pipe-left img {
   width: 48px;
   height: 48px;
   image-rendering: pixelated;
+  display: block;
 }
 
+/* Right Pipe with Surface Button */
 .pipe-btn.pipe-right {
   position: absolute;
-  right: 36px;
+  right: 48px;
   bottom: 18px;
   width: 56px;
   height: 64px;
@@ -287,6 +310,7 @@
   text-shadow: 1px 1px 0 var(--ink), 2px 2px 0 var(--ink);
   margin-bottom: 2px;
   white-space: nowrap;
+  pointer-events: none;
 }
 
 .pipe-btn.pipe-right img {
@@ -294,113 +318,142 @@
   height: 48px;
   image-rendering: pixelated;
   transition: transform var(--t-fast);
+  display: block;
 }
 
 .pipe-btn.pipe-right:hover img {
   transform: translateY(-3px);
 }
 
-/* Mario Patrol Animation between left pipe and right pipe */
+/* Floating Question Block near Right Pipe */
+.floor-qblock {
+  position: absolute;
+  right: 144px;
+  bottom: 58px;
+  width: 34px;
+  height: 34px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.floor-qblock img {
+  width: 34px;
+  height: 34px;
+  image-rendering: pixelated;
+  display: block;
+  transition: transform 0.2s ease-out;
+}
+
+.floor-qblock.bump img {
+  animation: floorBlockHop 260ms ease-out;
+}
+
+@keyframes floorBlockHop {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+/* Reward Coin popping out of Question Block */
+.floor-reward {
+  position: absolute;
+  right: 147px;
+  bottom: 60px;
+  width: 28px;
+  height: 28px;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.floor-reward img {
+  width: 28px;
+  height: 28px;
+  image-rendering: pixelated;
+  display: block;
+}
+
+.floor-reward.pop {
+  animation: rewardCoinPop 700ms cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes rewardCoinPop {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.6);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-36px) scale(1.15);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(-46px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-54px) scale(0.75);
+  }
+}
+
+/* Floor Mario Actor */
 .floor-mario {
   position: absolute;
   bottom: 20px;
-  z-index: 5;
   width: 40px;
   height: 48px;
-  animation: marioFloorPatrol 14s cubic-bezier(0.35, 0, 0.65, 1) infinite;
+  z-index: 5;
+  pointer-events: none;
+  transform-origin: bottom center;
+  --face: 1;
+  --pipe-sink: 0px;
+  transform: translateY(var(--pipe-sink, 0px));
+  clip-path: inset(0 0 var(--pipe-sink, 0px) 0);
+  -webkit-clip-path: inset(0 0 var(--pipe-sink, 0px) 0);
+}
+
+.floor-mario.moving-pos {
+  transition: left 0.75s linear, right 0.75s linear;
+}
+
+.floor-mario.pipe-trans {
+  transition: transform 0.52s ease-in-out, clip-path 0.52s ease-in-out, -webkit-clip-path 0.52s ease-in-out;
+}
+
+.floor-mario.jump-trans {
+  transition: transform 0.22s ease-out;
+}
+
+.floor-mario.fall-trans {
+  transition: transform 0.24s ease-in;
 }
 
 .floor-mario img {
   width: 40px;
   height: 48px;
   image-rendering: pixelated;
-  animation: marioWalkBob 220ms steps(1) infinite;
+  display: block;
+  transform: scaleX(var(--face, 1));
+  transform-origin: center;
 }
 
-@keyframes marioWalkBob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
+.floor-mario.walking img {
+  animation: floorMarioStep 220ms steps(1) infinite;
 }
 
-@keyframes marioFloorPatrol {
-  /* 0% - 3%: inside left pipe */
-  0%, 2% {
-    left: 40px;
-    transform: translateY(28px) scale(0.6);
-    opacity: 0;
+@keyframes floorMarioStep {
+  0%, 100% {
+    transform: scaleX(var(--face, 1)) translateY(0);
   }
-  /* 5%: emerges out of left pipe */
-  5% {
-    left: 40px;
-    transform: translateY(-24px) scale(1);
-    opacity: 1;
-  }
-  /* 8%: lands to the right of left pipe, facing right */
-  8% {
-    left: 88px;
-    transform: translateY(0) scaleX(1);
-    opacity: 1;
-  }
-  /* 42%: walks across floor to the right pipe */
-  42% {
-    left: calc(100% - 136px);
-    transform: translateY(0) scaleX(1);
-    opacity: 1;
-  }
-  /* 45%: jumps onto right pipe */
-  45% {
-    left: calc(100% - 88px);
-    transform: translateY(-24px) scale(1);
-    opacity: 1;
-  }
-  /* 48%: slides down into right pipe */
-  48% {
-    left: calc(100% - 88px);
-    transform: translateY(28px) scale(0.6);
-    opacity: 0;
-  }
-  /* 52%: inside right pipe, teleporting */
-  52% {
-    left: calc(100% - 88px);
-    transform: translateY(28px) scale(0.6);
-    opacity: 0;
-  }
-  /* 55%: emerges out of right pipe, facing left! */
-  55% {
-    left: calc(100% - 88px);
-    transform: translateY(-24px) scaleX(-1);
-    opacity: 1;
-  }
-  /* 58%: lands to the left of right pipe, facing left */
-  58% {
-    left: calc(100% - 136px);
-    transform: translateY(0) scaleX(-1);
-    opacity: 1;
-  }
-  /* 92%: walks across floor to the left pipe, facing left */
-  92% {
-    left: 88px;
-    transform: translateY(0) scaleX(-1);
-    opacity: 1;
-  }
-  /* 95%: jumps onto left pipe */
-  95% {
-    left: 40px;
-    transform: translateY(-24px) scaleX(-1);
-    opacity: 1;
-  }
-  /* 98%: slides down into left pipe */
-  98%, 100% {
-    left: 40px;
-    transform: translateY(28px) scale(0.6);
-    opacity: 0;
+  50% {
+    transform: scaleX(var(--face, 1)) translateY(-3px);
   }
 }
 
 /* Responsive on phone */
 @media (max-width: 720px) {
-  .layer.under {
-    padding: 12px 10px 110px 10px !important;
+  .under-scroll-body {
+    padding: 14px 10px 24px 10px !important;
   }
 
   .paper {
@@ -410,11 +463,19 @@
   }
 
   .floor-pipe.pipe-left {
-    left: 14px;
+    left: 48px;
   }
 
   .pipe-btn.pipe-right {
-    right: 14px;
+    right: 20px;
+  }
+
+  .floor-qblock {
+    right: 104px;
+  }
+
+  .floor-reward {
+    right: 107px;
   }
 
   .under-decor {
@@ -431,8 +492,8 @@
     animation: none !important;
   }
   .floor-mario {
-    animation: none !important;
-    left: 96px !important;
+    transition: none !important;
+    left: 20px !important;
     transform: none !important;
     opacity: 1 !important;
   }

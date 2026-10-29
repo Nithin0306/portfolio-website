@@ -138,70 +138,105 @@
 
 .sun {
   position: absolute;
-  top: 50px;
+  top: 40px;
   right: 6%;
-  width: 68px;
-  height: 68px;
+  width: 86px;
+  height: 86px;
   background-color: var(--sun-ring);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
   pointer-events: none;
+  border-radius: 2px;
+  animation: sunRingPulse 3.6s ease-in-out infinite;
 }
 
 .sun i {
   display: block;
-  width: 44px;
-  height: 44px;
+  width: 58px;
+  height: 58px;
   background-color: var(--sun);
-  border: 4px solid #ffffff;
+  border: 5px solid #ffffff;
+  border-radius: 2px;
+  animation: sunInnerGlow 3.6s ease-in-out infinite;
 }
 
-/* Pixel Clouds */
+@keyframes sunRingPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 18px 4px rgba(255, 215, 60, 0.55),
+      0 0 42px 14px rgba(255, 160, 20, 0.3);
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 36px 12px rgba(255, 235, 100, 0.92),
+      0 0 68px 24px rgba(255, 180, 20, 0.58);
+    filter: brightness(1.28);
+    transform: scale(1.04);
+  }
+}
+
+@keyframes sunInnerGlow {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.22);
+  }
+}
+
+/* Pixel Clouds - bigger size & slow smooth drift across sky */
 .cloud {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   background-color: var(--cloud);
   box-shadow:
-    20px 0 0 var(--cloud),
-    40px 0 0 var(--cloud),
-    60px 0 0 var(--cloud),
-    20px -20px 0 var(--cloud),
-    40px -20px 0 var(--cloud);
+    26px 0 0 var(--cloud),
+    52px 0 0 var(--cloud),
+    78px 0 0 var(--cloud),
+    26px -26px 0 var(--cloud),
+    52px -26px 0 var(--cloud);
   z-index: 2;
   pointer-events: none;
-  animation: cloudDrift linear infinite;
+  animation: cloudMoveAcross linear infinite;
+  will-change: transform;
 }
 
 .cloud.big {
-  top: 110px;
-  left: 62%;
-  transform: scale(1.5);
+  top: 90px;
+  left: 0;
+  --cloud-scale: 1.85;
   animation-duration: 90s;
-  animation-delay: -15s;
-}
-
-.cloud.sm {
-  top: 300px;
-  left: 52%;
-  transform: scale(0.7);
-  animation-duration: 130s;
-  animation-delay: -45s;
+  animation-delay: -25s;
 }
 
 .cloud:not(.big):not(.sm) {
-  top: 200px;
-  left: 78%;
-  animation-duration: 110s;
-  animation-delay: -30s;
+  top: 185px;
+  left: 0;
+  --cloud-scale: 1.45;
+  animation-duration: 115s;
+  animation-delay: -65s;
 }
 
-@keyframes cloudDrift {
-  0% { transform: translateX(0); }
-  50% { transform: translateX(60px); }
-  100% { transform: translateX(0); }
+.cloud.sm {
+  top: 285px;
+  left: 0;
+  --cloud-scale: 1.15;
+  animation-duration: 140s;
+  animation-delay: -105s;
+}
+
+@keyframes cloudMoveAcross {
+  0% {
+    transform: translateX(105vw) scale(var(--cloud-scale, 1.4));
+  }
+  100% {
+    transform: translateX(-350px) scale(var(--cloud-scale, 1.4));
+  }
 }
 
 /* ==========================================================================
@@ -266,9 +301,9 @@
 
 .castle {
   position: absolute;
-  right: 36px;
+  right: 28px;
   bottom: 96px;
-  width: 76px;
+  width: 108px;
   height: auto;
   image-rendering: pixelated;
   z-index: 4;
@@ -277,10 +312,10 @@
 
 .flag-btn {
   position: absolute;
-  right: 124px;
+  right: 154px;
   bottom: 96px;
-  width: 54px;
-  height: 126px;
+  width: 68px;
+  height: 164px;
   background: transparent;
   border: none;
   padding: 0;
@@ -302,7 +337,7 @@
   border-radius: 2px;
   border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: 2px 2px 0 var(--ink);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   white-space: nowrap;
   pointer-events: none;
   transition: transform var(--t-fast), background-color var(--t-fast);
@@ -318,18 +353,18 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 5px;
-  height: 98px;
+  width: 7px;
+  height: 128px;
   background-color: #f0f0f0;
   border: 1px solid var(--ink);
 }
 
 .flag-sprite {
   position: absolute;
-  top: 28px;
+  top: 34px;
   left: calc(50% + 2px);
-  width: 32px;
-  height: 36px;
+  width: 42px;
+  height: 48px;
   image-rendering: pixelated;
   transition: transform var(--t-fast);
 }
@@ -339,7 +374,7 @@
 }
 
 .flag-btn.flag-raised .flag-sprite {
-  transform: translateY(-56px) !important;
+  transform: translateY(-84px) !important;
   transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.3, 1) !important;
 }
 
@@ -351,7 +386,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 300px;
+  bottom: 316px;
   text-align: center;
   font-family: var(--font-pixel);
   font-size: var(--fs-xs);
@@ -378,10 +413,12 @@
   bottom: 196px;
   display: flex;
   justify-content: center;
-  gap: clamp(14px, 3.5vw, 44px);
+  gap: clamp(18px, 4.2vw, 52px);
   padding: 0 16px;
   z-index: 3;
   align-items: flex-end;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .block {
@@ -427,8 +464,8 @@
 }
 
 .block img {
-  width: 44px;
-  height: 44px;
+  width: 58px;
+  height: 58px;
   image-rendering: pixelated;
   transition: transform var(--t-fast);
 }
@@ -456,8 +493,8 @@
 }
 
 .pickup-item img {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   image-rendering: pixelated;
 }
 
@@ -506,7 +543,7 @@
 
 @keyframes heroJump {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-46px); }
+  50% { transform: translateY(-54px); }
   100% { transform: translateY(0); }
 }
 

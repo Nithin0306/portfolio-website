@@ -1,8 +1,8 @@
 // Main Bootloader: initializes world, room, router
 
-import { initWorld, visit } from "./world.js?v=7";
-import { initRoom } from "./room.js?v=7";
-import { initRouter } from "./router.js?v=7";
+import { initWorld, visit } from "./world.js?v=8";
+import { initRoom } from "./room.js?v=8";
+import { initRouter } from "./router.js?v=8";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Boot sequence: sprites -> world -> room -> router
