@@ -188,93 +188,58 @@
   }
 }
 
-/* Pixel Clouds - bigger size & slow smooth drift across sky */
-.cloud {
+/* ==========================================================================
+   PIXEL CLOUDS - AUTHENTIC NES SMB PIXEL SPRITES
+   ========================================================================== */
+
+.cloud-sprite {
   position: absolute;
-  width: 26px;
-  height: 26px;
-  background-color: var(--cloud);
-  box-shadow:
-    26px 0 0 var(--cloud),
-    52px 0 0 var(--cloud),
-    78px 0 0 var(--cloud),
-    26px -26px 0 var(--cloud),
-    52px -26px 0 var(--cloud);
+  image-rendering: pixelated;
   z-index: 2;
   pointer-events: none;
-  animation: cloudMoveAcross linear infinite;
+  animation: cloudMoveAcross 120s linear infinite;
   will-change: transform;
-}
-
-.cloud.big {
-  top: 90px;
-  left: 0;
-  --cloud-scale: 1.85;
-  animation-duration: 90s;
-  animation-delay: -25s;
-}
-
-.cloud:not(.big):not(.sm) {
-  top: 185px;
-  left: 0;
-  --cloud-scale: 1.45;
-  animation-duration: 115s;
-  animation-delay: -65s;
-}
-
-.cloud.sm {
-  top: 285px;
-  left: 0;
-  --cloud-scale: 1.15;
-  animation-duration: 140s;
-  animation-delay: -105s;
 }
 
 @keyframes cloudMoveAcross {
   0% {
-    transform: translateX(105vw) scale(var(--cloud-scale, 1.4));
+    transform: translateX(105vw);
   }
   100% {
-    transform: translateX(-350px) scale(var(--cloud-scale, 1.4));
+    transform: translateX(-300px);
+  }
+}
+
+@keyframes cloudMoveAcrossMobile {
+  0% {
+    transform: translateX(105vw);
+  }
+  100% {
+    transform: translateX(-150px);
   }
 }
 
 /* ==========================================================================
-   SCENERY: AUTHENTIC PIXEL HILL & BUSHES
+   SCENERY: AUTHENTIC PIXEL BUSHES
    ========================================================================== */
-
-.scenery-container {
-  display: contents;
-}
-
-.scenery-hill {
-  position: absolute;
-  bottom: 96px;
-  left: 36%;
-  width: 220px;
-  height: auto;
-  image-rendering: pixelated;
-  z-index: 2;
-  pointer-events: none;
-}
 
 .scenery-bush {
   position: absolute;
   bottom: 96px;
   image-rendering: pixelated;
-  z-index: 3;
+  z-index: 2;
   pointer-events: none;
 }
 
 .scenery-bush.b1 {
-  left: 18%;
-  width: 145px;
+  left: 17%;
+  width: 192px;
   height: auto;
 }
 
 .scenery-bush.b2 {
-  left: 68%;
-  width: 125px;
+  left: 66%;
+  width: 192px;
   height: auto;
 }
 
@@ -569,8 +534,22 @@
   }
   #world .sign,
   .sign {
-    width: calc(100% - 28px) !important;
-    left: 14px !important;
+    width: min(420px, 46vw) !important;
+    left: clamp(16px, 3vw, 32px) !important;
+    top: 32px !important;
+  }
+  .sun {
+    top: 24px !important;
+    right: 28px !important;
+    width: 56px !important;
+    height: 56px !important;
+  }
+  .sun i {
+    width: 34px !important;
+    height: 34px !important;
+  }
+  .cloud-sprite {
+    max-width: 160px !important;
   }
   .castle {
     display: none !important;
@@ -583,7 +562,9 @@
 /* ==========================================================================
    PHONE COMPOSITION (<= 720px)
    A dedicated phone layout, not a shrunken desktop:
-   - Full width wooden sign with short chains
+   - Full width wooden sign with visible hanging chains
+   - Open top sky for glowing retro Sun & Score badge
+   - Smooth drifting clouds across multiple sky tiers
    - Hint centered directly beneath the sign
    - Question blocks in a 3 x 2 touch-friendly grid (5 blocks + flag as 6th block)
    - Sticky floor with iOS-safe 16px prompt
@@ -619,41 +600,18 @@
     display: none !important;
   }
 
-  /* Sun and clouds as small decoration at top-right */
-  .sun {
-    top: 14px !important;
-    right: 14px !important;
-    width: 36px !important;
-    height: 36px !important;
-    z-index: 1 !important;
-  }
-  .sun i {
-    width: 22px !important;
-    height: 22px !important;
-  }
-  .cloud.big {
-    top: 18px !important;
-    right: 56px !important;
-    left: auto !important;
-    width: 72px !important;
-    height: 28px !important;
-    z-index: 1 !important;
-  }
-  .cloud:not(.big) {
-    display: none !important;
-  }
-
-  /* Score line fits neatly */
+  /* 1. Score badge at top-left */
   .score {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
+    position: absolute !important;
+    top: 12px !important;
+    left: 14px !important;
     right: auto !important;
-    padding: 10px 14px !important;
+    width: auto !important;
+    padding: 6px 10px !important;
     font-size: 10px !important;
-    background-color: rgba(26, 18, 8, 0.45) !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
+    background-color: rgba(26, 18, 8, 0.65) !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
     z-index: 5 !important;
   }
   .score .sound-toggle {
@@ -661,22 +619,68 @@
     padding: 2px 6px !important;
   }
 
-  /* 1. Sign is full width (chains kept short) */
+  /* 2. Responsive Glowing Retro Sun at top-right */
+  .sun {
+    position: absolute !important;
+    top: 10px !important;
+    right: 14px !important;
+    left: auto !important;
+    width: 44px !important;
+    height: 44px !important;
+    z-index: 4 !important;
+    display: block !important;
+  }
+  .sun i {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  /* 3. Responsive Drifting Clouds across mobile sky */
+  .cloud-sprite {
+    display: block !important;
+    z-index: 2 !important;
+    animation: cloudMoveAcrossMobile 90s linear infinite !important;
+    height: auto !important;
+  }
+
+  .cloud-sprite:nth-child(1) {
+    top: 14px !important;
+    animation-delay: 0s !important;
+    max-width: 115px !important;
+  }
+  .cloud-sprite:nth-child(2) {
+    top: 365px !important;
+    animation-delay: -22.5s !important;
+    max-width: 70px !important;
+  }
+  .cloud-sprite:nth-child(3) {
+    top: 140px !important;
+    animation-delay: -45s !important;
+    max-width: 105px !important;
+  }
+  .cloud-sprite:nth-child(4) {
+    top: 500px !important;
+    animation-delay: -67.5s !important;
+    max-width: 75px !important;
+  }
+
+  /* 4. Hanging Wooden Sign with top clearance */
   #world .sign,
   .sign {
     position: relative !important;
     top: auto !important;
     left: auto !important;
     width: calc(100% - 24px) !important;
-    margin: 32px auto 8px auto !important;
+    max-width: 440px !important;
+    margin: 78px auto 10px auto !important;
     padding: 14px 16px !important;
     box-sizing: border-box !important;
     z-index: 3 !important;
   }
   .sign .chain-left,
   .sign .chain-right {
-    top: -24px !important;
-    height: 24px !important;
+    top: -62px !important;
+    height: 62px !important;
   }
   .sign h1.name {
     font-size: 28px !important;
@@ -846,7 +850,7 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .cloud {
+  .cloud, .cloud-sprite {
     animation: none !important;
   }
   .hint {

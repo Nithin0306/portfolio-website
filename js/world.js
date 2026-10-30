@@ -1,6 +1,6 @@
-import { sprite, tile } from "./sprites.js?v=9";
-import { PROFILE } from "./portfolio-data.js?v=9";
-import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=9";
+import { sprite, tile } from "./sprites.js?v=10";
+import { PROFILE } from "./portfolio-data.js?v=10";
+import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=10";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -56,15 +56,13 @@ export function initWorld() {
     if (chainRight) chainRight.style.backgroundImage = tile("chain", 2);
   }
 
-  // Set up pixel scenery hill & bushes (Fix #4)
-  const sceneryHill = document.getElementById("sceneryHill");
-  if (sceneryHill) sceneryHill.src = sprite("hill", 6);
+  // Set up authentic NES pixel bushes (matching reference image)
   const sceneryBush1 = document.getElementById("sceneryBush1");
-  if (sceneryBush1) sceneryBush1.src = sprite("bush", 5);
+  if (sceneryBush1) sceneryBush1.src = sprite("bush", 3);
   const sceneryBush2 = document.getElementById("sceneryBush2");
-  if (sceneryBush2) sceneryBush2.src = sprite("bush", 4);
+  if (sceneryBush2) sceneryBush2.src = sprite("bush", 3);
 
-  // Set up randomized clouds (Fix #3)
+  // Set up evenly spaced authentic NES clouds
   buildClouds();
 
   // Set up sprites
@@ -131,34 +129,27 @@ function buildClouds() {
   if (!container) return;
   container.innerHTML = "";
 
-  const count = 7;
-  for (let i = 0; i < count; i++) {
-    const cloud = document.createElement("div");
-    cloud.className = "cloud";
+  // 4 evenly spaced clouds with varied heights across the sky
+  // Phased by exactly 30s in a 120s drift loop (25% intervals),
+  // guaranteeing they NEVER bunch up and remain evenly spaced across the entire screen!
+  // Includes clouds positioned lower in the sky as requested.
+  const configs = [
+    { type: "cloud", top: 48, scale: 3, delay: 0 },
+    { type: "cloud1", top: 175, scale: 3, delay: -30 },
+    { type: "cloud", top: 80, scale: 2.8, delay: -60 },
+    { type: "cloud1", top: 255, scale: 3, delay: -90 } // Lower sky cloud
+  ];
 
-    // Jittered staggered vertical heights (35px to 310px)
-    const baseTop = 35 + (i * 38);
-    const jitter = Math.floor((Math.random() - 0.5) * 24);
-    const top = Math.max(30, Math.min(320, baseTop + jitter));
-
-    // Randomized scales (1.05 to 2.15)
-    const scales = [1.05, 1.3, 1.5, 1.75, 1.95, 2.15];
-    const scale = (scales[i % scales.length] + (Math.random() * 0.2 - 0.1)).toFixed(2);
-
-    // Randomized drift speed (85s to 145s)
-    const speed = Math.round(85 + (Math.random() * 55));
-
-    // Randomized initial position so they start spread across the sky
-    const delay = -(Math.random() * speed).toFixed(1);
-
-    cloud.style.top = `${top}px`;
-    cloud.style.left = "0px";
-    cloud.style.setProperty("--cloud-scale", scale);
-    cloud.style.animationDuration = `${speed}s`;
-    cloud.style.animationDelay = `${delay}s`;
-
-    container.appendChild(cloud);
-  }
+  configs.forEach((c) => {
+    const img = document.createElement("img");
+    img.className = "cloud-sprite";
+    img.src = sprite(c.type, c.scale);
+    img.alt = "";
+    img.style.top = `${c.top}px`;
+    img.style.left = "0px";
+    img.style.animationDelay = `${c.delay}s`;
+    container.appendChild(img);
+  });
 }
 
 export function targetFor(id) {

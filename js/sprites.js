@@ -23,10 +23,12 @@ export const PAL = {
   s: "#b4b4b8", // castle stone
   S: "#7a7a80", // stone dark
   G: "#8d8f94", // metal / chain grey
-  W: "#f2f0e8", // paper white
+  W: "#ffffff", // paper white
   D: "#5a1420", // curtain dark (for cinema seats)
   e: "#2ea82e", // mid foliage green
-  E: "#0e4a0e", // dark green outline
+  E: "#005000", // dark foliage green shadow (NES SMB)
+  F: "#00d800", // bright foliage green (NES SMB)
+  L: "#8cb8f8", // cloud sky blue shadow (NES SMB)
   l: "#7ae028", // bright lime highlight
   h: "#b8ff50"  // pale lime top highlight
 };
@@ -231,44 +233,92 @@ export const MAPS = {
     "..GG.."
   ],
   bush: [
-    "...........kkkkkkkkk...........",
-    ".........kkhhhhhhhhhkk.........",
-    ".......kkhhhhhhhhhhhhhkk.......",
-    "..kkkkkkhhhhhhhhhhhhhhhkkkkkk..",
-    ".khhhhhkhhhhhhhhhhhhhhhkhhhhhk.",
-    "khhhhhhkhhhhhhhhhhhhhhhkhhhhhhk",
-    "khhhhhhkkkkkkkkkkkkkkkkkhhhhhhk",
-    "khhhhheeeeeeeeeeeeeeeeeeehhhhhk",
-    "kheeeeeeeeeeeeeeeeeeeeeeeeeeehk",
-    "kleeeeeeeekkkkkkkkkkkkeeeeeeelk",
-    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
-    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
-    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
-    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
-    "kleeeeeeeekeeeeeeeeeekeeeeeeelk",
-    "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
+    "..............kkkk............kkkk............kkkk..............",
+    ".............kFFFFk..........kFFFFk..........kFFFFk.............",
+    "...........kkFFFFFFk.......kkFFFFFFk.......kkFFFFFFk............",
+    "..........kFFFFFFFFk.k....kFFFFFFFFk.k....kFFFFFFFFk.k..........",
+    "..........kFFFFFFFFFkFk...kFFFFFFFFFkFk...kFFFFFFFFFkFk.........",
+    "..........kFFFFFFEFFFFFk..kFFFFFFEFFFFFk..kFFFFFFEFFFFFk........",
+    ".........kFFFEEFFFEEFFFk.kFFFEEFFFEEFFFk.kFFFEEFFFEEFFFk........",
+    "........kFFFEFFFFFFFFFFkkFFFEFFFFFFFFFFkkFFFEFFFFFFFFFFk........",
+    ".....kkkFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFk..k....",
+    "....kFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFk.kFk...",
+    "...kFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFkFFk...",
+    "...FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFk.k.",
+    ".kkFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFkFk",
+    "kFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFk",
+    "kFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFk",
+    ".kFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFk."
   ],
-  hill: [
-    ".............kkkkkk.............",
-    "...........kkhhhhhhkk...........",
-    ".........kkhhhhhhhhhhkk.........",
-    ".......kkhhhhhhhhhhhhhhkk.......",
-    "......kkhhhhhhhhhhhhhhhhkk......",
-    "....kkhhhhhhhhhhhhhhhhhhhhkk....",
-    "...kkhhhhhhkkkkkkhhhhhhhhhhkk...",
-    "..kkhhhhhhhkk..kkhhhhhhhhhhhkk..",
-    ".kkhhhhhhhhkk..kkhhhhhhhhhhhhhk.",
-    ".khhhhhhhhhkk..kkhhhhhhhhhhhhhk.",
-    "khhhhhhhhhhkk..kkhhhhhhhhhhhhhhk",
-    "khhhhhhhhhheeeeeeehhhhhhhhhhhhhk",
-    "khhhhhhhhhheeeeeeehhhhhhhhhhhhhk",
-    "khhhhhhhhhheeeeeeehhhhhhhhhhhhhk",
-    "kheeeeeeeeeeeeeeeeeeeeeeeeeeeehk",
-    "kleeeeeeeeeeeeeeeeeeeeeeeeeeeelk",
-    "kleeeeeeeeeeeeeeeeeeeeeeeeeeeelk",
-    "kleeeeeeeeeeeeeeeeeeeeeeeeeeeelk",
-    "kleeeeeeeeeeeeeeeeeeeeeeeeeeeelk",
-    "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk"
+  bush1: [
+    "..............kkkk..............",
+    ".............kFFFFk.............",
+    "...........kkFFFFFFk............",
+    "..........kFFFFFFFFk.k..........",
+    "..........kFFFFFFFFFkFk.........",
+    "..........kFFFFFFEFFFFFk........",
+    ".........kFFFEEFFFEEFFFk........",
+    "........kFFFEFFFFFFFFFFk........",
+    ".....kkkFFFFFFFFFFFFFFFFk..k....",
+    "....kFFFFFFFFFFFFFFFFFFFk.kFk...",
+    "...kFFFFFFFFFFFFFFFFFFFFFkFFk...",
+    "...FFFFFFFFFFFFFFFFFFFFFFFFFk.k.",
+    ".kkFFFFFFFFFFFFFFFFFFFFFFFFFFkFk",
+    "kFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFk",
+    "kFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFk",
+    ".kFFFFFFFFFFFFFFFFFFFFFFFFFFFFk."
+  ],
+  cloud: [
+    "..............kkkk............kkkk............kkkk..............",
+    ".............kWWWWk..........kWWWWk..........kWWWWk.............",
+    "...........kkWWWWWWk.......kkWWWWWWk.......kkWWWWWWk............",
+    "..........kWWWWWWWWk.k....kWWWWWWWWk.k....kWWWWWWWWk.k..........",
+    "..........kWWWWWWWWWkWk...kWWWWWWWWWkWk...kWWWWWWWWWkWk.........",
+    "..........kWWWWWWLWWWWWk..kWWWWWWLWWWWWk..kWWWWWWLWWWWWk........",
+    ".........kWWWLLWWWLWWWWk.kWWWLLWWWLWWWWk.kWWWLLWWWLWWWWk........",
+    "........kWWWLWWWWWWWWWWkkWWWLWWWWWWWWWWkkWWWLWWWWWWWWWWk........",
+    ".....kkkWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWk..k....",
+    "....kWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWk.kWk...",
+    "...kWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWkWWk...",
+    "...WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWk.k.",
+    ".kkWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWkWk",
+    "kWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWk",
+    "kWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWk",
+    ".kWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWk.",
+    "..kWWLWWWWWWWWWWWLWWWWWWWWWWWWWWWLWWWWWWWWWWWWWWWLWWWWWWWWWWWk..",
+    "...kWWLWWLWWWWWWLWWWWWWWWLWWWWWWLWWWWWWWWLWWWWWWLWWWWWWWWWWWWWk.",
+    "....kWWLLLLWWWLLLLWWWWLWLLLWWWLLLLWWWWLWLLLWWWLLLLWWWWLWWWWWWWWk",
+    "....kWWWWWLLLLLLWLLLLLWWWWLLLLLLWLLLLLWWWWLLLLLLWLLLLLWWWWWWWWW.",
+    ".....kkkWWWWLLWWWWLLLWWWWWWWLLWWWWLLLWWWWWWWLLWWWWLLLWWWWWWWWkk.",
+    "........kWWWWWWkWWWWWWWWkWWWWWWkWWWWWWWWkWWWWWWkWWWWWWWWkWWkk...",
+    ".........kkWWWk.kkWWWWkk.kkWWWk.kkWWWWkk.kkWWWk.kkWWWWkk.kk.....",
+    "...........kkk....kkkk.....kkk....kkkk.....kkk....kkkk.........."
+  ],
+  cloud1: [
+    "..............kkkk..............",
+    ".............kWWWWk.............",
+    "...........kkWWWWWWk............",
+    "..........kWWWWWWWWk.k..........",
+    "..........kWWWWWWWWWkWk.........",
+    "..........kWWWWWWLWWWWWk........",
+    ".........kWWWLLWWWLWWWWk........",
+    "........kWWWLWWWWWWWWWWk........",
+    ".....kkkWWWWWWWWWWWWWWWWk..k....",
+    "....kWWWWWWWWWWWWWWWWWWWk.kWk...",
+    "...kWWWWWWWWWWWWWWWWWWWWWkWWk...",
+    "...WWWWWWWWWWWWWWWWWWWWWWWWWk.k.",
+    ".kkWWWWWWWWWWWWWWWWWWWWWWWWWWkWk",
+    "kWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWk",
+    "kWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWk",
+    ".kWWWWWWWWWWWWWWWWWWWWWWWWWWWWk.",
+    "..kWWLWWWWWWWWWWWLWWWWWWWWWWWk..",
+    "...kWWLWWLWWWWWWLWWWWWWWWWWWWWk.",
+    "....kWWLLLLWWWLLLLWWWWLWWWWWWWWk",
+    "....kWWWWWLLLLLLWLLLLLWWWWWWWWW.",
+    ".....kkkWWWWLLWWWWLLLWWWWWWWWkk.",
+    "........kWWWWWWkWWWWWWWWkWWkk...",
+    ".........kkWWWk.kkWWWWkk.kk.....",
+    "...........kkk....kkkk.........."
   ]
 };
 

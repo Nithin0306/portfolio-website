@@ -1,6 +1,6 @@
 // Projects Module: mounts interactive themed mini-worlds (Dayta, Archivist, GoCDC, SkillUp)
 
-import { sprite } from "./sprites.js?v=9";
+import { sprite } from "./sprites.js?v=10";
 
 export function mountProjectWorld(projectId, cardEl) {
   const existingBand = cardEl.querySelector(".world-band");

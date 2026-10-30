@@ -1,9 +1,9 @@
 // Room Controller: underground blue brick room, paper card, and floor Mario teleport patrol
 
-import { sprite, tile } from "./sprites.js?v=9";
-import { seen, updateScore, syncBlockSprites } from "./world.js?v=9";
-import { mountProjectWorld } from "./projects.js?v=9";
-import { playBump, playPickup } from "./audio.js?v=9";
+import { sprite, tile } from "./sprites.js?v=10";
+import { seen, updateScore, syncBlockSprites } from "./world.js?v=10";
+import { mountProjectWorld } from "./projects.js?v=10";
+import { playBump, playPickup } from "./audio.js?v=10";
 
 const PROJECT_IDS = new Set(["dayta", "archivist", "gocdc", "skillup"]);
 
