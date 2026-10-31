@@ -25,11 +25,11 @@ export function initRoom() {
   underEl.style.backgroundImage = tile("ubrick", 4);
 
   underEl.innerHTML = `
-    <!-- Scrollable content area: contains nav, coins, and paper card (Fix #2: separate from floor) -->
-    <div class="under-scroll-body" id="underScrollBody">
-      <!-- Top Nav Row -->
-      <nav class="under-nav" id="underNav" aria-label="Underground navigation"></nav>
+    <!-- Top Nav Row: fixed header at top of underground room -->
+    <nav class="under-nav" id="underNav" aria-label="Underground navigation"></nav>
 
+    <!-- Scrollable content area: contains coins and paper card -->
+    <div class="under-scroll-body" id="underScrollBody">
       <!-- Wall Coins -->
       <img class="under-decor coin-left" src="${sprite("coin", 4)}" alt="" aria-hidden="true">
       <img class="under-decor coin-right" src="${sprite("coin", 4)}" alt="" aria-hidden="true">
@@ -96,13 +96,13 @@ export function initRoom() {
 function buildNav() {
   if (!navRowEl) return;
   const items = [
+    { id: "surface", label: "↑ surface", action: "up" },
     { id: "about", label: "about" },
     { id: "projects", label: "projects" },
-    { id: "awards", label: "awards" },
     { id: "experience", label: "experience" },
+    { id: "awards", label: "awards" },
     { id: "resume", label: "resume" },
-    { id: "contact", label: "contact" },
-    { id: "surface", label: "↑ surface", action: "up" }
+    { id: "contact", label: "contact" }
   ];
 
   navRowEl.innerHTML = "";
@@ -227,15 +227,38 @@ async function runFloorMarioPatrol(cycleId) {
   const qBlockEl = document.getElementById("floorQBlock");
   const qBlockImg = document.getElementById("floorQBlockImg");
   const rewardEl = document.getElementById("floorReward");
+  const leftPipeEl = document.getElementById("floorPipeLeft");
+  const rightPipeEl = document.getElementById("pipeBtn");
 
-  if (!marioEl || !marioImg || !qBlockEl || !qBlockImg || !rewardEl) return;
+  if (!marioEl || !marioImg || !qBlockEl || !qBlockImg || !rewardEl || !leftPipeEl || !rightPipeEl) return;
 
   const isCurrent = () => patrolActive && cycleId === patrolCycle;
+
+  // Calculates exact coordinates dynamically based on element positions inside the floor
+  const getCoords = () => {
+    const marioW = marioEl.offsetWidth || 40;
+    const leftPipeLeft = leftPipeEl.offsetLeft;
+    const leftPipeW = leftPipeEl.offsetWidth;
+    const rightPipeLeft = rightPipeEl.offsetLeft;
+    const rightPipeW = rightPipeEl.offsetWidth;
+    const qBlockLeft = qBlockEl.offsetLeft;
+    const qBlockW = qBlockEl.offsetWidth;
+
+    return {
+      leftStand: Math.max(4, leftPipeLeft - marioW - 8),
+      leftEdge: Math.max(8, leftPipeLeft - 4),
+      leftCenter: leftPipeLeft + (leftPipeW - marioW) / 2,
+      rightCenter: rightPipeLeft + (rightPipeW - marioW) / 2,
+      rightLand: rightPipeLeft - marioW - 12,
+      qBlockUnder: qBlockLeft + (qBlockW - marioW) / 2
+    };
+  };
 
   // Reduced motion check
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (prefersReduced) {
-    marioEl.style.left = "20px";
+    const coords = getCoords();
+    marioEl.style.left = coords.leftStand + "px";
     marioEl.style.right = "auto";
     marioEl.style.setProperty("--face", "1");
     marioEl.style.setProperty("--pipe-sink", "0px");
@@ -244,6 +267,8 @@ async function runFloorMarioPatrol(cycleId) {
   }
 
   while (isCurrent()) {
+    const coords = getCoords();
+
     // 0. Ensure Question Block is restored to '?'
     qBlockImg.src = sprite("q", 5);
     qBlockEl.classList.remove("bump");
@@ -251,28 +276,28 @@ async function runFloorMarioPatrol(cycleId) {
 
     // 1. Initial state: Mario standing to the left of the left pipe
     marioEl.className = "floor-mario";
-    marioEl.style.left = "20px";
+    marioEl.style.left = coords.leftStand + "px";
     marioEl.style.right = "auto";
     marioEl.style.transform = "none";
     marioEl.style.setProperty("--face", "1");
     marioEl.style.setProperty("--pipe-sink", "0px");
     marioEl.style.opacity = "1";
 
-    // Stand still to the left of left pipe for 1.2s
+    // Stand still for 1.2s
     await sleep(1200);
     if (!isCurrent()) break;
 
     // 2. Mario walks toward left pipe
     marioEl.className = "floor-mario moving-pos walking";
-    marioEl.style.left = "48px";
+    marioEl.style.left = coords.leftEdge + "px";
     await sleep(380);
     if (!isCurrent()) break;
 
     marioEl.classList.remove("walking");
 
-    // 3. Mario JUMPS onto the left pipe (jump into pipe!)
+    // 3. Mario JUMPS onto top of the left pipe
     marioEl.className = "floor-mario jump-trans";
-    marioEl.style.left = "88px";
+    marioEl.style.left = coords.leftCenter + "px";
     marioEl.style.transform = "translateY(-48px)";
     await sleep(280);
     if (!isCurrent()) break;
@@ -296,10 +321,13 @@ async function runFloorMarioPatrol(cycleId) {
     await sleep(1500);
     if (!isCurrent()) break;
 
+    // Recalculate coords in case of screen resize/orientation change
+    const curCoords = getCoords();
+
     // 5. Position inside right pipe, prepare to JUMP OUT facing left
     marioEl.className = "floor-mario";
-    marioEl.style.left = "auto";
-    marioEl.style.right = "56px";
+    marioEl.style.right = "auto";
+    marioEl.style.left = curCoords.rightCenter + "px";
     marioEl.style.setProperty("--face", "-1");
     marioEl.style.setProperty("--pipe-sink", "60px");
     marioEl.style.transform = "translateY(30px)";
@@ -310,20 +338,20 @@ async function runFloorMarioPatrol(cycleId) {
     marioEl.className = "floor-mario jump-trans";
     marioEl.style.setProperty("--pipe-sink", "0px");
     marioEl.style.transform = "translateY(-54px)";
-    marioEl.style.right = "92px";
+    marioEl.style.left = (curCoords.rightCenter - 20) + "px";
     await sleep(300);
     if (!isCurrent()) break;
 
     // Arcs down and lands on floor
     marioEl.className = "floor-mario fall-trans";
     marioEl.style.transform = "translateY(0px)";
-    marioEl.style.right = "128px";
+    marioEl.style.left = curCoords.rightLand + "px";
     await sleep(240);
     if (!isCurrent()) break;
 
-    // 7. Mario walks left to under raised Question Block (right: 230px)
+    // 7. Mario walks left to under raised Question Block
     marioEl.className = "floor-mario moving-pos walking";
-    marioEl.style.right = "230px";
+    marioEl.style.left = curCoords.qBlockUnder + "px";
     await sleep(750);
     if (!isCurrent()) break;
 
@@ -362,7 +390,7 @@ async function runFloorMarioPatrol(cycleId) {
     if (!isCurrent()) break;
 
     marioEl.className = "floor-mario moving-pos walking";
-    marioEl.style.right = "100px";
+    marioEl.style.left = (curCoords.rightLand + 8) + "px";
     await sleep(650);
     if (!isCurrent()) break;
 
@@ -370,7 +398,7 @@ async function runFloorMarioPatrol(cycleId) {
 
     // 10. Mario JUMPS onto top of right pipe
     marioEl.className = "floor-mario jump-trans";
-    marioEl.style.right = "56px";
+    marioEl.style.left = curCoords.rightCenter + "px";
     marioEl.style.transform = "translateY(-48px)";
     await sleep(280);
     if (!isCurrent()) break;
@@ -391,7 +419,7 @@ async function runFloorMarioPatrol(cycleId) {
     marioEl.style.opacity = "0";
 
     // 11. Teleporting through pipes back to left pipe (vanished)
-    // While Mario is teleporting back, the question block restores to '?'!
+    // While Mario is teleporting back, question block restores to '?'!
     await sleep(750);
     if (!isCurrent()) break;
     qBlockImg.src = sprite("q", 5);
@@ -402,7 +430,7 @@ async function runFloorMarioPatrol(cycleId) {
     // 12. Position inside left pipe, prepare to JUMP OUT facing left
     marioEl.className = "floor-mario";
     marioEl.style.right = "auto";
-    marioEl.style.left = "88px";
+    marioEl.style.left = curCoords.leftCenter + "px";
     marioEl.style.setProperty("--face", "-1");
     marioEl.style.setProperty("--pipe-sink", "60px");
     marioEl.style.transform = "translateY(30px)";
@@ -413,14 +441,14 @@ async function runFloorMarioPatrol(cycleId) {
     marioEl.className = "floor-mario jump-trans";
     marioEl.style.setProperty("--pipe-sink", "0px");
     marioEl.style.transform = "translateY(-54px)";
-    marioEl.style.left = "54px";
+    marioEl.style.left = (curCoords.leftCenter - 20) + "px";
     await sleep(300);
     if (!isCurrent()) break;
 
     // Arcs down and lands on floor to the left of the left pipe
     marioEl.className = "floor-mario fall-trans";
     marioEl.style.transform = "translateY(0px)";
-    marioEl.style.left = "20px";
+    marioEl.style.left = curCoords.leftStand + "px";
     await sleep(240);
     if (!isCurrent()) break;
 

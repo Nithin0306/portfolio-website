@@ -16,7 +16,7 @@
 
 .under-scroll-body {
   position: absolute;
-  top: 0;
+  top: 52px;
   left: 0;
   right: 0;
   bottom: 96px; /* Exactly clears the 96px floor so it never overlaps */
@@ -64,14 +64,21 @@
    ========================================================================== */
 
 .under-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: 8px;
-  margin-bottom: 24px;
-  z-index: 5;
-  width: 100%;
-  max-width: 780px;
+  z-index: 25;
+  background: rgba(11, 37, 112, 0.96);
+  border-bottom: 2px solid #06153d;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .under-nav .nav-btn {
@@ -88,6 +95,14 @@
   cursor: pointer;
   transition: transform var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast);
   white-space: nowrap;
+}
+
+.under-nav .nav-btn[data-id="surface"] {
+  background-color: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+  border-color: var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
 }
 
 .under-nav .nav-btn:hover {
@@ -433,7 +448,50 @@
 /* Responsive on phone */
 @media (max-width: 720px) {
   .under-scroll-body {
-    padding: 14px 10px 24px 10px !important;
+    top: 48px !important;
+    bottom: 84px !important;
+    padding: 16px 10px 24px 10px !important;
+  }
+
+  .under-nav {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 48px !important;
+    z-index: 30 !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 0 10px !important;
+    margin-bottom: 0 !important;
+    background: #0b2570 !important;
+    border-bottom: 2px solid #06153d !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45) !important;
+    scrollbar-width: none !important;
+  }
+
+  .under-nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .under-nav .nav-btn {
+    flex-shrink: 0 !important;
+    font-size: 11px !important;
+    padding: 6px 12px !important;
+  }
+
+  /* Make ↑ SURFACE prominent and easily visible on mobile */
+  .under-nav .nav-btn[data-id="surface"] {
+    background-color: var(--gold) !important;
+    color: var(--ink) !important;
+    font-weight: 700 !important;
+    border-color: var(--ink) !important;
+    box-shadow: 2px 2px 0 var(--ink) !important;
   }
 
   .paper {
@@ -442,20 +500,78 @@
     padding: 20px 16px !important;
   }
 
+  .under-floor {
+    height: 84px !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    z-index: 25 !important;
+    display: block !important;
+    pointer-events: auto !important;
+  }
+
   .floor-pipe.pipe-left {
-    left: 48px;
+    left: 14px !important;
+    bottom: 0 !important;
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .floor-pipe.pipe-left img {
+    width: 48px !important;
+    height: 48px !important;
   }
 
   .pipe-btn.pipe-right {
-    right: 20px;
+    right: 12px !important;
+    bottom: 0 !important;
+    width: 52px !important;
+    height: 66px !important;
+  }
+  .pipe-btn.pipe-right img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .pipe-btn.pipe-right .label {
+    font-size: 9px !important;
+    padding: 2px 4px !important;
+    background-color: var(--gold) !important;
+    color: var(--ink) !important;
+    border: 1px solid var(--ink) !important;
+    box-shadow: 1px 1px 0 var(--ink) !important;
+    margin-bottom: 2px !important;
+    border-radius: 2px !important;
   }
 
   .floor-qblock {
-    right: 104px;
+    right: 106px !important;
+    bottom: 74px !important;
+    width: 38px !important;
+    height: 38px !important;
+  }
+  .floor-qblock img {
+    width: 38px !important;
+    height: 38px !important;
   }
 
   .floor-reward {
-    right: 107px;
+    right: 109px !important;
+    bottom: 78px !important;
+    width: 32px !important;
+    height: 32px !important;
+  }
+  .floor-reward img {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .floor-mario {
+    width: 38px !important;
+    height: 46px !important;
+  }
+  .floor-mario img {
+    width: 38px !important;
+    height: 46px !important;
   }
 
   .under-decor {
