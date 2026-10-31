@@ -1,0 +1,180 @@
+{
+  "name": "NITHIN",
+  "fullName": "Nithin Venkat Sharma P M",
+  "status": "Open to opportunities",
+  "location": "Coimbatore, Tamil Nadu",
+  "tagline": "Software engineer in the making",
+  "lead": "CSE student at Amrita, SDE intern, and Hack101 2nd place runner-up. Focused on backend engineering, distributed systems, and AI-driven architectures.",
+  "summary": "CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into software people actually use.",
+  "roles": [
+    "SDE intern,",
+    "Backend & Systems Developer,",
+    "AI-driven Architectures,",
+    "Hack101 runner-up,",
+    "Building scalable software,"
+  ],
+  "chips": [
+    { "label": "CSE @ Amrita", "href": "#/about" },
+    { "label": "SDE Intern", "href": "#/experience" },
+    { "label": "Hack101 · 2nd place", "href": "#/awards" },
+    { "label": "4 projects", "href": "#/projects" }
+  ],
+  "buttons": [
+    { "label": "Resume ↓", "href": "assets/resume.pdf", "primary": true, "download": true },
+    { "label": "View projects", "href": "#/projects" },
+    { "label": "Contact", "href": "#/contact" }
+  ],
+  "contact": {
+    "email": "nithin.p.m2006@gmail.com",
+    "phone": "+91 73730 93900",
+    "linkedin": "https://linkedin.com/in/nithin-p-m-",
+    "linkedinDisplay": "linkedin.com/in/nithin-p-m-",
+    "github": "https://github.com/nithin0306",
+    "githubDisplay": "github.com/nithin0306",
+    "resumePdf": "assets/resume.pdf"
+  },
+  "education": {
+    "institution": "Amrita Vishwa Vidyapeetham",
+    "location": "Coimbatore, Tamil Nadu",
+    "degree": "B.Tech in Computer Science and Engineering",
+    "period": "Aug 2024 – May 2028",
+    "cgpa": "8.85 / 10"
+  },
+  "experience": [
+    {
+      "id": "tensor-club",
+      "role": "Web Developer",
+      "company": "Tensor Club, Amrita Vishwa Vidyapeetham",
+      "period": "Jul 2025 – Apr 2026",
+      "bullets": [
+        "Built the 'Featured Projects' and 'All Projects' pages with React and Tailwind CSS, achieving a 99 Lighthouse performance score with 0.3s First Contentful Paint and zero cumulative layout shift.",
+        "Implemented responsive, terminal-style interactive card layouts with uniform rendering across mobile and desktop viewports, contributing to 98 accessibility and 100 SEO scores for the pages."
+      ]
+    },
+    {
+      "id": "pedagogy",
+      "role": "Automation Intern",
+      "company": "The Pedagogy Community",
+      "period": "Apr 2026 – Jun 2026",
+      "bullets": [
+        "Architected an AI pipeline that transforms raw webinar recordings into structured courses, reducing manual production time from 8 hours to under 15 minutes.",
+        "Bypassed API file-size constraints by building a multi-threaded chunking engine that runs 20-minute audio slices in parallel, maintaining perfect timestamp alignment.",
+        "Developed an automated speech-stitching and MCQ generation system that strips awkward Q&A pauses via FFmpeg and builds 5 scenario-based quizzes per lesson."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "dayta",
+      "level": "1",
+      "title": "Dayta",
+      "tagline": "Academic Document Ingestion & RAG Assistant",
+      "status": "Live",
+      "badge": "Gemini + Pinecone",
+      "shot": "assets/shots/dayta.png",
+      "theme": "study",
+      "overview": "Processes multi-page academic schedules and course syllabi, generating high-density vector embeddings stored in Pinecone for rapid semantic search and conversational schedule querying.",
+      "highlights": [
+        "Engineered an automated document ingestion pipeline converting multi-page academic schedules into high-density vector embeddings.",
+        "Implemented conversational guardrails with windowed session memory, confining responses strictly to official university data to eliminate hallucinations.",
+        "Built a lightweight, modular backend architecture utilizing FastAPI and asynchronous pipeline execution for sub-second query turnaround."
+      ],
+      "stack": ["React (Vite)", "TypeScript", "FastAPI", "Pinecone", "Google Gemini API"],
+      "links": {
+        "live": "https://dayta.example.com",
+        "github": "https://github.com/nithin0306/dayta"
+      }
+    },
+    {
+      "id": "archivist",
+      "level": "2",
+      "title": "Archivist",
+      "tagline": "Autonomous ADR Enforcement Agent",
+      "status": "GitHub",
+      "badge": "LangGraph + MCP",
+      "shot": "assets/shots/archivist.png",
+      "theme": "cinema",
+      "overview": "An autonomous GitHub Action utilizing LangGraph and Model Context Protocol (MCP) to dynamically parse pull request diffs, achieving 100% automated enforcement of Architecture Decision Records (ADRs).",
+      "highlights": [
+        "Engineered an autonomous GitHub Action using LangGraph and MCP to dynamically parse PR diffs and enforce ADR compliance.",
+        "Enforced CI/CD governance via GitHub API, catching and blocking injected violations such as client-side secret leaks during pipeline simulations.",
+        "Reduced architectural review feedback loop from hours of manual inspection to under 60 seconds with a secure webhook-driven override command."
+      ],
+      "stack": ["Python", "LangGraph", "GitHub Actions", "LLMs", "Model Context Protocol (MCP)"],
+      "links": {
+        "github": "https://github.com/nithin0306/archivist"
+      }
+    },
+    {
+      "id": "gocdc",
+      "level": "3",
+      "title": "GoCDC",
+      "tagline": "High-Throughput Event-Driven CDC Pipeline",
+      "status": "GitHub",
+      "badge": "1,400 events/sec",
+      "shot": "assets/shots/gocdc.png",
+      "theme": "water",
+      "overview": "A Go-based Change Data Capture (CDC) engine utilizing PostgreSQL WAL logical decoding to stream DML events to Redpanda and Kafka at 1,400 events/sec, completely eliminating database polling overhead.",
+      "highlights": [
+        "Engineered a Go-based CDC engine streaming DML events to Redpanda at 1,400 events/sec utilizing PostgreSQL WAL logical decoding.",
+        "Architected a fault-tolerant polyglot persistence pipeline routing data from Postgres to Redis and MongoDB via Kafka with <150ms replication lag.",
+        "Containerized a 6-node microservice ecosystem using multi-stage Docker builds, reducing Go binary image sizes to 20MB."
+      ],
+      "stack": ["Go (Golang)", "PostgreSQL", "Apache Kafka", "Redis", "MongoDB", "Docker"],
+      "links": {
+        "github": "https://github.com/nithin0306/gocdc"
+      }
+    },
+    {
+      "id": "skillup",
+      "level": "4",
+      "title": "SkillUp",
+      "tagline": "AI-Powered Skill Gap Analyzer",
+      "status": "Awarded",
+      "badge": "Hack101 · 2nd Place",
+      "shot": "assets/shots/skillup.png",
+      "theme": "gap",
+      "overview": "An AI-powered workforce reskilling and resume analyzer that detects skill gaps against target roles and curates personalized project and course roadmaps.",
+      "highlights": [
+        "Secured 2nd place out of 30+ teams at the Hack101 Hackathon.",
+        "Built automated parser extracting requirement matrices across 50+ technology domains.",
+        "Generates milestone-driven learning roadmaps with step-by-step project suggestions."
+      ],
+      "stack": ["Python", "FastAPI", "NLP", "Machine Learning", "Vector Search"],
+      "links": {
+        "github": "https://github.com/nithin0306/SkillUp"
+      }
+    }
+  ],
+  "skills": {
+    "languages": ["C", "C++", "Java", "JavaScript", "Python", "SQL", "Go (Golang)"],
+    "frameworks": ["React.js", "FastAPI", "Node.js", "Express.js", "LangChain", "LangGraph"],
+    "databases": ["PostgreSQL", "MongoDB", "Supabase", "Redis", "Pinecone"],
+    "tools": ["Git", "GitHub", "Docker", "Postman", "Linux", "Kafka", "FFmpeg"],
+    "concepts": ["Data Structures", "System Design", "Event-Driven Architecture", "SDLC", "RAG Pipelines"]
+  },
+  "achievements": [
+    {
+      "id": "hack101",
+      "rank": "2nd place",
+      "event": "Hack101 (out of 30+ teams)",
+      "project": "SkillUp",
+      "projectLink": "#/projects/skillup",
+      "note": "Developed SkillUp, an AI-powered resume analyzer that detects skill gaps and curates personalized project and course recommendations for target job roles."
+    },
+    {
+      "id": "build2break",
+      "rank": "3rd place",
+      "event": "Build2Break Hackathon (out of 80+ teams)",
+      "project": "VITA-CARE",
+      "note": "Built VITA-CARE, a voice-integrated, Gemini AI-powered microservice ecosystem that automates healthcare appointment scheduling and WhatsApp medication reminders."
+    },
+    {
+      "id": "gssoc",
+      "rank": "Contributor",
+      "event": "GirlScript Summer of Code (GSSoC)",
+      "project": "Open Source",
+      "note": "Merged 4 pull requests across independent open-source repositories, spanning Redis-backed setup automation, API unit test coverage, and SEO metadata improvements."
+    }
+  ]
+}

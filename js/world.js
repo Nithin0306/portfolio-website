@@ -1,6 +1,6 @@
-import { sprite, tile } from "./sprites.js?v=10";
-import { PROFILE } from "./portfolio-data.js?v=10";
-import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=10";
+import { sprite, tile } from "./sprites.js?v=14";
+import { PROFILE, loadProfile } from "./portfolio-data.js?v=14";
+import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=14";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -11,8 +11,6 @@ const SECTION_ICONS = {
   experience: "gear",
   resume: "doc"
 };
-
-const ROLE_LINES = PROFILE.roles;
 
 export const seen = new Set();
 let busy = false;
@@ -77,6 +75,12 @@ export function initWorld() {
   // Build 5 question blocks in order
   buildBlocks();
 
+  // Populate wooden sign content dynamically from profile data
+  updateSignContent();
+  loadProfile().then(() => {
+    updateSignContent();
+  });
+
   // Set up role typing animation
   roleTextEl = document.getElementById("roleText");
   startTypewriter();
@@ -98,6 +102,29 @@ export function initWorld() {
   });
 
   updateScore();
+}
+
+export function updateSignContent() {
+  const statusEl = document.querySelector("#sign .status-pill span:last-child");
+  if (statusEl && PROFILE.status) statusEl.textContent = PROFILE.status;
+
+  const nameEl = document.querySelector("#sign .name");
+  if (nameEl && PROFILE.name) nameEl.textContent = PROFILE.name;
+
+  const summaryEl = document.querySelector("#sign .summary");
+  if (summaryEl && PROFILE.summary) summaryEl.textContent = PROFILE.summary;
+
+  const chipsEl = document.querySelector("#sign .chips-row");
+  if (chipsEl && Array.isArray(PROFILE.chips)) {
+    chipsEl.innerHTML = PROFILE.chips.map(c => `<a class="chip" href="${c.href}">${c.label}</a>`).join("\n");
+  }
+
+  const btnsEl = document.querySelector("#sign .buttons-row");
+  if (btnsEl && Array.isArray(PROFILE.buttons)) {
+    btnsEl.innerHTML = PROFILE.buttons.map(b => 
+      `<a class="btn-sign${b.primary ? ' pri' : ''}" href="${b.href}"${b.download ? ' download' : ''}>${b.label}</a>`
+    ).join("\n");
+  }
 }
 
 function buildBlocks() {
@@ -336,19 +363,22 @@ function startTypewriter() {
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (prefersReduced) {
-    roleTextEl.textContent = ROLE_LINES[0];
+    const roles = (PROFILE.roles && PROFILE.roles.length) ? PROFILE.roles : ["SDE intern,"];
+    roleTextEl.textContent = roles[0];
     return;
   }
 
   function typeStep() {
-    const currentLine = ROLE_LINES[typeIndex];
+    const roles = (PROFILE.roles && PROFILE.roles.length) ? PROFILE.roles : ["SDE intern,"];
+    if (typeIndex >= roles.length) typeIndex = 0;
+    const currentLine = roles[typeIndex];
 
     if (isDeleting) {
       charIndex--;
       roleTextEl.textContent = currentLine.substring(0, charIndex);
       if (charIndex === 0) {
         isDeleting = false;
-        typeIndex = (typeIndex + 1) % ROLE_LINES.length;
+        typeIndex = (typeIndex + 1) % roles.length;
         setTimeout(typeStep, 400);
         return;
       }

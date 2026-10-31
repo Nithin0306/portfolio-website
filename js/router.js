@@ -4,7 +4,7 @@
  * deep linking, and transitions between surface and underground.
  */
 
-import { show, up } from "./room.js?v=10";
+import { show, up } from "./room.js?v=14";
 
 export const PAGES = new Set([
   "about",
@@ -13,20 +13,12 @@ export const PAGES = new Set([
   "experience",
   "resume",
   "contact",
-  "dayta",
-  "archivist",
-  "gocdc",
-  "skillup",
   "map"
 ]);
 
 const TITLES = {
   about: "About",
   projects: "Projects",
-  dayta: "Dayta (Level 1)",
-  archivist: "Archivist (Level 2)",
-  gocdc: "GoCDC (Level 3)",
-  skillup: "SkillUp (Level 4)",
   awards: "Awards",
   experience: "Experience",
   resume: "Resume",
@@ -56,10 +48,19 @@ export function route() {
     return;
   }
 
-  const id = sub || page;
+  // Route to the section (all projects live under single 'projects' page)
+  const id = page === "projects" ? "projects" : (PAGES.has(page) ? page : (PAGES.has(sub) ? sub : "error"));
   const targetId = PAGES.has(id) ? id : "error";
 
   show(targetId);
+
+  if (sub && page === "projects") {
+    // If anchored to a specific project like #/projects/dayta, scroll to it
+    setTimeout(() => {
+      const targetCard = document.getElementById(`proj-${sub}`);
+      if (targetCard) targetCard.scrollIntoView({ behavior: "smooth" });
+    }, 150);
+  }
 
   if (sceneEl) {
     sceneEl.classList.add("down");

@@ -84,16 +84,7 @@
   --stagger-step: 70ms;
 }
 
-/* night variant: only sky, clouds, sun and ring change */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --sky: #1b2a66;
-    --cloud: #8d9bd0;
-    --sun: #e8ecf5;
-    --sun-ring: #34459a;
-  }
-}
-
+/* Optional explicit dark theme (only when explicitly set on root via data-theme="dark") */
 :root[data-theme="dark"] {
   --sky: #1b2a66;
   --cloud: #8d9bd0;

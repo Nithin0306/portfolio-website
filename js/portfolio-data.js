@@ -8,6 +8,20 @@ export const PROFILE = {
   tagline: "Software engineer in the making",
   lead: "CSE student at Amrita, SDE intern, and Hack101 2nd place runner-up. Focused on backend engineering, distributed systems, and AI-driven architectures.",
 
+  status: "Open to opportunities",
+  summary: "CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into software people actually use.",
+  chips: [
+    { label: "CSE @ Amrita", href: "#/about" },
+    { label: "SDE Intern", href: "#/experience" },
+    { label: "Hack101 · 2nd place", href: "#/awards" },
+    { label: "4 projects", href: "#/projects" }
+  ],
+  buttons: [
+    { label: "Resume ↓", href: "assets/resume.pdf", primary: true, download: true },
+    { label: "View projects", href: "#/projects" },
+    { label: "Contact", href: "#/contact" }
+  ],
+
   // Rotating titles for typewriter on the hanging wooden sign
   roles: [
     "SDE intern,",
@@ -182,3 +196,17 @@ export const PROFILE = {
     }
   ]
 };
+
+export async function loadProfile() {
+  try {
+    const res = await fetch("data/portfolio.json?v=14");
+    if (res.ok) {
+      const data = await res.json();
+      Object.assign(PROFILE, data);
+      return PROFILE;
+    }
+  } catch (e) {
+    console.warn("Could not load portfolio.json, using built-in profile fallback.", e);
+  }
+  return PROFILE;
+}

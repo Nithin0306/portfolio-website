@@ -1,11 +1,10 @@
 // Room Controller: underground blue brick room, paper card, and floor Mario teleport patrol
 
-import { sprite, tile } from "./sprites.js?v=10";
-import { seen, updateScore, syncBlockSprites } from "./world.js?v=10";
-import { mountProjectWorld } from "./projects.js?v=10";
-import { playBump, playPickup } from "./audio.js?v=10";
+import { sprite, tile } from "./sprites.js?v=14";
+import { seen, updateScore, syncBlockSprites } from "./world.js?v=14";
+import { playBump, playPickup } from "./audio.js?v=14";
 
-const PROJECT_IDS = new Set(["dayta", "archivist", "gocdc", "skillup"]);
+const pageCache = new Map();
 
 let underEl = null;
 let scrollBodyEl = null;
@@ -123,29 +122,39 @@ function buildNav() {
   });
 }
 
-export function show(id) {
+export async function show(id) {
   if (!paperEl) initRoom();
   if (currentShowing === id) return;
   currentShowing = id;
 
-  // Find template element in #pages
-  let template = document.querySelector(`#pages [data-page="${id}"]`);
-  if (!template) {
-    template = document.querySelector(`#pages [data-page="error"]`);
+  let html = pageCache.get(id);
+  if (!html) {
+    try {
+      const res = await fetch(`pages/${id}.html?v=14`);
+      if (res.ok) {
+        html = await res.text();
+        pageCache.set(id, html);
+      } else {
+        throw new Error(`HTTP ${res.status}`);
+      }
+    } catch (err) {
+      // Fallback to inline template element in #pages if present
+      const template = document.querySelector(`#pages [data-page="${id}"]`) || document.querySelector(`#pages [data-page="error"]`);
+      if (template) {
+        html = template.innerHTML;
+      } else {
+        try {
+          const errRes = await fetch(`pages/error.html?v=14`);
+          html = await errRes.text();
+        } catch (e2) {
+          html = `<h2>Page not found</h2><p>The requested section could not be found.</p><p><a class="btn" href="#/">Return to World</a></p>`;
+        }
+      }
+    }
   }
 
-  // Clear paper card and clone template children
-  paperEl.innerHTML = "";
-  if (template) {
-    Array.from(template.children).forEach((child) => {
-      paperEl.appendChild(child.cloneNode(true));
-    });
-  }
-
-  // Mount themed interactive mini-world band for project pages
-  if (PROJECT_IDS.has(id)) {
-    mountProjectWorld(id, paperEl);
-  }
+  // Set paper card content
+  paperEl.innerHTML = html;
 
   // Mark as seen and update score line
   if (!seen.has(id)) {
@@ -180,9 +189,7 @@ function updateNavState(id) {
   if (!navRowEl) return;
   const navBtns = navRowEl.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => {
-    // If inside a project subpage, highlight 'projects' in nav
-    const isProj = PROJECT_IDS.has(id) && btn.dataset.id === "projects";
-    if (btn.dataset.id === id || isProj) {
+    if (btn.dataset.id === id) {
       btn.classList.add("active");
       btn.setAttribute("aria-current", "page");
     } else {
