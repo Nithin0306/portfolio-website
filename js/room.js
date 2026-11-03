@@ -1,8 +1,8 @@
 // Room Controller: underground blue brick room, paper card, and floor Mario teleport patrol
 
-import { sprite, tile } from "./sprites.js?v=14";
-import { seen, updateScore, syncBlockSprites } from "./world.js?v=14";
-import { playBump, playPickup } from "./audio.js?v=14";
+import { sprite, tile } from "./sprites.js?v=17";
+import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=17";
+import { playBump, playPickup } from "./audio.js?v=17";
 
 const pageCache = new Map();
 
@@ -126,11 +126,12 @@ export async function show(id) {
   if (!paperEl) initRoom();
   if (currentShowing === id) return;
   currentShowing = id;
+  stopHeroIdleCycle();
 
   let html = pageCache.get(id);
   if (!html) {
     try {
-      const res = await fetch(`pages/${id}.html?v=14`);
+      const res = await fetch(`pages/${id}.html?v=17`);
       if (res.ok) {
         html = await res.text();
         pageCache.set(id, html);
@@ -144,7 +145,7 @@ export async function show(id) {
         html = template.innerHTML;
       } else {
         try {
-          const errRes = await fetch(`pages/error.html?v=14`);
+          const errRes = await fetch(`pages/error.html?v=17`);
           html = await errRes.text();
         } catch (e2) {
           html = `<h2>Page not found</h2><p>The requested section could not be found.</p><p><a class="btn" href="#/">Return to World</a></p>`;
@@ -207,6 +208,7 @@ export function up() {
     sceneEl.classList.remove("down");
   }
   syncBlockSprites();
+  startHeroIdleCycle();
 }
 
 export function stopFloorMarioPatrol() {

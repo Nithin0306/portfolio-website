@@ -1,6 +1,6 @@
-import { sprite, tile } from "./sprites.js?v=14";
-import { PROFILE, loadProfile } from "./portfolio-data.js?v=14";
-import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=14";
+import { sprite, tile } from "./sprites.js?v=17";
+import { PROFILE, loadProfile } from "./portfolio-data.js?v=17";
+import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=17";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -101,7 +101,16 @@ export function initWorld() {
     }
   });
 
+  // Wire interactive Mario tap/click
+  heroEl.addEventListener("click", () => {
+    playBump();
+    triggerHeroCheer();
+  });
+
   updateScore();
+
+  // Start continuous Mario in-place actions & poses
+  startHeroIdleCycle();
 }
 
 export function updateSignContent() {
@@ -205,15 +214,23 @@ export async function visit(id) {
       el.classList.add("bump");
       popItem(id, el.getBoundingClientRect());
       markSeen(id, el);
+      // On mobile, Mario stays standing in the left, but cheers in place on block hit
+      if (!prefersReduced && heroEl) {
+        heroEl.className = "hero pose-jump";
+        heroEl.src = sprite("hero_jump", 5);
+      }
       setTimeout(() => el.classList.remove("bump"), 250);
     } else {
       markSeen(id, el);
     }
-    await sleep(prefersReduced ? 50 : 250);
+    await sleep(prefersReduced ? 50 : 350);
     location.hash = "#/" + id;
     busy = false;
     return;
   }
+
+  // Desktop: pause idle loop while Mario traverses to block
+  stopHeroIdleCycle();
 
   const s = sceneEl.getBoundingClientRect();
   const r = el.getBoundingClientRect();
@@ -396,4 +413,121 @@ function startTypewriter() {
   }
 
   typeStep();
+}
+
+// =============================================================================
+// MARIO CONTINUOUS IN-PLACE ACTIONS & POSES
+// Keeps Mario standing on the left in the same place while performing a dynamic,
+// retro sequence of classic poses: idle breathing, cursor blink, curious lookup,
+// waiting foot tap, classic vertical fist-pump jump, happy cheer, and friendly wave.
+// =============================================================================
+
+export let idleLoopActive = false;
+let idleLoopCycle = 0;
+
+export function startHeroIdleCycle() {
+  if (idleLoopActive) return;
+  idleLoopActive = true;
+  const cycleId = ++idleLoopCycle;
+  runHeroIdlePoses(cycleId);
+}
+
+export function stopHeroIdleCycle() {
+  idleLoopActive = false;
+  idleLoopCycle++;
+  if (heroEl) {
+    heroEl.className = "hero";
+    heroEl.src = sprite("hero", 5);
+  }
+}
+
+export async function triggerHeroCheer() {
+  if (!heroEl) return;
+  const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (isReduced) return;
+
+  const currentCycle = idleLoopCycle;
+  heroEl.className = "hero pose-jump";
+  heroEl.src = sprite("hero_jump", 5);
+  await sleep(650);
+
+  if (currentCycle === idleLoopCycle) {
+    heroEl.className = "hero pose-cheer";
+    heroEl.src = sprite("hero_cheer", 5);
+    await sleep(750);
+    heroEl.className = "hero idle-breath";
+    heroEl.src = sprite("hero", 5);
+  }
+}
+
+async function runHeroIdlePoses(cycleId) {
+  if (!heroEl) return;
+  const isCurrent = () => idleLoopActive && cycleId === idleLoopCycle;
+
+  // Initial gentle delay after surface load
+  await sleep(700);
+
+  while (isCurrent()) {
+    const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (isReduced) {
+      heroEl.className = "hero";
+      heroEl.src = sprite("hero", 5);
+      await sleep(1000);
+      continue;
+    }
+
+    // 1. Idle breathing with terminal prompt cursor blinking
+    heroEl.className = "hero idle-breath";
+    heroEl.src = sprite("hero", 5);
+    await sleep(1500);
+    if (!isCurrent()) break;
+
+    // Terminal cursor blink
+    heroEl.src = sprite("hero_blink", 5);
+    await sleep(350);
+    if (!isCurrent()) break;
+    heroEl.src = sprite("hero", 5);
+    await sleep(1200);
+    if (!isCurrent()) break;
+
+    // 2. Curious: look up at the floating question blocks and sky!
+    heroEl.className = "hero pose-lookup";
+    heroEl.src = sprite("hero_lookup", 5);
+    await sleep(1500);
+    if (!isCurrent()) break;
+
+    // 3. Fidget: impatient waiting foot tap in place
+    heroEl.className = "hero pose-tap";
+    heroEl.src = sprite("hero_tap", 5);
+    await sleep(900);
+    if (!isCurrent()) break;
+
+    // 4. Classic Mario vertical fist-pump jump in place!
+    heroEl.className = "hero pose-jump";
+    heroEl.src = sprite("hero_jump", 5);
+    await sleep(700);
+    if (!isCurrent()) break;
+
+    // 5. Joyful double-hop cheer with happy face
+    heroEl.className = "hero pose-cheer";
+    heroEl.src = sprite("hero_cheer", 5);
+    await sleep(850);
+    if (!isCurrent()) break;
+
+    // 6. Friendly wave to the viewer
+    heroEl.className = "hero pose-wave";
+    heroEl.src = sprite("hero_wave", 5);
+    await sleep(1200);
+    if (!isCurrent()) break;
+
+    // 7. Happy blink
+    heroEl.src = sprite("hero_happy", 5);
+    await sleep(650);
+    if (!isCurrent()) break;
+
+    // Return to default idle breathing
+    heroEl.className = "hero idle-breath";
+    heroEl.src = sprite("hero", 5);
+    await sleep(1600);
+  }
 }

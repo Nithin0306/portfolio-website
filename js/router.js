@@ -4,7 +4,7 @@
  * deep linking, and transitions between surface and underground.
  */
 
-import { show, up } from "./room.js?v=14";
+import { show, up } from "./room.js?v=17";
 
 export const PAGES = new Set([
   "about",
