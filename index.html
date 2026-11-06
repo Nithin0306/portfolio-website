@@ -22,12 +22,12 @@
     rel="stylesheet">
 
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/tokens.css?v=17">
-  <link rel="stylesheet" href="css/base.css?v=17">
-  <link rel="stylesheet" href="css/world.css?v=17">
-  <link rel="stylesheet" href="css/sign.css?v=17">
-  <link rel="stylesheet" href="css/room.css?v=17">
-  <link rel="stylesheet" href="css/projects.css?v=17">
+  <link rel="stylesheet" href="css/tokens.css?v=18">
+  <link rel="stylesheet" href="css/base.css?v=18">
+  <link rel="stylesheet" href="css/world.css?v=18">
+  <link rel="stylesheet" href="css/sign.css?v=18">
+  <link rel="stylesheet" href="css/room.css?v=18">
+  <link rel="stylesheet" href="css/projects.css?v=18">
 
   <script>
     // Mark JS as enabled so world scene renders
@@ -58,6 +58,7 @@
   <div id="world" class="scene">
     <!-- Score line: directly on sky, no plaque, no bar -->
     <div class="score" id="score">
+      <span class="stage-badge">WORLD 1-1</span>
       <span id="hc">0/6</span>
       <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound effects">SFX: OFF</button>
     </div>
@@ -93,11 +94,14 @@
           CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into
           software people actually use.
         </p>
-        <div class="chips-row">
-          <a class="chip" href="#/about">CSE @ Amrita</a>
-          <a class="chip" href="#/experience">SDE Intern</a>
-          <a class="chip" href="#/awards">Hack101 · 2nd place</a>
-          <a class="chip" href="#/projects">4 projects</a>
+        <div class="tech-stack-row" aria-label="Core Engineering Stack">
+          <span class="tech-badge">Go</span>
+          <span class="tech-badge">Python</span>
+          <span class="tech-badge">TypeScript</span>
+          <span class="tech-badge">Kafka</span>
+          <span class="tech-badge">FastAPI</span>
+          <span class="tech-badge">PostgreSQL</span>
+          <span class="tech-badge">Docker</span>
         </div>
         <div class="buttons-row">
           <a class="btn-sign pri" href="assets/resume.pdf" download>Resume ↓</a>
@@ -156,7 +160,7 @@
     </noscript>
   </main>
 
-  <script type="module" src="js/main.js?v=17"></script>
+  <script type="module" src="js/main.js?v=18"></script>
 </body>
 
 </html>

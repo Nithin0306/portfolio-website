@@ -13,11 +13,14 @@
     "Hack101 runner-up,",
     "Building scalable software,"
   ],
-  "chips": [
-    { "label": "CSE @ Amrita", "href": "#/about" },
-    { "label": "SDE Intern", "href": "#/experience" },
-    { "label": "Hack101 · 2nd place", "href": "#/awards" },
-    { "label": "4 projects", "href": "#/projects" }
+  "techStack": [
+    "Go",
+    "Python",
+    "TypeScript",
+    "Kafka",
+    "FastAPI",
+    "PostgreSQL",
+    "Docker"
   ],
   "buttons": [
     { "label": "Resume ↓", "href": "assets/resume.pdf", "primary": true, "download": true },

@@ -151,7 +151,37 @@
   margin-bottom: 16px;
 }
 
-/* 7. Clickable Chips Row */
+/* 7. Core Tech Stack Row (Replaced Redundant Tags) */
+.sign .tech-stack-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+.sign .tech-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #241407;
+  color: #ffd666;
+  border: 1.5px solid #a36f33;
+  box-shadow: 2px 2px 0 #120902;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 3px 8px;
+  letter-spacing: 0.03em;
+  transition: transform var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+  user-select: none;
+}
+
+.sign .tech-badge:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  color: #ffffff;
+}
+
+/* Backwards-compatible Chips Row */
 .sign .chips-row {
   display: flex;
   flex-wrap: wrap;

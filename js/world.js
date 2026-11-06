@@ -1,6 +1,6 @@
-import { sprite, tile } from "./sprites.js?v=17";
-import { PROFILE, loadProfile } from "./portfolio-data.js?v=17";
-import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=17";
+import { sprite, tile } from "./sprites.js?v=18";
+import { PROFILE, loadProfile } from "./portfolio-data.js?v=18";
+import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=18";
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -122,6 +122,11 @@ export function updateSignContent() {
 
   const summaryEl = document.querySelector("#sign .summary");
   if (summaryEl && PROFILE.summary) summaryEl.textContent = PROFILE.summary;
+
+  const techEl = document.querySelector("#sign .tech-stack-row");
+  if (techEl && Array.isArray(PROFILE.techStack)) {
+    techEl.innerHTML = PROFILE.techStack.map(t => `<span class="tech-badge">${t}</span>`).join("\n");
+  }
 
   const chipsEl = document.querySelector("#sign .chips-row");
   if (chipsEl && Array.isArray(PROFILE.chips)) {

@@ -54,6 +54,48 @@
   animation-delay: -1.2s;
 }
 
+/* Atmospheric Wall Torches */
+.under-torch {
+  position: absolute;
+  top: 190px;
+  width: 32px;
+  height: 36px;
+  image-rendering: pixelated;
+  pointer-events: none;
+  z-index: 2;
+  animation: torchFlicker 1.8s ease-in-out infinite alternate;
+}
+
+.under-torch.torch-left {
+  left: 6%;
+}
+
+.under-torch.torch-right {
+  right: 6%;
+  animation-delay: -0.9s;
+}
+
+@keyframes torchFlicker {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 10px rgba(255, 190, 50, 0.7));
+  }
+  35% {
+    transform: scale(1.05) translateY(-1px);
+    filter: drop-shadow(0 0 16px rgba(255, 220, 80, 0.9));
+  }
+  65% {
+    transform: scale(0.95) translateY(1px);
+    filter: drop-shadow(0 0 8px rgba(255, 170, 40, 0.5));
+  }
+}
+
+@media (max-width: 900px) {
+  .under-torch {
+    display: none !important;
+  }
+}
+
 @keyframes coinFloat {
   0% { transform: translateY(0); }
   100% { transform: translateY(-10px); }
@@ -124,11 +166,11 @@
 
 .paper {
   position: relative;
-  width: min(100%, 780px);
+  width: min(100%, 860px);
   background-color: #FAF6EE;
-  border: 3px solid var(--ink);
-  box-shadow: 6px 6px 0 var(--ink);
-  padding: 32px 36px;
+  border: 4px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  padding: 36px 42px;
   z-index: 3;
   box-sizing: border-box;
 }
@@ -140,26 +182,80 @@
   pointer-events: none;
 }
 
-/* Inside paper card: clean nested cards for jobs/awards/projects */
+/* Inside paper card: clean quest-log entries */
 .paper .award-card,
 .paper .job-card,
 .paper .facts-card,
 .paper .project-entry,
 .paper article.project {
   background-color: #ffffff;
-  border: 2px solid var(--ink);
-  box-shadow: 3px 3px 0 var(--ink);
-  padding: 20px 24px;
-  margin-bottom: 20px;
+  border: 2.5px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 22px 26px;
+  margin-bottom: 24px;
   box-sizing: border-box;
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
 }
 
 .paper .award-card:hover,
 .paper .job-card:hover,
 .paper .project-entry:hover {
   transform: translateY(-2px);
-  box-shadow: 5px 5px 0 var(--ink);
-  transition: transform var(--t-fast), box-shadow var(--t-fast);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+/* Experience Quest Milestone indicator */
+.paper .job-card {
+  position: relative;
+  border-left: 6px solid var(--gold);
+}
+
+.paper .job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.paper .job-header h3 {
+  font-family: var(--font-pixel);
+  font-size: var(--fs-s);
+  color: var(--ink);
+  margin: 0;
+}
+
+.paper .job-period {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--paper-2);
+  padding: 2px 8px;
+  border: 1px solid var(--ink);
+}
+
+.paper .company-name {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--brick);
+  margin: 0 0 12px 0;
+}
+
+.paper .job-bullets,
+.paper .bullet-list {
+  margin: 8px 0 12px 18px;
+  padding: 0;
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+.paper .job-bullets li,
+.paper .bullet-list li {
+  margin-bottom: 8px;
 }
 
 .paper .plaque.gold,
@@ -187,6 +283,19 @@
   box-shadow: 4px 4px 0 var(--ink);
 }
 
+/* Eliminate orange browser focus ring artifact on programmatic focus */
+.paper h2,
+.paper h2:focus,
+.paper h2:focus-visible,
+.paper h3,
+.paper h3:focus,
+.paper h3:focus-visible,
+.paper:focus,
+.paper:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .paper h2 {
   font-family: var(--font-pixel);
   font-size: var(--fs-l);
@@ -199,6 +308,109 @@
   font-size: var(--fs-m);
   color: var(--ink);
   margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* Copy Email Button for Contact Page */
+.copy-email-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--paper-2);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform var(--t-fast), background-color var(--t-fast);
+  margin-left: 8px;
+}
+
+.copy-email-btn:hover {
+  background-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.copy-email-btn.copied {
+  background-color: var(--green);
+  color: #ffffff;
+}
+
+/* Skills Matrix Grid for About Page */
+.skills-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.skill-category {
+  background-color: var(--paper-2);
+  border: 1.5px solid var(--ink);
+  padding: 14px 16px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.skill-category-title {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--ink);
+  margin: 0 0 10px 0;
+  letter-spacing: 0.04em;
+}
+
+.skill-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skill-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  background-color: #ffffff;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* Stage Clear Card for Contact Page */
+.stage-clear-card {
+  text-align: center;
+  background-color: var(--paper-2);
+  border: 2px dashed var(--ink);
+  padding: 24px 20px;
+  margin-top: 28px;
+}
+
+.stage-clear-badge {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--brick);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.stage-clear-card .ascii-castle {
+  display: inline-block;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 8px auto;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.stage-clear-card p {
+  font-family: var(--font-mono);
+  font-size: var(--fs-s);
+  color: var(--ink);
+  margin: 12px 0 16px 0;
 }
 
 .paper .section-badge {

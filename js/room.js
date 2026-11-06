@@ -1,8 +1,8 @@
 // Room Controller: underground blue brick room, paper card, and floor Mario teleport patrol
 
-import { sprite, tile } from "./sprites.js?v=17";
-import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=17";
-import { playBump, playPickup } from "./audio.js?v=17";
+import { sprite, tile } from "./sprites.js?v=18";
+import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=18";
+import { playBump, playPickup } from "./audio.js?v=18";
 
 const pageCache = new Map();
 
@@ -28,11 +28,13 @@ export function initRoom() {
     <!-- Top Nav Row: fixed header at top of underground room -->
     <nav class="under-nav" id="underNav" aria-label="Underground navigation"></nav>
 
-    <!-- Scrollable content area: contains coins and paper card -->
+    <!-- Scrollable content area: contains coins, torches, and paper card -->
     <div class="under-scroll-body" id="underScrollBody">
-      <!-- Wall Coins -->
+      <!-- Wall Coins & Wall Torches -->
       <img class="under-decor coin-left" src="${sprite("coin", 4)}" alt="" aria-hidden="true">
       <img class="under-decor coin-right" src="${sprite("coin", 4)}" alt="" aria-hidden="true">
+      <img class="under-torch torch-left" src="${sprite("torch", 4)}" alt="" aria-hidden="true">
+      <img class="under-torch torch-right" src="${sprite("torch", 4)}" alt="" aria-hidden="true">
 
       <!-- Paper Card Container -->
       <div class="paper" id="paperCard" role="region" aria-live="polite" tabindex="-1"></div>
@@ -91,6 +93,24 @@ export function initRoom() {
       }
     }
   });
+
+  // One-click copy email handler
+  document.addEventListener("click", (e) => {
+    const copyBtn = e.target.closest("#copyEmailBtn");
+    if (copyBtn) {
+      const email = copyBtn.dataset.email || "nithin.p.m2006@gmail.com";
+      navigator.clipboard.writeText(email).then(() => {
+        playPickup();
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = "<span>✓ Copied!</span>";
+        copyBtn.classList.add("copied");
+        setTimeout(() => {
+          copyBtn.innerHTML = originalText;
+          copyBtn.classList.remove("copied");
+        }, 2200);
+      });
+    }
+  });
 }
 
 function buildNav() {
@@ -131,7 +151,7 @@ export async function show(id) {
   let html = pageCache.get(id);
   if (!html) {
     try {
-      const res = await fetch(`pages/${id}.html?v=17`);
+      const res = await fetch(`pages/${id}.html?v=18`);
       if (res.ok) {
         html = await res.text();
         pageCache.set(id, html);
@@ -145,7 +165,7 @@ export async function show(id) {
         html = template.innerHTML;
       } else {
         try {
-          const errRes = await fetch(`pages/error.html?v=17`);
+          const errRes = await fetch(`pages/error.html?v=18`);
           html = await errRes.text();
         } catch (e2) {
           html = `<h2>Page not found</h2><p>The requested section could not be found.</p><p><a class="btn" href="#/">Return to World</a></p>`;

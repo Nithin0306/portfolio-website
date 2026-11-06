@@ -326,3 +326,27 @@
   padding-top: 20px;
   border-top: 3px solid var(--paper-2);
 }
+
+/* Responsive Project Screenshot Frame */
+.project-media-frame {
+  margin: 14px 0 16px 0;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  overflow: hidden;
+  background-color: #0b1120;
+  max-height: 240px;
+}
+
+.project-media-frame img.project-shot-img {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform var(--t-med);
+}
+
+.project-entry:hover .project-media-frame img.project-shot-img {
+  transform: scale(1.02);
+}

@@ -84,6 +84,20 @@
   transition: transform var(--t-fast), background-color var(--t-fast);
 }
 
+.score .stage-badge {
+  display: inline-block;
+  background-color: var(--ink);
+  color: var(--gold);
+  border: 1.5px solid var(--paper);
+  padding: 3px 7px;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  text-shadow: none;
+  box-shadow: 2px 2px 0 var(--ink);
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
 .score .sound-toggle:hover {
   background-color: var(--gold);
   color: var(--ink);

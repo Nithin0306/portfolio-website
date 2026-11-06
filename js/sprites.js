@@ -206,6 +206,17 @@ export const MAPS = {
     "..nn...nn.",
     ".kkk....kk"
   ],
+  torch: [
+    "..yyyy..",
+    ".ywwyy..",
+    ".yroyy..",
+    "..ooy...",
+    "..kGGk..",
+    ".kCCCCk.",
+    ".kCCCCk.",
+    "..kCCk..",
+    "...kk..."
+  ],
   bulb: [
     "..kkkk..",
     ".kyyyyk.",
