@@ -1,11 +1,11 @@
-import { sprite, tile } from "./sprites.js?v=21";
-import { PROFILE, loadProfile } from "./portfolio-data.js?v=21";
-import { playBump, playPickup, playVictory, play1Up, playWarp, toggleSound, updateSoundButton } from "./audio.js?v=21";
+import { sprite, tile } from "./sprites.js?v=24";
+import { PROFILE, loadProfile } from "./portfolio-data.js?v=24";
+import { playBump, playPickup, playVictory, play1Up, playWarp, toggleSound, updateSoundButton } from "./audio.js?v=24";
 // openWindow is imported lazily to avoid circular dep (windows.js imports world.js)
 let _openWindow = null;
 async function getOpenWindow() {
   if (!_openWindow) {
-    const mod = await import("./windows.js?v=21");
+    const mod = await import("./windows.js?v=24");
     _openWindow = mod.openWindow;
   }
   return _openWindow;
@@ -59,8 +59,8 @@ export function initWorld() {
     signEl.style.backgroundImage = tile("plank", 3);
     const chainLeft = signEl.querySelector(".chain-left");
     const chainRight = signEl.querySelector(".chain-right");
-    if (chainLeft) chainLeft.style.backgroundImage = tile("chain", 2);
-    if (chainRight) chainRight.style.backgroundImage = tile("chain", 2);
+    if (chainLeft) chainLeft.style.backgroundImage = tile("chain", 3);
+    if (chainRight) chainRight.style.backgroundImage = tile("chain", 3);
   }
 
   // Set up authentic NES pixel bushes (matching reference image)
@@ -76,7 +76,13 @@ export function initWorld() {
   heroEl.src = sprite("hero", 5);
 
   const castleImg = document.getElementById("castleImg");
-  if (castleImg) castleImg.src = sprite("castle", 7);
+  if (castleImg) {
+    castleImg.src = sprite("castle", 7);
+    castleImg.addEventListener("click", () => {
+      playVictory();
+      triggerCastleToast();
+    });
+  }
 
   const flagSprite = sceneEl.querySelector(".flag-sprite");
   if (flagSprite) flagSprite.src = sprite("flag", 5);
@@ -249,7 +255,9 @@ export async function visit(id) {
     return;
   }
 
-  // Desktop: Mario walks to block but idle cycle keeps running (world stays visible)
+  // Desktop/Laptop: pause continuous idle loop while Mario traverses to block and jumps
+  stopHeroIdleCycle();
+
   const s = sceneEl.getBoundingClientRect();
   const r = el.getBoundingClientRect();
   const targetX = r.left + r.width / 2 - s.left - heroEl.offsetWidth / 2;
@@ -257,32 +265,67 @@ export async function visit(id) {
   const dist = Math.abs(targetX - currentX);
 
   // Walk
-  heroEl.classList.add("walk");
+  heroEl.className = "hero walk";
+  heroEl.src = sprite("hero", 5);
   heroEl.style.left = `${targetX}px`;
-  await sleep(300 + dist * 0.7);
-  heroEl.classList.remove("walk");
+  await sleep(320 + dist * 0.7);
+  heroEl.className = "hero";
 
   // Jump and bump if it's a question block
   if (el.classList.contains("block")) {
-    heroEl.classList.add("jump");
-    await sleep(230);
+    heroEl.className = "hero jump";
+    heroEl.src = sprite("hero_jump", 5);
+    await sleep(225); // peak of jump (strikes the bottom of the block)
 
     playBump();
     el.classList.add("bump");
     popItem(id, r);
     markSeen(id, el);
 
-    await sleep(450);
-    heroEl.classList.remove("jump");
+    await sleep(225); // landing
+    heroEl.className = "hero";
+    heroEl.src = sprite("hero", 5);
     el.classList.remove("bump");
   } else if (id === "contact") {
     markSeen(id, el);
+    heroEl.className = "hero pose-cheer";
+    heroEl.src = sprite("hero_cheer", 5);
+    await sleep(500);
+    heroEl.className = "hero";
+    heroEl.src = sprite("hero", 5);
   }
 
   const ow = await getOpenWindow();
   ow(id, el.getBoundingClientRect());
   await sleep(400);
   busy = false;
+
+  // Resume continuous idle poses from current position
+  startHeroIdleCycle();
+}
+
+function triggerCastleToast() {
+  const existing = document.getElementById("castleToast");
+  if (existing) existing.remove();
+
+  const toast = document.createElement("div");
+  toast.id = "castleToast";
+  toast.className = "castle-toast";
+  toast.innerHTML = `<span>🏰 STAGE 1-1 CLEARED!</span><br><span style="font-size: 11px; opacity: 0.9;">Nithin is ready for new quests.</span>`;
+  sceneEl.appendChild(toast);
+
+  if (heroEl) {
+    heroEl.className = "hero pose-cheer";
+    heroEl.src = sprite("hero_cheer", 5);
+    setTimeout(() => {
+      heroEl.className = "hero idle-breath";
+      heroEl.src = sprite("hero", 5);
+    }, 1200);
+  }
+
+  setTimeout(() => {
+    if (toast.parentNode) toast.parentNode.removeChild(toast);
+  }, 2800);
 }
 
 export function syncBlockSprites() {

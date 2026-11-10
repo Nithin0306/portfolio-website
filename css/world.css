@@ -258,7 +258,7 @@
 
 .scenery-bush {
   position: absolute;
-  bottom: 96px;
+  bottom: 124px; /* Sits flush on 72px brick floor + 52px taskbar */
   image-rendering: pixelated;
   z-index: 2;
   pointer-events: none;
@@ -282,21 +282,27 @@
 
 .castle {
   position: absolute;
-  right: 28px;
-  bottom: 96px;
-  width: 108px;
+  right: 24px;
+  bottom: 124px; /* Sits flush on 72px brick floor + 52px taskbar */
+  width: 140px;
   height: auto;
   image-rendering: pixelated;
   z-index: 4;
-  pointer-events: none;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform var(--t-fast);
+}
+
+.castle:hover {
+  transform: scale(1.03);
 }
 
 .flag-btn {
   position: absolute;
-  right: 154px;
-  bottom: 96px;
+  right: 172px;
+  bottom: 124px; /* Sits flush on 72px brick floor + 52px taskbar */
   width: 68px;
-  height: 164px;
+  height: 180px;
   background: transparent;
   border: none;
   padding: 0;
@@ -318,9 +324,10 @@
   border-radius: 2px;
   border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: 2px 2px 0 var(--ink);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   white-space: nowrap;
   pointer-events: none;
+  z-index: 5;
   transition: transform var(--t-fast), background-color var(--t-fast);
 }
 
@@ -334,29 +341,54 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 7px;
-  height: 128px;
+  width: 6px;
+  height: 146px;
   background-color: #f0f0f0;
-  border: 1px solid var(--ink);
+  border: 1.5px solid var(--ink);
+  box-shadow: 2px 0 0 rgba(0, 0, 0, 0.15);
+}
+
+.flag-pole::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: var(--gold);
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
 }
 
 .flag-sprite {
   position: absolute;
-  top: 34px;
+  top: 36px;
   left: calc(50% + 2px);
   width: 42px;
   height: 48px;
   image-rendering: pixelated;
   transition: transform var(--t-fast);
+  transform-origin: left top;
 }
 
 .flag-btn:hover .flag-sprite {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .flag-btn.flag-raised .flag-sprite {
-  transform: translateY(-84px) !important;
-  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.3, 1) !important;
+  animation: flagWave 0.7s ease-in-out infinite alternate;
+}
+
+.flag-btn.flag-raised .flag-label {
+  background-color: var(--gold);
+  color: var(--ink);
+  box-shadow: 0 0 8px rgba(245, 196, 81, 0.8), 2px 2px 0 var(--ink);
+}
+
+@keyframes flagWave {
+  0% { transform: scaleX(1) rotate(0deg); }
+  100% { transform: scaleX(0.92) rotate(3deg) translateY(-2px); }
 }
 
 /* ==========================================================================
@@ -367,7 +399,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 370px; /* Raised above blocks (Fix #4) */
+  bottom: 435px; /* Raised above moved question blocks */
   text-align: center;
   font-family: var(--font-pixel);
   font-size: var(--fs-xs);
@@ -391,7 +423,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 245px; /* Raised above floor (Fix #4) */
+  bottom: 310px; /* Raised to give ample breathing room above the taller brick floor */
   display: flex;
   justify-content: center;
   gap: clamp(18px, 4.2vw, 52px);
@@ -513,7 +545,7 @@
 
 .hero {
   position: absolute;
-  bottom: 96px;
+  bottom: 124px; /* Sits flush on 72px brick floor + 52px taskbar */
   left: 6%;
   width: 50px;
   height: 60px;
@@ -537,7 +569,7 @@
 
 @keyframes heroJump {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-88px); } /* Reaches raised blocks */
+  50% { transform: translateY(-128px); } /* Hits bottom of question blocks raised to 310px */
   100% { transform: translateY(0); }
 }
 
@@ -607,7 +639,7 @@
 
 /* ==========================================================================
    FLOOR (Surface)
-   Entire floor uses solid brick texture to bottom (Fix #2)
+   Taller 3-row brick floor (72px) + taskbar (52px) = 124px
    ========================================================================== */
 
 .floor {
@@ -615,13 +647,13 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 96px;
+  height: 124px;
   z-index: 5;
   user-select: none;
 }
 
 .floor .strip {
-  height: 24px;
+  height: 72px;
   border-top: 4px solid var(--brick-top);
   background-repeat: repeat;
   background-size: auto 24px;
@@ -911,7 +943,7 @@
   .hero {
     display: block !important;
     position: absolute !important;
-    bottom: 96px !important;
+    bottom: 124px !important;
     left: clamp(14px, 4.5vw, 26px) !important;
     width: 48px !important;
     height: 58px !important;
@@ -978,3 +1010,30 @@
   }
 }
 
+
+/* ==========================================================================
+   CASTLE TOAST CELEBRATION
+   ========================================================================== */
+
+.castle-toast {
+  position: absolute;
+  right: 20px;
+  bottom: 260px;
+  background: var(--gold);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 8px 14px;
+  font-family: var(--pf);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  z-index: 25;
+  pointer-events: none;
+  animation: castleToastPop 0.35s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+}
+
+@keyframes castleToastPop {
+  0% { transform: translateY(12px) scale(0.7); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}

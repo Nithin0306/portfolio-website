@@ -4,7 +4,7 @@
  * Pages now open as retro OS windows over the Mario surface world.
  */
 
-import { openWindow } from "./windows.js?v=21";
+import { openWindow } from "./windows.js?v=24";
 
 export const PAGES = new Set([
   "about",

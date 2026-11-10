@@ -1,44 +1,96 @@
-<!-- Resume: Spec sheet download -->
+<!-- Resume: Interactive Spec Sheet, Skill Meters & Academics -->
 <div class="resume-window-content">
-  <div class="resume-hero">
-    <div class="resume-badge">★ SPEC SHEET READY ★</div>
-    <div class="resume-name">NITHIN VENKAT SHARMA P M</div>
-    <div class="resume-meta">B.Tech CSE · Amrita Vishwa Vidyapeetham · CGPA 8.85/10</div>
-    <div class="resume-meta muted">Backend Engineering · Distributed Systems · AI-Driven Systems</div>
+  <div class="resume-tabs-bar" role="tablist">
+    <button class="resume-tab-btn is-active" data-tab="overview" role="tab" aria-selected="true">📄 SPEC SHEET</button>
+    <button class="resume-tab-btn" data-tab="skills" role="tab" aria-selected="false">⚔️ SKILL METERS</button>
+    <button class="resume-tab-btn" data-tab="academics" role="tab" aria-selected="false">🎓 ACADEMICS</button>
   </div>
 
-  <div class="resume-skills-grid">
-    <div class="resume-skill-col">
-      <div class="resume-skill-label">LANGUAGES</div>
-      <div class="resume-skill-pills">
-        <span class="skill-pill">Go</span>
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">TypeScript</span>
-        <span class="skill-pill">Java</span>
+  <!-- Tab 1: Spec Sheet Overview -->
+  <div class="resume-tab-pane is-active" id="resumeTab-overview">
+    <div class="resume-hero">
+      <div class="resume-badge">★ OFFICIAL SDE RESUME (2026 SPEC) ★</div>
+      <div class="resume-name">NITHIN VENKAT SHARMA P M</div>
+      <div class="resume-meta">B.Tech Computer Science &amp; Engineering · Amrita Vishwa Vidyapeetham</div>
+      <div class="resume-meta muted">CGPA: 8.85 / 10 · Distributed Systems · High-Throughput Pipelines · LLM Architectures</div>
+    </div>
+
+    <div class="resume-spec-table">
+      <div class="resume-spec-row">
+        <span class="resume-spec-k">ROLES</span>
+        <span class="resume-spec-v">Backend Software Engineer, Distributed Systems Intern, AI Agent Architect</span>
+      </div>
+      <div class="resume-spec-row">
+        <span class="resume-spec-k">KEY BUILDS</span>
+        <span class="resume-spec-v">GoCDC (1,400 ev/s CDC engine), Archivist (LangGraph PR reviewer), Dayta (RAG knowledge base)</span>
+      </div>
+      <div class="resume-spec-row">
+        <span class="resume-spec-k">EXPERIENCE</span>
+        <span class="resume-spec-v">Automation Intern @ The Pedagogy Community (8h → &lt;15m pipeline), Web Dev @ Tensor Club</span>
+      </div>
+      <div class="resume-spec-row">
+        <span class="resume-spec-k">AWARDS</span>
+        <span class="resume-spec-v">🥈 Hack101 Runner-Up (SkillUp), 🥉 Build2Break 3rd Place (Vita-Care), GSSoC Contributor</span>
       </div>
     </div>
-    <div class="resume-skill-col">
-      <div class="resume-skill-label">SYSTEMS</div>
-      <div class="resume-skill-pills">
-        <span class="skill-pill">Apache Kafka</span>
-        <span class="skill-pill">PostgreSQL</span>
-        <span class="skill-pill">Redis</span>
-        <span class="skill-pill">Docker</span>
-      </div>
+
+    <div class="resume-actions">
+      <a class="btn-retro pri" href="assets/resume.pdf" download id="resumeDownloadBtn">📄 Download PDF Resume ↓</a>
+      <button type="button" class="btn-retro" id="resumePrintBtn">🖨️ Print Spec Sheet</button>
+      <a class="btn-retro" href="https://linkedin.com/in/nithin-p-m-" target="_blank" rel="noopener noreferrer">LinkedIn Profile ↗</a>
     </div>
-    <div class="resume-skill-col">
-      <div class="resume-skill-label">AI / ML</div>
-      <div class="resume-skill-pills">
-        <span class="skill-pill">LangGraph</span>
-        <span class="skill-pill">Pinecone</span>
-        <span class="skill-pill">Gemini API</span>
-        <span class="skill-pill">MCP Protocol</span>
+  </div>
+
+  <!-- Tab 2: Skill Meters (Interactive RPG Level Bars) -->
+  <div class="resume-tab-pane" id="resumeTab-skills" style="display: none;">
+    <div class="resume-skills-rpg">
+      <div class="rpg-meter-row">
+        <div class="rpg-meter-label"><span>Go (Golang)</span><span class="rpg-val">LV. 88 · WAL / Concurrency</span></div>
+        <div class="rpg-bar"><div class="rpg-fill" style="width: 88%; background: var(--green);"></div></div>
+      </div>
+      <div class="rpg-meter-row">
+        <div class="rpg-meter-label"><span>Python</span><span class="rpg-val">LV. 92 · Async / FastAPI / Scripting</span></div>
+        <div class="rpg-bar"><div class="rpg-fill" style="width: 92%; background: var(--gold);"></div></div>
+      </div>
+      <div class="rpg-meter-row">
+        <div class="rpg-meter-label"><span>TypeScript / React</span><span class="rpg-val">LV. 86 · Full Stack / Vite</span></div>
+        <div class="rpg-bar"><div class="rpg-fill" style="width: 86%; background: #3a5bd9;"></div></div>
+      </div>
+      <div class="rpg-meter-row">
+        <div class="rpg-meter-label"><span>Apache Kafka &amp; Event Streaming</span><span class="rpg-val">LV. 84 · CDC / Consumer Groups</span></div>
+        <div class="rpg-bar"><div class="rpg-fill" style="width: 84%; background: var(--brick);"></div></div>
+      </div>
+      <div class="rpg-meter-row">
+        <div class="rpg-meter-label"><span>PostgreSQL &amp; Redis</span><span class="rpg-val">LV. 88 · Indexing / Caching</span></div>
+        <div class="rpg-bar"><div class="rpg-fill" style="width: 88%; background: #0088aa;"></div></div>
+      </div>
+      <div class="rpg-meter-row">
+        <div class="rpg-meter-label"><span>Docker &amp; CI/CD Pipelines</span><span class="rpg-val">LV. 82 · Actions / Multi-Stage</span></div>
+        <div class="rpg-bar"><div class="rpg-fill" style="width: 82%; background: #6b3ba7;"></div></div>
+      </div>
+      <div class="rpg-meter-row">
+        <div class="rpg-meter-label"><span>LangGraph / Pinecone / LLMs</span><span class="rpg-val">LV. 90 · State Machines / RAG</span></div>
+        <div class="rpg-bar"><div class="rpg-fill" style="width: 90%; background: #c05a00;"></div></div>
       </div>
     </div>
   </div>
 
-  <div class="resume-actions">
-    <a class="btn-retro pri" href="assets/resume.pdf" download>📄 Download PDF Resume ↓</a>
-    <a class="btn-retro" href="https://linkedin.com/in/nithin-p-m-" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+  <!-- Tab 3: Academics & Coursework -->
+  <div class="resume-tab-pane" id="resumeTab-academics" style="display: none;">
+    <div class="resume-academic-card">
+      <div class="academic-institution">Amrita Vishwa Vidyapeetham, Coimbatore</div>
+      <div class="academic-degree">B.Tech in Computer Science and Engineering · Class of 2028</div>
+      <div class="academic-cgpa">Current Cumulative GPA: <strong>8.85 / 10.0</strong></div>
+      <div class="academic-coursework-title">RELEVANT THEORY &amp; CORE MODULES</div>
+      <div class="academic-pills">
+        <span class="skill-pill">Data Structures &amp; Algorithms</span>
+        <span class="skill-pill">Object Oriented Programming</span>
+        <span class="skill-pill">Operating Systems</span>
+        <span class="skill-pill">Database Management Systems</span>
+        <span class="skill-pill">Computer Networks</span>
+        <span class="skill-pill">Computer Architecture</span>
+        <span class="skill-pill">Linear Algebra &amp; Probability</span>
+      </div>
+    </div>
   </div>
 </div>

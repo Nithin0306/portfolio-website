@@ -199,7 +199,7 @@ export const PROFILE = {
 
 export async function loadProfile() {
   try {
-    const res = await fetch("data/portfolio.json?v=21");
+    const res = await fetch("data/portfolio.json?v=24");
     if (res.ok) {
       const data = await res.json();
       Object.assign(PROFILE, data);

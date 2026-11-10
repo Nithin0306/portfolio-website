@@ -299,13 +299,22 @@ export const MAPS = {
     ".kkkkkk."
   ],
   castle: [
-    "s.s.s..s.s.s",
-    "ssssssssssss",
-    "ssSSssssSSss",
-    "ssssssssssss",
-    "ssssskksssss",
-    "ssssskksssss",
-    "ssssskksssss"
+    ".......G......",
+    "......Grrr....",
+    "......Grrrr...",
+    ".......G......",
+    "....s.s.s.....",
+    "....sssss.....",
+    "....sSSss.....",
+    ".s.s.ssss.s.s.",
+    ".ssssssssssss.",
+    ".ssSSssssSSss.",
+    ".ssssssssssss.",
+    ".ssSSskksssSS.",
+    ".ssssskksssss.",
+    ".ssSSskksssSS.",
+    ".ssssskksssss.",
+    "kkkkkkkkkkkkkk"
   ],
   flag: [
     "krrrrr..",

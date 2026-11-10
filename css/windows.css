@@ -8,7 +8,7 @@
 .windows-container {
   position: absolute;
   inset: 0;
-  bottom: 68px; /* above the floor taskbar */
+  bottom: 124px; /* above the 72px brick floor + 52px taskbar */
   z-index: 50;
   pointer-events: none;
   overflow: hidden;
@@ -72,6 +72,8 @@
   border-bottom: 3px solid var(--ink);
   cursor: grab;
   user-select: none;
+  -webkit-user-select: none;
+  touch-action: none; /* Allows smooth dragging on laptop trackpad and touchscreens */
   background-color: var(--gold);
   flex-shrink: 0;
 }
@@ -639,15 +641,16 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 68px;
+  height: 124px;
   z-index: 60;
   user-select: none;
 }
 
 .floor .strip {
-  height: 16px;
-  background-repeat: repeat-x;
-  border-top: 3px solid #7a2a00;
+  height: 72px;
+  background-repeat: repeat;
+  background-size: auto 24px;
+  border-top: 4px solid var(--brick-top);
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.2);
 }
 
@@ -797,7 +800,7 @@
 .start-menu {
   position: absolute;
   left: 12px;
-  bottom: 68px;
+  bottom: 124px;
   width: 260px;
   background: #ffffff;
   border: 3px solid #000000;
@@ -858,7 +861,7 @@
 
 @media (max-width: 768px) {
   .windows-container {
-    bottom: 64px;
+    bottom: 124px !important;
   }
 
   .retro-window {
@@ -876,14 +879,82 @@
 
   .projects-master-detail {
     grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    min-height: auto !important;
   }
 
   .projects-master {
-    max-height: 220px !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding-bottom: 6px !important;
+    padding-right: 0 !important;
+    max-height: none !important;
+    gap: 8px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .proj-card {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 130px !important;
+    padding: 8px 10px !important;
+  }
+
+  .proj-card-hook {
+    display: none !important; /* Hide long text on mobile tab strip */
+  }
+
+  .proj-card-head {
+    margin-bottom: 0 !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
   }
 
   .projects-detail {
     max-height: none !important;
+    padding: 14px 16px !important;
+    box-shadow: 2px 2px 0 var(--ink) !important;
+  }
+
+  .proj-bezel-frame {
+    height: 150px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .proj-detail-title-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+
+  .proj-detail-title {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    word-break: break-word !important;
+  }
+
+  .proj-metrics-row {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .metric-tile {
+    padding: 6px 4px !important;
+  }
+
+  .metric-val {
+    font-size: 10px !important;
+  }
+
+  .metric-lbl {
+    font-size: 8px !important;
+  }
+
+  .proj-detail-desc {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
   }
 
   .about-header-card {
@@ -957,18 +1028,49 @@
 }
 
 /* ==========================================================================
-   RESUME WINDOW
+   RESUME WINDOW (INTERACTIVE TABS & SKILL METERS)
    ========================================================================== */
 
 .resume-window-content {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
+}
+
+.resume-tabs-bar {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 8px;
+}
+
+.resume-tab-btn {
+  font-family: var(--pf);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  background: var(--paper-2);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  cursor: pointer;
+  color: var(--ink);
+  transition: transform var(--t-fast), background var(--t-fast);
+}
+
+.resume-tab-btn:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+}
+
+.resume-tab-btn.is-active {
+  background: var(--gold);
+  border: 2px solid var(--ink);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.4), 2px 2px 0 var(--ink);
 }
 
 .resume-hero {
   text-align: center;
-  padding: 20px 16px;
+  padding: 16px 14px;
   background: #fff8ea;
   border: 2px solid #000;
   box-shadow: 3px 3px 0 #000;
@@ -978,53 +1080,155 @@
   font-family: var(--ps);
   font-size: 8px;
   color: var(--gold);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   letter-spacing: 0.05em;
 }
 
 .resume-name {
   font-family: var(--ps);
-  font-size: 12px;
+  font-size: 13px;
   color: #1a1208;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .resume-meta {
   font-family: var(--pf);
   font-size: 13px;
   color: #3d2b00;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .resume-meta.muted { color: var(--muted); }
 
-.resume-skills-grid {
+.resume-spec-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #ffffff;
+  border: 2px solid var(--ink);
+  padding: 12px 14px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.resume-spec-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 120px 1fr;
   gap: 12px;
+  font-family: var(--pf);
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+}
+
+.resume-spec-row:last-child {
+  border-bottom: none;
+}
+
+.resume-spec-k {
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.resume-spec-v {
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.45;
 }
 
 @media (max-width: 600px) {
-  .resume-skills-grid { grid-template-columns: 1fr; }
+  .resume-spec-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
 }
 
-.resume-skill-col {
-  padding: 12px;
-  background: #fff8ea;
-  border: 2px solid #000;
-  box-shadow: 2px 2px 0 #000;
+/* RPG Skill Meters */
+.resume-skills-rpg {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #ffffff;
+  border: 2px solid var(--ink);
+  padding: 16px;
+  box-shadow: 3px 3px 0 var(--ink);
 }
 
-.resume-skill-label {
+.rpg-meter-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rpg-meter-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--pf);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.rpg-val {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.rpg-bar {
+  height: 14px;
+  background: #e8dfcb;
+  border: 1.5px solid var(--ink);
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.rpg-fill {
+  height: 100%;
+  transition: width 1s ease-out;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Academic Card */
+.resume-academic-card {
+  background: #ffffff;
+  border: 2px solid var(--ink);
+  padding: 18px;
+  box-shadow: 3px 3px 0 var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.academic-institution {
+  font-family: var(--pf);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--brick);
+}
+
+.academic-degree {
+  font-family: var(--pf);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.academic-cgpa {
+  font-family: var(--pf);
+  font-size: 13px;
+  color: #1a7a00;
+}
+
+.academic-coursework-title {
   font-family: var(--pf);
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #1a1208;
-  margin-bottom: 8px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-top: 6px;
 }
 
-.resume-skill-pills {
+.academic-pills {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
@@ -1032,18 +1236,152 @@
 
 .resume-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
+  margin-top: 6px;
 }
 
 /* ==========================================================================
-   CONTACT WINDOW
+   CONTACT WINDOW (INTERACTIVE CONSOLE & DIRECT CHANNELS)
    ========================================================================== */
 
 .contact-window-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
+}
+
+.contact-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-family: var(--pf);
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a7a00;
+  padding: 8px 12px;
+  background: #e8ffe8;
+  border: 2px solid #1a7a00;
+  box-shadow: 2px 2px 0 #000;
+  flex-wrap: wrap;
+}
+
+.contact-badge-reply {
+  font-size: 10px;
+  background: #1a7a00;
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+.contact-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22cc00;
+  animation: blink-green 1.4s step-end infinite;
+  flex-shrink: 0;
+}
+
+/* Quick Dispatch Console */
+.contact-console {
+  background: #ffffff;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.console-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--pf);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 6px;
+}
+
+.console-blinker {
+  font-size: 10px;
+  color: #22cc00;
+  font-weight: 700;
+}
+
+.console-chips-label {
+  font-family: var(--pf);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.console-vibe-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.vibe-chip {
+  font-family: var(--pf);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  background: var(--paper-2);
+  border: 1.5px solid var(--ink);
+  box-shadow: 1.5px 1.5px 0 var(--ink);
+  cursor: pointer;
+  color: var(--ink);
+  transition: transform var(--t-fast);
+}
+
+.vibe-chip:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+}
+
+.vibe-chip.is-active {
+  background: var(--gold);
+  border-color: var(--ink);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.console-textarea {
+  width: 100%;
+  font-family: var(--pf);
+  font-size: 14px;
+  line-height: 1.45;
+  padding: 10px;
+  border: 2px solid var(--ink);
+  background: #fffdf7;
+  color: var(--ink);
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.console-textarea:focus {
+  outline: 2px solid var(--gold);
+}
+
+.console-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.social-tag {
+  font-family: var(--pf);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  background: var(--paper-2);
+  border: 1px solid var(--ink);
+  color: var(--muted);
 }
 
 .contact-status {
@@ -1187,11 +1525,18 @@ a.contact-link-val:hover { color: #004499; }
 
 /* ==========================================================================
    FLOOR HEIGHT OVERRIDE FOR TASKBAR
-   The floor now has strip (24px) + taskbar (52px) = 76px total
+   The floor has 3-row brick strip (72px) + taskbar (52px) = 124px total
    ========================================================================== */
 
 .floor {
-  height: 76px !important;
+  height: 124px !important;
+}
+
+.floor .strip {
+  height: 72px !important;
+  border-top: 4px solid var(--brick-top);
+  background-repeat: repeat;
+  background-size: auto 24px;
 }
 
 /* The taskbar sits below the brick strip */

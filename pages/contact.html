@@ -1,41 +1,74 @@
-<!-- Contact: Direct links -->
+<!-- Contact: Interactive Direct Links & Quick Message Console -->
 <div class="contact-window-content">
 
   <div class="contact-status">
     <span class="contact-dot"></span>
-    Open to SDE internships &amp; new grad roles
+    <span>AVAILABLE FOR WORK · SDE Internships &amp; New Grad Roles</span>
+    <span class="contact-badge-reply">&lt;24H REPLY</span>
   </div>
 
+  <!-- Interactive Quick Message Console -->
+  <div class="contact-console">
+    <div class="console-title-bar">
+      <span>⚡ QUICK DISPATCH CONSOLE</span>
+      <span class="console-blinker">● READY</span>
+    </div>
+
+    <div class="console-chips-label">SELECT VIBE / TOPIC:</div>
+    <div class="console-vibe-chips">
+      <button type="button" class="vibe-chip is-active" data-vibe="sde">💼 SDE Opportunity</button>
+      <button type="button" class="vibe-chip" data-vibe="collab">🤝 Project Collab</button>
+      <button type="button" class="vibe-chip" data-vibe="coffee">☕ Coffee Chat</button>
+      <button type="button" class="vibe-chip" data-vibe="sayhi">💬 Say Hi</button>
+    </div>
+
+    <textarea id="contactMessageInput" class="console-textarea" rows="3" placeholder="Type your message to Nithin...">Hi Nithin, I saw your portfolio and would love to discuss a Software Engineering opportunity with our team.</textarea>
+
+    <div class="console-actions">
+      <a id="contactMailtoLink" class="btn-retro pri" href="mailto:nithin.p.m2006@gmail.com?subject=SDE%20Opportunity&body=Hi%20Nithin%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20Software%20Engineering%20opportunity%20with%20our%20team.">
+        Launch Email ↗
+      </a>
+      <button type="button" class="btn-retro" id="copyMsgBtn">
+        Copy Message 📋
+      </button>
+    </div>
+  </div>
+
+  <!-- Direct Channels List -->
   <div class="contact-links-list">
 
     <div class="contact-link-item">
-      <div class="contact-link-label">EMAIL</div>
+      <div class="contact-link-label">DIRECT EMAIL</div>
       <div class="contact-link-row">
         <a href="mailto:nithin.p.m2006@gmail.com" class="contact-link-val">nithin.p.m2006@gmail.com</a>
-        <button type="button" class="copy-email-btn" id="copyEmailBtn" data-email="nithin.p.m2006@gmail.com">Copy</button>
+        <button type="button" class="copy-email-btn" id="copyEmailBtn" data-email="nithin.p.m2006@gmail.com">Copy Email</button>
       </div>
     </div>
 
     <div class="contact-link-item">
       <div class="contact-link-label">LINKEDIN</div>
-      <a href="https://linkedin.com/in/nithin-p-m-" target="_blank" rel="noopener noreferrer" class="contact-link-val">linkedin.com/in/nithin-p-m- ↗</a>
+      <div class="contact-link-row">
+        <a href="https://linkedin.com/in/nithin-p-m-" target="_blank" rel="noopener noreferrer" class="contact-link-val">linkedin.com/in/nithin-p-m- ↗</a>
+        <span class="social-tag">Verified</span>
+      </div>
     </div>
 
     <div class="contact-link-item">
       <div class="contact-link-label">GITHUB</div>
-      <a href="https://github.com/nithin0306" target="_blank" rel="noopener noreferrer" class="contact-link-val">github.com/nithin0306 ↗</a>
+      <div class="contact-link-row">
+        <a href="https://github.com/nithin0306" target="_blank" rel="noopener noreferrer" class="contact-link-val">github.com/nithin0306 ↗</a>
+        <span class="social-tag">Open Source</span>
+      </div>
     </div>
 
     <div class="contact-link-item">
       <div class="contact-link-label">LOCATION</div>
-      <span class="contact-link-val">Coimbatore, Tamil Nadu · India</span>
+      <div class="contact-link-row">
+        <span class="contact-link-val" style="color: var(--ink);">Coimbatore, Tamil Nadu · India</span>
+        <span class="social-tag">IST (UTC+5:30)</span>
+      </div>
     </div>
 
-  </div>
-
-  <div class="contact-footer">
-    <span>Replies within 24 hours.</span>
-    <a class="btn-retro pri" href="mailto:nithin.p.m2006@gmail.com">Send Message ↗</a>
   </div>
 
 </div>

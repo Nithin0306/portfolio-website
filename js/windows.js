@@ -1,8 +1,8 @@
 // Retro OS Window Manager: manages draggable, stackable windows over the Mario surface world
 
-import { sprite } from "./sprites.js?v=21";
-import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=21";
-import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=21";
+import { sprite } from "./sprites.js?v=24";
+import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=24";
+import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=24";
 
 const SECTION_CONFIG = {
   about: { title: "ABOUT-ME", icon: "bulb", color: "about" },
@@ -95,27 +95,12 @@ export function initWindows() {
     });
   }
 
-  // Live Clock in Tray
-  updateClock();
-  setInterval(updateClock, 1000);
-
   // Esc key closes top window
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeTopWindow();
     }
   });
-}
-
-function updateClock() {
-  const clockEl = document.getElementById("trayClock");
-  if (!clockEl) return;
-  const now = new Date();
-  let hours = now.getHours();
-  const minutes = String(now.getMinutes()).padStart(2, "0");
-  const ampm = hours >= 12 ? "PM" : "AM";
-  hours = hours % 12 || 12;
-  clockEl.textContent = `${hours}:${minutes} ${ampm}`;
 }
 
 function updateSfxUi() {
@@ -166,7 +151,7 @@ export async function openWindow(id, originRect = null) {
   let html = pageCache.get(id);
   if (!html) {
     try {
-      const res = await fetch(`pages/${id}.html?v=21`);
+      const res = await fetch(`pages/${id}.html?v=24`);
       if (res.ok) {
         html = await res.text();
         pageCache.set(id, html);
@@ -249,10 +234,8 @@ export async function openWindow(id, originRect = null) {
     focusWindow(id);
   });
 
-  // Draggable behavior by titlebar on desktop
-  if (!isMobile) {
-    makeDraggable(win);
-  }
+  // Make every opened window draggable across laptop, desktop, and touch screens
+  makeDraggable(win);
 
   // Mount to container
   win.style.zIndex = ++topZIndex;
@@ -283,20 +266,14 @@ export async function openWindow(id, originRect = null) {
     });
   }
 
-  // If contact, wire copy email button
+  // If resume, initialize interactive tabs & print
+  if (id === "resume") {
+    initResumeTabs(win);
+  }
+
+  // If contact, wire copy email button & interactive console
   if (id === "contact") {
-    const copyBtn = win.querySelector("#copyEmailBtn");
-    if (copyBtn) {
-      copyBtn.addEventListener("click", () => {
-        const email = copyBtn.dataset.email || "nithin.p.m2006@gmail.com";
-        navigator.clipboard.writeText(email).then(() => {
-          playPickup();
-          const orig = copyBtn.innerHTML;
-          copyBtn.innerHTML = "<span>✓ Copied!</span>";
-          setTimeout(() => { copyBtn.innerHTML = orig; }, 2000);
-        });
-      });
-    }
+    initContactConsole(win);
   }
 
   // Update hash
@@ -313,6 +290,31 @@ function makeDraggable(win) {
   let initLeft = 0;
   let initTop = 0;
 
+  const onPointerMove = (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+
+    const maxLeft = Math.max(10, window.innerWidth - win.offsetWidth - 10);
+    const maxTop = Math.max(10, window.innerHeight - 110);
+
+    const newLeft = Math.max(10, Math.min(maxLeft, initLeft + dx));
+    const newTop = Math.max(10, Math.min(maxTop, initTop + dy));
+
+    win.style.left = `${newLeft}px`;
+    win.style.top = `${newTop}px`;
+  };
+
+  const onPointerUp = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    win.classList.remove("is-dragging");
+    titlebar.style.cursor = "";
+    window.removeEventListener("pointermove", onPointerMove);
+    window.removeEventListener("pointerup", onPointerUp);
+    window.removeEventListener("pointercancel", onPointerUp);
+  };
+
   titlebar.addEventListener("pointerdown", (e) => {
     if (e.target.closest(".window-btn")) return;
     isDragging = true;
@@ -320,34 +322,120 @@ function makeDraggable(win) {
     startY = e.clientY;
     initLeft = win.offsetLeft;
     initTop = win.offsetTop;
-    titlebar.setPointerCapture(e.pointerId);
     win.classList.add("is-dragging");
+    titlebar.style.cursor = "grabbing";
+
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
+  });
+}
+
+function initResumeTabs(win) {
+  const tabBtns = win.querySelectorAll(".resume-tab-btn");
+  const tabPanes = win.querySelectorAll(".resume-tab-pane");
+
+  tabBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const target = btn.dataset.tab;
+      playPickup();
+
+      tabBtns.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle("is-active", active);
+        b.setAttribute("aria-selected", String(active));
+      });
+
+      tabPanes.forEach((pane) => {
+        pane.style.display = pane.id === `resumeTab-${target}` ? "block" : "none";
+      });
+    });
   });
 
-  titlebar.addEventListener("pointermove", (e) => {
-    if (!isDragging) return;
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
+  const printBtn = win.querySelector("#resumePrintBtn");
+  if (printBtn) {
+    printBtn.addEventListener("click", () => {
+      window.print();
+    });
+  }
+}
 
-    const maxLeft = window.innerWidth - win.offsetWidth;
-    const maxTop = window.innerHeight - 100;
+function initContactConsole(win) {
+  const vibeChips = win.querySelectorAll(".vibe-chip");
+  const msgInput = win.querySelector("#contactMessageInput");
+  const mailtoLink = win.querySelector("#contactMailtoLink");
+  const copyMsgBtn = win.querySelector("#copyMsgBtn");
+  const copyEmailBtn = win.querySelector("#copyEmailBtn");
 
-    const newLeft = Math.max(10, Math.min(maxLeft - 10, initLeft + dx));
-    const newTop = Math.max(10, Math.min(maxTop - 60, initTop + dy));
-
-    win.style.left = `${newLeft}px`;
-    win.style.top = `${newTop}px`;
-  });
-
-  const endDrag = (e) => {
-    if (!isDragging) return;
-    isDragging = false;
-    win.classList.remove("is-dragging");
-    try { titlebar.releasePointerCapture(e.pointerId); } catch {}
+  const TEMPLATES = {
+    sde: {
+      subj: "SDE Opportunity @ [Company]",
+      msg: "Hi Nithin, I saw your portfolio and would love to discuss a Software Engineering opportunity with our team."
+    },
+    collab: {
+      subj: "Project Collaboration Proposal",
+      msg: "Hey Nithin, I have an interesting distributed systems / AI project and would love to collaborate with you."
+    },
+    coffee: {
+      subj: "Casual Tech Chat",
+      msg: "Hi Nithin, let's grab a coffee or jump on a quick call to talk tech and engineering architecture."
+    },
+    sayhi: {
+      subj: "Hello from your portfolio visitor!",
+      msg: "Loved the NES Mario + Retro OS aesthetic of your portfolio! Wanted to drop a quick hello."
+    }
   };
 
-  titlebar.addEventListener("pointerup", endDrag);
-  titlebar.addEventListener("pointercancel", endDrag);
+  let currentSubj = "SDE Opportunity @ [Company]";
+
+  function syncMailto() {
+    if (!mailtoLink || !msgInput) return;
+    const body = encodeURIComponent(msgInput.value);
+    const subj = encodeURIComponent(currentSubj);
+    mailtoLink.href = `mailto:nithin.p.m2006@gmail.com?subject=${subj}&body=${body}`;
+  }
+
+  vibeChips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      playPickup();
+      vibeChips.forEach((c) => c.classList.remove("is-active"));
+      chip.classList.add("is-active");
+
+      const vibe = chip.dataset.vibe;
+      const t = TEMPLATES[vibe] || TEMPLATES.sde;
+      currentSubj = t.subj;
+      if (msgInput) {
+        msgInput.value = t.msg;
+      }
+      syncMailto();
+    });
+  });
+
+  if (msgInput) {
+    msgInput.addEventListener("input", syncMailto);
+  }
+
+  if (copyMsgBtn && msgInput) {
+    copyMsgBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(msgInput.value).then(() => {
+        playPickup();
+        const orig = copyMsgBtn.innerHTML;
+        copyMsgBtn.innerHTML = "<span>✓ Copied!</span>";
+        setTimeout(() => { copyMsgBtn.innerHTML = orig; }, 2000);
+      });
+    });
+  }
+
+  if (copyEmailBtn) {
+    copyEmailBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText("nithin.p.m2006@gmail.com").then(() => {
+        playPickup();
+        const orig = copyEmailBtn.innerHTML;
+        copyEmailBtn.innerHTML = "<span>✓ Copied!</span>";
+        setTimeout(() => { copyEmailBtn.innerHTML = orig; }, 2000);
+      });
+    });
+  }
 }
 
 function addTaskbarTab(id, cfg, iconSrc) {
