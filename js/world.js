@@ -1,6 +1,15 @@
-import { sprite, tile } from "./sprites.js?v=18";
-import { PROFILE, loadProfile } from "./portfolio-data.js?v=18";
-import { playBump, playPickup, playVictory, toggleSound, updateSoundButton } from "./audio.js?v=18";
+import { sprite, tile } from "./sprites.js?v=21";
+import { PROFILE, loadProfile } from "./portfolio-data.js?v=21";
+import { playBump, playPickup, playVictory, play1Up, playWarp, toggleSound, updateSoundButton } from "./audio.js?v=21";
+// openWindow is imported lazily to avoid circular dep (windows.js imports world.js)
+let _openWindow = null;
+async function getOpenWindow() {
+  if (!_openWindow) {
+    const mod = await import("./windows.js?v=21");
+    _openWindow = mod.openWindow;
+  }
+  return _openWindow;
+}
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -204,7 +213,8 @@ export async function visit(id) {
 
   const el = targetFor(id);
   if (!el || !heroEl || !sceneEl) {
-    location.hash = "#/" + id;
+    const ow = await getOpenWindow();
+    ow(id);
     busy = false;
     return;
   }
@@ -223,20 +233,23 @@ export async function visit(id) {
       if (!prefersReduced && heroEl) {
         heroEl.className = "hero pose-jump";
         heroEl.src = sprite("hero_jump", 5);
+        setTimeout(() => {
+          heroEl.className = "hero idle-breath";
+          heroEl.src = sprite("hero", 5);
+        }, 500);
       }
       setTimeout(() => el.classList.remove("bump"), 250);
     } else {
       markSeen(id, el);
     }
     await sleep(prefersReduced ? 50 : 350);
-    location.hash = "#/" + id;
+    const ow = await getOpenWindow();
+    ow(id, el.getBoundingClientRect());
     busy = false;
     return;
   }
 
-  // Desktop: pause idle loop while Mario traverses to block
-  stopHeroIdleCycle();
-
+  // Desktop: Mario walks to block but idle cycle keeps running (world stays visible)
   const s = sceneEl.getBoundingClientRect();
   const r = el.getBoundingClientRect();
   const targetX = r.left + r.width / 2 - s.left - heroEl.offsetWidth / 2;
@@ -266,8 +279,9 @@ export async function visit(id) {
     markSeen(id, el);
   }
 
-  location.hash = "#/" + id;
-  await sleep(850);
+  const ow = await getOpenWindow();
+  ow(id, el.getBoundingClientRect());
+  await sleep(400);
   busy = false;
 }
 
@@ -309,7 +323,12 @@ function popItem(id, rect) {
   img.src = sprite(iconName, 5);
   img.alt = "";
 
+  const scoreLabel = document.createElement("span");
+  scoreLabel.className = "score-popup";
+  scoreLabel.textContent = "+100";
+
   item.appendChild(img);
+  item.appendChild(scoreLabel);
   sceneEl.appendChild(item);
 
   setTimeout(() => {
@@ -318,12 +337,10 @@ function popItem(id, rect) {
 }
 
 export function updateScore() {
-  if (!scoreCenterEl) return;
-
-  // Count items collected
-  let iconsHtml = "";
-  const iconOrder = ["about", "projects", "awards", "experience", "resume"];
+  // Count items collected: 5 blocks + contact flag = 6 total
   let count = 0;
+  const iconOrder = ["about", "projects", "awards", "experience", "resume"];
+  let iconsHtml = "";
 
   iconOrder.forEach((id) => {
     if (seen.has(id)) {
@@ -337,16 +354,22 @@ export function updateScore() {
     count++;
   }
 
-  const isAllClear = count === 6;
+  // Update old score HUD if present
+  if (scoreCenterEl) {
+    const isAllClear = count === 6;
+    scoreCenterEl.innerHTML = `
+      <div class="score-center ${isAllClear ? "gold-score" : ""}">
+        <span class="collected-icons">${iconsHtml}</span>
+        <span>${count}/6</span>
+      </div>
+    `;
+  }
 
-  scoreCenterEl.innerHTML = `
-    <div class="score-center ${isAllClear ? "gold-score" : ""}">
-      <span class="collected-icons">${iconsHtml}</span>
-      <span>${count}/6</span>
-    </div>
-  `;
+  // Update taskbar tray score
+  const trayScore = document.getElementById("trayScore");
+  if (trayScore) trayScore.textContent = `${count}/6`;
 
-  if (isAllClear) {
+  if (count === 6) {
     const flagBtn = sceneEl ? sceneEl.querySelector(".flag-btn") : null;
     if (flagBtn) {
       flagBtn.classList.add("flag-raised");

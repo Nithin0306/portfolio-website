@@ -75,3 +75,17 @@ export function playVictory() {
   [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => tone(f, i * 0.11, 0.2, "square", null, 0.14));
 }
 
+export function playWarp() {
+  if (!soundEnabled) return;
+  tone(320, 0, 0.08, "triangle", 180, 0.14);
+  tone(240, 0.08, 0.08, "triangle", 140, 0.14);
+  tone(180, 0.16, 0.14, "triangle", 80, 0.14);
+}
+
+export function play1Up() {
+  if (!soundEnabled) return;
+  const notes = [330, 392, 659, 523, 587, 784];
+  notes.forEach((f, i) => tone(f, i * 0.065, 0.09, "square", null, 0.14));
+}
+
+

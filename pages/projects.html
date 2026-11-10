@@ -1,136 +1,53 @@
-<div class="section-badge">
-  <span class="plaque">PROJECTS</span>
-</div>
-<h2>Featured Projects</h2>
-<p class="sub-desc">Key systems, high-throughput pipelines, and autonomous AI agents.</p>
+<!-- Projects: Master-Detail Two-Panel Layout -->
+<div class="projects-master-detail">
+  <div class="projects-master" role="list">
 
-<div class="projects-list">
-  <!-- Level 1: Dayta -->
-  <article class="project-entry" id="proj-dayta">
-    <div class="level-label">1</div>
-    <div class="project-info">
-      <div class="project-title-row">
-        <h3>Dayta · Academic Ingestion &amp; RAG Assistant</h3>
-        <span class="plaque gold">Live</span>
+    <button class="proj-card" data-proj="gocdc" role="listitem">
+      <div class="proj-card-icon">⚡</div>
+      <div class="proj-card-body">
+        <div class="proj-card-head">
+          <span class="proj-card-name">GOCDC</span>
+          <span class="proj-card-badge">1,400 ev/s</span>
+        </div>
+        <p class="proj-card-hook">Streams database changes to Kafka at 1,400 events/sec without polling.</p>
       </div>
-      <p class="project-desc">
-        Processes multi-page academic schedules and course syllabi, generating high-density vector embeddings stored in Pinecone for rapid semantic search and conversational querying.
-      </p>
-      <div class="project-media-frame">
-        <img src="assets/shots/dayta.png" alt="Dayta RAG Assistant UI" class="project-shot-img" loading="lazy">
-      </div>
-      <ul class="bullet-list">
-        <li><strong>Automated Document Ingestion:</strong> Engineered an asynchronous pipeline converting complex university syllabi into 768-d vector embeddings in Pinecone.</li>
-        <li><strong>Hallucination Guardrails:</strong> Implemented windowed session memory strictly bound to indexed academic data with 100% boundary containment.</li>
-        <li><strong>Sub-second Latency:</strong> Built modular FastAPI backend leveraging asynchronous query execution for instant multi-turn retrieval.</li>
-      </ul>
-      <div class="tags-row">
-        <span class="tag">React (Vite)</span>
-        <span class="tag">TypeScript</span>
-        <span class="tag">FastAPI</span>
-        <span class="tag">Pinecone</span>
-        <span class="tag">Google Gemini API</span>
-      </div>
-      <div class="action-row" style="margin-top: 14px;">
-        <a class="btn pri" href="https://github.com/nithin0306/dayta" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
-      </div>
-    </div>
-  </article>
+    </button>
 
-  <!-- Level 2: Archivist -->
-  <article class="project-entry" id="proj-archivist">
-    <div class="level-label">2</div>
-    <div class="project-info">
-      <div class="project-title-row">
-        <h3>Archivist · Autonomous ADR Enforcement Agent</h3>
-        <span class="plaque">GitHub</span>
+    <button class="proj-card" data-proj="archivist" role="listitem">
+      <div class="proj-card-icon">🤖</div>
+      <div class="proj-card-body">
+        <div class="proj-card-head">
+          <span class="proj-card-name">ARCHIVIST</span>
+          <span class="proj-card-badge">&lt;60s cycle</span>
+        </div>
+        <p class="proj-card-hook">Autonomous GitHub Action enforcing Architecture Decision Records on every PR.</p>
       </div>
-      <p class="project-desc">
-        An autonomous GitHub Action utilizing LangGraph and Model Context Protocol (MCP) to dynamically parse pull request diffs, achieving 100% automated enforcement of Architecture Decision Records (ADRs).
-      </p>
-      <div class="project-media-frame">
-        <img src="assets/shots/archivist.png" alt="Archivist Architecture Agent" class="project-shot-img" loading="lazy">
-      </div>
-      <ul class="bullet-list">
-        <li><strong>Autonomous Diff Analysis:</strong> Built an automated CI/CD pipeline using LangGraph state machines and MCP tools to evaluate pull request diffs against versioned ADRs.</li>
-        <li><strong>Security &amp; Policy Governance:</strong> Catches architectural regressions and secret leaks pre-merge, enforcing automated build breaks on policy violations.</li>
-        <li><strong>Sub-Minute Cycle Time:</strong> Slashed code review architectural inspection cycles from hours of manual scrutiny to under 60 seconds with webhook override capability.</li>
-      </ul>
-      <div class="tags-row">
-        <span class="tag">Python</span>
-        <span class="tag">LangGraph</span>
-        <span class="tag">GitHub Actions</span>
-        <span class="tag">LLMs</span>
-        <span class="tag">MCP</span>
-      </div>
-      <div class="action-row" style="margin-top: 14px;">
-        <a class="btn pri" href="https://github.com/nithin0306/archivist" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
-      </div>
-    </div>
-  </article>
+    </button>
 
-  <!-- Level 3: GoCDC -->
-  <article class="project-entry" id="proj-gocdc">
-    <div class="level-label">3</div>
-    <div class="project-info">
-      <div class="project-title-row">
-        <h3>GoCDC · High-Throughput Event-Driven CDC Pipeline</h3>
-        <span class="plaque">1,400 ev/s</span>
+    <button class="proj-card" data-proj="dayta" role="listitem">
+      <div class="proj-card-icon">🔍</div>
+      <div class="proj-card-body">
+        <div class="proj-card-head">
+          <span class="proj-card-name">DAYTA</span>
+          <span class="proj-card-badge">&lt;1s latency</span>
+        </div>
+        <p class="proj-card-hook">RAG knowledge base: semantic search over academic schedules in under a second.</p>
       </div>
-      <p class="project-desc">
-        A Go-based Change Data Capture (CDC) engine utilizing PostgreSQL WAL logical decoding to stream DML events to Redpanda and Kafka at 1,400 events/sec, completely eliminating database polling overhead.
-      </p>
-      <div class="project-media-frame">
-        <img src="assets/shots/gocdc.png" alt="GoCDC Pipeline Architecture" class="project-shot-img" loading="lazy">
-      </div>
-      <ul class="bullet-list">
-        <li><strong>1,400 Events/sec Throughput:</strong> Streamed continuous PostgreSQL Write-Ahead Log (WAL) changes directly to Kafka and Redpanda topics without polling lag.</li>
-        <li><strong>Polyglot Replication:</strong> Architected fault-tolerant downstream sinks routing events to Redis and MongoDB with &lt;150ms end-to-end replication lag.</li>
-        <li><strong>Minimal Footprint:</strong> Packaged 6-node microservice stack via multi-stage Docker builds, yielding ultra-lean 20MB Go service binaries.</li>
-      </ul>
-      <div class="tags-row">
-        <span class="tag">Go (Golang)</span>
-        <span class="tag">PostgreSQL</span>
-        <span class="tag">Apache Kafka</span>
-        <span class="tag">Redis</span>
-        <span class="tag">MongoDB</span>
-        <span class="tag">Docker</span>
-      </div>
-      <div class="action-row" style="margin-top: 14px;">
-        <a class="btn pri" href="https://github.com/nithin0306/gocdc" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
-      </div>
-    </div>
-  </article>
+    </button>
 
-  <!-- Level 4: SkillUp -->
-  <article class="project-entry" id="proj-skillup">
-    <div class="level-label">4</div>
-    <div class="project-info">
-      <div class="project-title-row">
-        <h3>SkillUp · AI-Powered Skill Gap Analyzer</h3>
-        <span class="plaque gold">Hack101 · 2nd</span>
+    <button class="proj-card" data-proj="skillup" role="listitem">
+      <div class="proj-card-icon">🏆</div>
+      <div class="proj-card-body">
+        <div class="proj-card-head">
+          <span class="proj-card-name">SKILLUP</span>
+          <span class="proj-card-badge">Hack101 · 2nd</span>
+        </div>
+        <p class="proj-card-hook">AI reskilling engine that maps skill gaps and curates learning roadmaps.</p>
       </div>
-      <p class="project-desc">
-        An AI-powered workforce reskilling and resume analyzer that detects skill gaps against target roles and curates personalized project and course roadmaps.
-      </p>
-      <div class="project-media-frame">
-        <img src="assets/shots/skillup.png" alt="SkillUp Analysis UI" class="project-shot-img" loading="lazy">
-      </div>
-      <ul class="bullet-list">
-        <li><strong>Hackathon Runner-Up:</strong> Awarded 2nd place out of 30+ engineering teams at Hack101 for automated domain competency benchmarking.</li>
-        <li><strong>Requirement Matrix Extraction:</strong> Built NLP parsing engine matching resume skills against real-time job specifications across 50+ tech domains.</li>
-        <li><strong>Adaptive Learning Curricula:</strong> Synthesizes milestone-driven technical roadmaps with step-by-step project suggestions and target milestones.</li>
-      </ul>
-      <div class="tags-row">
-        <span class="tag">Python</span>
-        <span class="tag">FastAPI</span>
-        <span class="tag">NLP</span>
-        <span class="tag">Machine Learning</span>
-        <span class="tag">Vector Search</span>
-      </div>
-      <div class="action-row" style="margin-top: 14px;">
-        <a class="btn pri" href="https://github.com/nithin0306/SkillUp" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
-      </div>
-    </div>
-  </article>
+    </button>
+
+  </div>
+  <div id="projectDetailPane" class="projects-detail">
+    <p style="color: var(--muted); text-align: center; padding: 60px 20px; font-size: 14px;">← Select a project to view details</p>
+  </div>
 </div>

@@ -66,9 +66,12 @@
   --fs-l: 24px;
   --fs-xl: clamp(32px, 5vw, 56px);
 
-  --font-pixel: "Press Start 2P", "Courier New", monospace;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --pf: "Pixelify Sans", "Courier New", monospace;
+  --ps: "Press Start 2P", "Courier New", monospace;
+
+  --font-pixel: var(--ps);
+  --font-mono: var(--pf);
+  --font-body: var(--pf);
 
   /* 2.3 Space, borders, shadows */
   --m: clamp(16px, 3vw, 40px);

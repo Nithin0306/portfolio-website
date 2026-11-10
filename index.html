@@ -14,20 +14,19 @@
   <meta name="theme-color" content="#5c94fc">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <!-- Google Fonts: Press Start 2P, Inter (400, 600, 700), JetBrains Mono (400, 700) -->
+  <!-- Google Fonts: Pixelify Sans (400, 500, 600, 700) & Press Start 2P -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Press+Start+2P&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap"
     rel="stylesheet">
 
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/tokens.css?v=18">
-  <link rel="stylesheet" href="css/base.css?v=18">
-  <link rel="stylesheet" href="css/world.css?v=18">
-  <link rel="stylesheet" href="css/sign.css?v=18">
-  <link rel="stylesheet" href="css/room.css?v=18">
-  <link rel="stylesheet" href="css/projects.css?v=18">
+  <link rel="stylesheet" href="css/tokens.css?v=21">
+  <link rel="stylesheet" href="css/base.css?v=21">
+  <link rel="stylesheet" href="css/world.css?v=21">
+  <link rel="stylesheet" href="css/sign.css?v=21">
+  <link rel="stylesheet" href="css/windows.css?v=21">
 
   <script>
     // Mark JS as enabled so world scene renders
@@ -56,13 +55,6 @@
        Matches the approved reference screenshot (v8 page).
        ======================================================================= -->
   <div id="world" class="scene">
-    <!-- Score line: directly on sky, no plaque, no bar -->
-    <div class="score" id="score">
-      <span class="stage-badge">WORLD 1-1</span>
-      <span id="hc">0/6</span>
-      <button id="soundToggle" class="sound-toggle" aria-label="Toggle sound effects">SFX: OFF</button>
-    </div>
-
     <!-- Surface Layer -->
     <div class="layer over" id="over">
       <!-- Sun & Randomized Clouds Container -->
@@ -132,15 +124,41 @@
       <!-- Hero (Developer with Monitor Head) -->
       <img class="hero" id="hero" alt="Pixel developer with a terminal screen for a head">
 
-      <!-- Floor -->
+      <!-- Windows Container: retro OS windows float here over the Mario world -->
+      <div class="windows-container" id="windowsContainer"></div>
+
+      <!-- Start Menu Popup -->
+      <div id="startMenu" hidden class="start-menu">
+        <div class="start-menu-banner">NITHIN.WORLD V1.0</div>
+        <div class="start-menu-items">
+          <button class="start-item" data-action="about">👤 About Me</button>
+          <button class="start-item" data-action="projects">⚡ Projects</button>
+          <button class="start-item" data-action="experience">💼 Experience</button>
+          <button class="start-item" data-action="awards">🏆 Awards</button>
+          <button class="start-item" data-action="resume">📄 Resume</button>
+          <button class="start-item" data-action="contact">✉️ Contact</button>
+          <div class="start-divider"></div>
+          <button class="start-item" data-action="toggle-sfx"><span id="startSfxLabel">SFX: Off</span></button>
+        </div>
+      </div>
+
+      <!-- Floor with Taskbar -->
       <div class="floor">
         <div class="strip"></div>
-        <div class="earth"></div>
+        <div class="taskbar">
+          <button id="taskbarStart" class="taskbar-start">
+            <img id="startHeroIcon" class="start-icon" alt="">
+            NITHIN.WORLD
+          </button>
+          <div id="taskbarTabs" class="taskbar-tabs"></div>
+          <div class="taskbar-tray">
+            <div id="trayAchievements" class="tray-item achievements">🏆 <span id="trayScore">0/6</span></div>
+            <div id="traySfx" class="tray-item sfx-toggle">SFX: OFF</div>
+            <div id="trayClock" class="tray-item clock">12:00 PM</div>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- Underground Layer (Phases 7 - 9) -->
-    <div class="layer under" id="under"></div>
   </div>
 
   <!-- =======================================================================
@@ -160,7 +178,7 @@
     </noscript>
   </main>
 
-  <script type="module" src="js/main.js?v=18"></script>
+  <script type="module" src="js/main.js?v=21"></script>
 </body>
 
 </html>

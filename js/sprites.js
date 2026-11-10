@@ -30,10 +30,41 @@ export const PAL = {
   F: "#00d800", // bright foliage green (NES SMB)
   L: "#8cb8f8", // cloud sky blue shadow (NES SMB)
   l: "#7ae028", // bright lime highlight
-  h: "#b8ff50"  // pale lime top highlight
+  h: "#b8ff50", // pale lime top highlight
+  p: "#fcd0a1", // skin peach
+  P: "#e2ad76", // skin shadow
+  m: "#2a1c12"  // dark brown hair
 };
 
 export const MAPS = {
+  portrait: [
+    "..mmmmmmmmmm..",
+    ".mmmmmmmmmmmm.",
+    "mmmmmmmmmmmmmm",
+    "mmmmppppppmmmm",
+    "mmmppppppppmmm",
+    "mmmppkppkppmmm",
+    "mmmppppppppmmm",
+    "mmmppppppppmmm",
+    ".mmppPPppmm...",
+    "..pppppppp....",
+    "...nnnnnn.....",
+    "..nnnnnnnn....",
+    ".nnnnnnnnnn...",
+    "nnnnnnnnnnnn..",
+    "nnnnnnnnnnnn..",
+    "nnnnnnnnnnnn.."
+  ],
+  mail: [
+    "kkkkkkkkkkkk",
+    "kWWWWWWWWWWk",
+    "kWkWkkkkWkWk",
+    "kWkkWkkWkkwk",
+    "kWkkkWkkwkWk",
+    "kWkkkkkkkkwk",
+    "kWkkkkkkkkwk",
+    "kkkkkkkkkkkk"
+  ],
   brick: [
     "bbbbBbbb",
     "bbbbBbbb",

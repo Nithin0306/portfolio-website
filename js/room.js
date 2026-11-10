@@ -1,8 +1,8 @@
 // Room Controller: underground blue brick room, paper card, and floor Mario teleport patrol
 
-import { sprite, tile } from "./sprites.js?v=18";
-import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=18";
-import { playBump, playPickup } from "./audio.js?v=18";
+import { sprite, tile } from "./sprites.js?v=20";
+import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=20";
+import { playBump, playPickup, playWarp, play1Up } from "./audio.js?v=20";
 
 const pageCache = new Map();
 
@@ -28,13 +28,23 @@ export function initRoom() {
     <!-- Top Nav Row: fixed header at top of underground room -->
     <nav class="under-nav" id="underNav" aria-label="Underground navigation"></nav>
 
-    <!-- Scrollable content area: contains coins, torches, and paper card -->
+    <!-- Scrollable content area: contains ceiling entrance pipe, side mystery shelf, and paper card -->
     <div class="under-scroll-body" id="underScrollBody">
-      <!-- Wall Coins & Wall Torches -->
-      <img class="under-decor coin-left" src="${sprite("coin", 4)}" alt="" aria-hidden="true">
-      <img class="under-decor coin-right" src="${sprite("coin", 4)}" alt="" aria-hidden="true">
-      <img class="under-torch torch-left" src="${sprite("torch", 4)}" alt="" aria-hidden="true">
-      <img class="under-torch torch-right" src="${sprite("torch", 4)}" alt="" aria-hidden="true">
+      <!-- Authentic World 1-2 Ceiling Warp Pipe (Top Left) -->
+      <div class="under-ceiling-pipe" id="underCeilingPipe" aria-hidden="true" title="Cavern Entrance Pipe">
+        <img src="${sprite("pipe", 5)}" alt="">
+      </div>
+
+      <!-- Authentic Stepped Brick Shelf with Interactive Mystery Block (Right Margin) -->
+      <div class="under-brick-shelf" id="underBrickShelf" aria-label="Secret Question Block">
+        <button type="button" class="side-qblock-btn" id="sideQBlockBtn" aria-label="Hit Secret Question Block" title="Hit secret block!">
+          <img id="sideQBlockImg" src="${sprite("q", 4)}" alt="?">
+        </button>
+        <div class="side-shelf-bricks" style="background-image: ${tile("ubrick", 3)}"></div>
+        <div class="side-coin-pop" id="sideCoinPop" aria-hidden="true">
+          <img src="${sprite("coin", 4)}" alt="">
+        </div>
+      </div>
 
       <!-- Paper Card Container -->
       <div class="paper" id="paperCard" role="region" aria-live="polite" tabindex="-1"></div>
@@ -111,6 +121,26 @@ export function initRoom() {
       });
     }
   });
+
+  // Interactive Secret Question Block on right shelf
+  const sideQBtn = document.getElementById("sideQBlockBtn");
+  const sideQImg = document.getElementById("sideQBlockImg");
+  const sideCoinPop = document.getElementById("sideCoinPop");
+  if (sideQBtn && sideQImg && sideCoinPop) {
+    sideQBtn.addEventListener("click", () => {
+      playPickup();
+      sideQBtn.classList.add("bump");
+      sideCoinPop.classList.add("pop");
+      sideQImg.src = sprite("used", 4);
+      setTimeout(() => {
+        sideQBtn.classList.remove("bump");
+        sideCoinPop.classList.remove("pop");
+      }, 650);
+      setTimeout(() => {
+        sideQImg.src = sprite("q", 4);
+      }, 2400);
+    });
+  }
 }
 
 function buildNav() {
@@ -151,7 +181,7 @@ export async function show(id) {
   let html = pageCache.get(id);
   if (!html) {
     try {
-      const res = await fetch(`pages/${id}.html?v=18`);
+      const res = await fetch(`pages/${id}.html?v=20`);
       if (res.ok) {
         html = await res.text();
         pageCache.set(id, html);
@@ -165,7 +195,7 @@ export async function show(id) {
         html = template.innerHTML;
       } else {
         try {
-          const errRes = await fetch(`pages/error.html?v=18`);
+          const errRes = await fetch(`pages/error.html?v=20`);
           html = await errRes.text();
         } catch (e2) {
           html = `<h2>Page not found</h2><p>The requested section could not be found.</p><p><a class="btn" href="#/">Return to World</a></p>`;
@@ -224,7 +254,8 @@ export function up() {
   currentShowing = "";
   stopFloorMarioPatrol();
   const sceneEl = document.getElementById("world");
-  if (sceneEl) {
+  if (sceneEl && sceneEl.classList.contains("down")) {
+    playWarp();
     sceneEl.classList.remove("down");
   }
   syncBlockSprites();

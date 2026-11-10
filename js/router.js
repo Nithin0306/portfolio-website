@@ -1,10 +1,10 @@
 /**
- * WORLD//CLI: Hash Router (Phase 8)
- * Handles client-side hash routing, document titles,
- * deep linking, and transitions between surface and underground.
+ * WORLD//CLI: Hash Router
+ * Handles client-side hash routing and deep linking.
+ * Pages now open as retro OS windows over the Mario surface world.
  */
 
-import { show, up } from "./room.js?v=18";
+import { openWindow } from "./windows.js?v=21";
 
 export const PAGES = new Set([
   "about",
@@ -12,8 +12,7 @@ export const PAGES = new Set([
   "awards",
   "experience",
   "resume",
-  "contact",
-  "map"
+  "contact"
 ]);
 
 const TITLES = {
@@ -23,7 +22,6 @@ const TITLES = {
   experience: "Experience",
   resume: "Resume",
   contact: "Contact",
-  map: "World Map",
   error: "Page Not Found"
 };
 
@@ -39,34 +37,19 @@ export function titleFor(id) {
 }
 
 export function route() {
-  const { page, sub } = parse(location.hash);
-  const sceneEl = document.getElementById("world");
+  const { page } = parse(location.hash);
 
   if (!page) {
-    up();
+    // Root — no window to open, world stays visible
     document.title = DEFAULT_TITLE;
     return;
   }
 
-  // Route to the section (all projects live under single 'projects' page)
-  const id = page === "projects" ? "projects" : (PAGES.has(page) ? page : (PAGES.has(sub) ? sub : "error"));
-  const targetId = PAGES.has(id) ? id : "error";
+  const id = PAGES.has(page) ? page : null;
+  if (!id) return;
 
-  show(targetId);
-
-  if (sub && page === "projects") {
-    // If anchored to a specific project like #/projects/dayta, scroll to it
-    setTimeout(() => {
-      const targetCard = document.getElementById(`proj-${sub}`);
-      if (targetCard) targetCard.scrollIntoView({ behavior: "smooth" });
-    }, 150);
-  }
-
-  if (sceneEl) {
-    sceneEl.classList.add("down");
-  }
-
-  document.title = `${titleFor(targetId)} · Nithin`;
+  openWindow(id);
+  document.title = `${titleFor(id)} · Nithin`;
 }
 
 export function initRouter() {
