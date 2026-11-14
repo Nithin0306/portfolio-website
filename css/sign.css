@@ -125,9 +125,12 @@
   font-weight: 700;
   color: var(--sign-text);
   min-height: 28px;
+  height: 28px;
+  line-height: 28px;
   display: flex;
   align-items: center;
   margin-bottom: 12px;
+  overflow: hidden;
 }
 
 .sign .role-line .cursor {
@@ -147,8 +150,8 @@
 
 /* 6. Summary Paragraph */
 .sign .summary {
-  font-family: var(--font-mono);
-  font-size: var(--fs-s);
+  font-family: var(--font-body);
+  font-size: 15px;
   line-height: 1.6;
   color: var(--sign-soft);
   margin-bottom: 16px;

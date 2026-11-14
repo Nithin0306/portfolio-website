@@ -5,12 +5,11 @@
   "location": "Coimbatore, Tamil Nadu",
   "tagline": "Software engineer in the making",
   "lead": "CSE student at Amrita, SDE intern, and Hack101 2nd place runner-up. Focused on backend engineering, distributed systems, and AI-driven architectures.",
-  "summary": "CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into software people actually use.",
+  "summary": "Hey! I'm Nithin, a Computer Science student at Amrita. I enjoy building backend systems, experimenting with new technologies, and turning ideas into software that actually works. Currently exploring distributed systems, backend architecture, and AI-powered applications.",
   "roles": [
+    "Backend Developer,",
     "SDE intern,",
-    "Backend & Systems Developer,",
     "AI-driven Architectures,",
-    "Hack101 runner-up,",
     "Building scalable software,"
   ],
   "techStack": [
@@ -29,11 +28,11 @@
   ],
   "contact": {
     "email": "nithin.p.m2006@gmail.com",
-    "phone": "+91 73730 93900",
     "linkedin": "https://linkedin.com/in/nithin-p-m-",
     "linkedinDisplay": "linkedin.com/in/nithin-p-m-",
     "github": "https://github.com/nithin0306",
     "githubDisplay": "github.com/nithin0306",
+    "location": "Coimbatore, India · IST (UTC+5:30)",
     "resumePdf": "assets/resume.pdf"
   },
   "education": {
@@ -45,47 +44,49 @@
   },
   "experience": [
     {
-      "id": "tensor-club",
-      "role": "Web Developer",
-      "company": "Tensor Club, Amrita Vishwa Vidyapeetham",
-      "period": "Jul 2025 – Apr 2026",
-      "bullets": [
-        "Built the 'Featured Projects' and 'All Projects' pages with React and Tailwind CSS, achieving a 99 Lighthouse performance score with 0.3s First Contentful Paint and zero cumulative layout shift.",
-        "Implemented responsive, terminal-style interactive card layouts with uniform rendering across mobile and desktop viewports, contributing to 98 accessibility and 100 SEO scores for the pages."
-      ]
-    },
-    {
       "id": "pedagogy",
       "role": "Automation Intern",
       "company": "The Pedagogy Community",
       "period": "Apr 2026 – Jun 2026",
       "bullets": [
-        "Architected an AI pipeline that transforms raw webinar recordings into structured courses, reducing manual production time from 8 hours to under 15 minutes.",
-        "Bypassed API file-size constraints by building a multi-threaded chunking engine that runs 20-minute audio slices in parallel, maintaining perfect timestamp alignment.",
-        "Developed an automated speech-stitching and MCQ generation system that strips awkward Q&A pauses via FFmpeg and builds 5 scenario-based quizzes per lesson."
-      ]
+        "Turned raw webinar recordings into structured courses automatically: 8 hours down to under 15 minutes.",
+        "Got around an API file-size limit by splitting audio into 20-minute chunks processed in parallel, with timestamps kept aligned.",
+        "Built the finishing step: FFmpeg removes awkward Q&A pauses and the system produces 5 scenario-based quizzes per lesson."
+      ],
+      "tags": ["Python", "FFmpeg", "Multithreading", "LLM APIs"]
+    },
+    {
+      "id": "tensor-club",
+      "role": "Web Developer",
+      "company": "Tensor Club, Amrita",
+      "period": "Jul 2025 – Apr 2026",
+      "bullets": [
+        "Built the Featured Projects and All Projects pages in React and Tailwind CSS: 99 Lighthouse performance, 0.3 s first paint, zero layout shift.",
+        "Designed terminal-style project cards that look the same on phones and desktops; the pages score 98 accessibility and 100 SEO."
+      ],
+      "tags": ["React", "Tailwind CSS", "TypeScript", "Vite"]
     }
   ],
   "projects": [
     {
-      "id": "dayta",
+      "id": "gocdc",
       "level": "1",
-      "title": "Dayta",
-      "tagline": "Academic Document Ingestion & RAG Assistant",
-      "status": "Live",
-      "badge": "Gemini + Pinecone",
-      "shot": "assets/shots/dayta.png",
-      "theme": "study",
-      "overview": "Processes multi-page academic schedules and course syllabi, generating high-density vector embeddings stored in Pinecone for rapid semantic search and conversational schedule querying.",
-      "highlights": [
-        "Engineered an automated document ingestion pipeline converting multi-page academic schedules into high-density vector embeddings.",
-        "Implemented conversational guardrails with windowed session memory, confining responses strictly to official university data to eliminate hallucinations.",
-        "Built a lightweight, modular backend architecture utilizing FastAPI and asynchronous pipeline execution for sub-second query turnaround."
+      "title": "GoCDC",
+      "tagline": "Event-Driven CDC Pipeline",
+      "role": "Solo Developer",
+      "status": "Shipped",
+      "badge": "1,400 ev/s",
+      "shot": "assets/shots/gocdc.png",
+      "theme": "water",
+      "overview": "Most apps keep asking their database what changed. GoCDC listens to PostgreSQL's write-ahead log instead and streams every change to a Kafka-compatible broker (Redpanda) at 1,400 events a second. Changes fan out to Redis and MongoDB with under 150 ms of lag, and zero events were lost in a 500-concurrent-transaction benchmark.",
+      "metrics": [
+        { "val": "1,400", "lbl": "EVENTS / SEC" },
+        { "val": "<150ms", "lbl": "REPLICATION LAG" },
+        { "val": "0", "lbl": "LOST IN BENCHMARK" }
       ],
-      "stack": ["React (Vite)", "TypeScript", "FastAPI", "Pinecone", "Google Gemini API"],
+      "stack": ["Go", "PostgreSQL WAL", "Kafka / Redpanda", "Redis", "MongoDB", "Docker"],
       "links": {
-        "live": "https://dayta.example.com",
-        "github": "https://github.com/nithin0306/dayta"
+        "github": "https://github.com/nithin0306/gocdc"
       }
     },
     {
@@ -93,39 +94,41 @@
       "level": "2",
       "title": "Archivist",
       "tagline": "Autonomous ADR Enforcement Agent",
-      "status": "GitHub",
-      "badge": "LangGraph + MCP",
+      "role": "Solo Developer",
+      "status": "Active",
+      "badge": "<60s review",
       "shot": "assets/shots/archivist.png",
       "theme": "cinema",
-      "overview": "An autonomous GitHub Action utilizing LangGraph and Model Context Protocol (MCP) to dynamically parse pull request diffs, achieving 100% automated enforcement of Architecture Decision Records (ADRs).",
-      "highlights": [
-        "Engineered an autonomous GitHub Action using LangGraph and MCP to dynamically parse PR diffs and enforce ADR compliance.",
-        "Enforced CI/CD governance via GitHub API, catching and blocking injected violations such as client-side secret leaks during pipeline simulations.",
-        "Reduced architectural review feedback loop from hours of manual inspection to under 60 seconds with a secure webhook-driven override command."
+      "overview": "Teams agree on architecture rules, then forget them in code review. Archivist is a GitHub Action that reads each pull request with a LangGraph agent and checks it against the team's Architecture Decision Records. In simulations it blocked injected violations like client-side secret leaks, and cut feedback from hours to under 60 seconds.",
+      "metrics": [
+        { "val": "<60s", "lbl": "REVIEW FEEDBACK" },
+        { "val": "100%", "lbl": "ADRS ENFORCED" },
+        { "val": "Blocks", "lbl": "SECRET LEAKS" }
       ],
-      "stack": ["Python", "LangGraph", "GitHub Actions", "LLMs", "Model Context Protocol (MCP)"],
+      "stack": ["Python", "LangGraph", "Model Context Protocol (MCP)", "GitHub Actions", "LLMs"],
       "links": {
         "github": "https://github.com/nithin0306/archivist"
       }
     },
     {
-      "id": "gocdc",
+      "id": "dayta",
       "level": "3",
-      "title": "GoCDC",
-      "tagline": "High-Throughput Event-Driven CDC Pipeline",
-      "status": "GitHub",
-      "badge": "1,400 events/sec",
-      "shot": "assets/shots/gocdc.png",
-      "theme": "water",
-      "overview": "A Go-based Change Data Capture (CDC) engine utilizing PostgreSQL WAL logical decoding to stream DML events to Redpanda and Kafka at 1,400 events/sec, completely eliminating database polling overhead.",
-      "highlights": [
-        "Engineered a Go-based CDC engine streaming DML events to Redpanda at 1,400 events/sec utilizing PostgreSQL WAL logical decoding.",
-        "Architected a fault-tolerant polyglot persistence pipeline routing data from Postgres to Redis and MongoDB via Kafka with <150ms replication lag.",
-        "Containerized a 6-node microservice ecosystem using multi-stage Docker builds, reducing Go binary image sizes to 20MB."
+      "title": "Dayta",
+      "tagline": "Academic Ingestion & RAG Assistant",
+      "role": "Full Stack Developer",
+      "status": "Live",
+      "badge": "LIVE",
+      "shot": "assets/shots/dayta.png",
+      "theme": "study",
+      "overview": "Academic schedules are long PDFs nobody wants to search. Dayta reads them, stores the meaning in Pinecone, and answers questions in a chat that remembers the conversation. Guardrails keep every answer inside official university data, preventing hallucinations.",
+      "metrics": [
+        { "val": "RAG", "lbl": "PINECONE SEARCH" },
+        { "val": "Multi", "lbl": "TURN MEMORY" },
+        { "val": "Guarded", "lbl": "OFFICIAL DATA ONLY" }
       ],
-      "stack": ["Go (Golang)", "PostgreSQL", "Apache Kafka", "Redis", "MongoDB", "Docker"],
+      "stack": ["React (Vite)", "TypeScript", "FastAPI", "Pinecone", "Gemini API"],
       "links": {
-        "github": "https://github.com/nithin0306/gocdc"
+        "github": "https://github.com/nithin0306/dayta"
       }
     },
     {
@@ -133,51 +136,54 @@
       "level": "4",
       "title": "SkillUp",
       "tagline": "AI-Powered Skill Gap Analyzer",
+      "role": "Backend & AI Developer",
       "status": "Awarded",
-      "badge": "Hack101 · 2nd Place",
+      "badge": "Hack101 · 2nd",
       "shot": "assets/shots/skillup.png",
       "theme": "gap",
-      "overview": "An AI-powered workforce reskilling and resume analyzer that detects skill gaps against target roles and curates personalized project and course roadmaps.",
-      "highlights": [
-        "Secured 2nd place out of 30+ teams at the Hack101 Hackathon.",
-        "Built automated parser extracting requirement matrices across 50+ technology domains.",
-        "Generates milestone-driven learning roadmaps with step-by-step project suggestions."
+      "overview": "SkillUp reads a resume, compares it with a target role, and suggests the projects and courses that close the gaps. Built at Hack101 in a collaborative sprint and placed 2nd out of 30+ teams.",
+      "metrics": [
+        { "val": "2nd", "lbl": "HACK101" },
+        { "val": "30+", "lbl": "TEAMS" },
+        { "val": "Sprint", "lbl": "BUILD TIME" }
       ],
-      "stack": ["Python", "FastAPI", "NLP", "Machine Learning", "Vector Search"],
+      "stack": ["FastAPI", "Python", "Vector Search", "NLP", "React"],
       "links": {
         "github": "https://github.com/nithin0306/SkillUp"
       }
     }
   ],
   "skills": {
-    "languages": ["C", "C++", "Java", "JavaScript", "Python", "SQL", "Go (Golang)"],
-    "frameworks": ["React.js", "FastAPI", "Node.js", "Express.js", "LangChain", "LangGraph"],
-    "databases": ["PostgreSQL", "MongoDB", "Supabase", "Redis", "Pinecone"],
-    "tools": ["Git", "GitHub", "Docker", "Postman", "Linux", "Kafka", "FFmpeg"],
-    "concepts": ["Data Structures", "System Design", "Event-Driven Architecture", "SDLC", "RAG Pipelines"]
+    "languages": ["Go", "Python", "C", "C++", "Java", "JavaScript", "TypeScript", "SQL"],
+    "backend": ["FastAPI", "Node.js", "Express.js", "PostgreSQL", "MongoDB", "Redis", "Kafka / Redpanda", "Supabase"],
+    "ai": ["LangChain", "LangGraph", "Model Context Protocol (MCP)", "Pinecone", "Gemini API"],
+    "frontend": ["React.js", "Tailwind CSS"],
+    "tools": ["Git", "GitHub", "GitHub Actions", "Docker", "Postman", "Linux", "FFmpeg"]
   },
   "achievements": [
     {
       "id": "hack101",
       "rank": "2nd place",
+      "date": "Oct 2025",
       "event": "Hack101 (out of 30+ teams)",
       "project": "SkillUp",
-      "projectLink": "#/projects/skillup",
-      "note": "Developed SkillUp, an AI-powered resume analyzer that detects skill gaps and curates personalized project and course recommendations for target job roles."
+      "note": "Runner-up among 30+ teams for an AI resume analyzer that finds skill gaps and recommends projects and courses."
     },
     {
       "id": "build2break",
       "rank": "3rd place",
+      "date": "Jan 2026",
       "event": "Build2Break Hackathon (out of 80+ teams)",
       "project": "VITA-CARE",
-      "note": "Built VITA-CARE, a voice-integrated, Gemini AI-powered microservice ecosystem that automates healthcare appointment scheduling and WhatsApp medication reminders."
+      "note": "Third among 80+ teams for a voice-driven healthcare scheduling system that also sends WhatsApp medication reminders."
     },
     {
       "id": "gssoc",
       "rank": "Contributor",
+      "date": "2025",
       "event": "GirlScript Summer of Code (GSSoC)",
       "project": "Open Source",
-      "note": "Merged 4 pull requests across independent open-source repositories, spanning Redis-backed setup automation, API unit test coverage, and SEO metadata improvements."
+      "note": "Merged 4 pull requests: Redis-backed setup automation, API unit tests and SEO metadata fixes."
     }
   ]
 }

@@ -1,8 +1,8 @@
 // Main Bootloader: initializes world, windows, router
 
-import { initWorld } from "./world.js?v=24";
-import { initWindows, openWindow } from "./windows.js?v=24";
-import { initRouter } from "./router.js?v=24";
+import { initWorld } from "./world.js?v=26";
+import { initWindows, openWindow } from "./windows.js?v=26";
+import { initRouter } from "./router.js?v=26";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Boot sequence: world -> windows -> router

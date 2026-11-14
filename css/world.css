@@ -1037,3 +1037,69 @@
   0% { transform: translateY(12px) scale(0.7); opacity: 0; }
   100% { transform: translateY(0) scale(1); opacity: 1; }
 }
+
+/* ==========================================================================
+   NIGHT MODE & CAMPFIRE
+   ========================================================================== */
+
+.scene.night-mode .layer.over {
+  background-color: #182245;
+}
+
+.scene.night-mode .layer.over::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(2px 2px at 12% 16%, #ffffff 100%, transparent),
+    radial-gradient(1px 1px at 28% 28%, #ffffff 100%, transparent),
+    radial-gradient(2px 2px at 48% 12%, #ffd666 100%, transparent),
+    radial-gradient(1px 1px at 64% 34%, #ffffff 100%, transparent),
+    radial-gradient(2px 2px at 82% 20%, #ffffff 100%, transparent),
+    radial-gradient(1px 1px at 22% 52%, #ffd666 100%, transparent),
+    radial-gradient(2px 2px at 72% 44%, #ffffff 100%, transparent),
+    radial-gradient(1.5px 1.5px at 92% 12%, #ffffff 100%, transparent);
+  background-repeat: repeat;
+  background-size: 360px 260px;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+/* Sun becomes flat square moon */
+.scene.night-mode .sun {
+  background-color: #2b395e;
+  border-color: #43547f;
+}
+
+.scene.night-mode .sun i {
+  background-color: #e0e6ed;
+  border-color: #cbd5e1;
+}
+
+.scene.night-mode .sun i::after {
+  background-color: #cbd5e1;
+  border-color: #94a3b8;
+}
+
+/* Night Campfire beside Mario */
+.night-campfire {
+  position: absolute;
+  bottom: 124px;
+  left: calc(34% + 56px);
+  width: 32px;
+  height: 32px;
+  z-index: 3;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 50% 30%, #ffcc00 20%, #ff5500 55%, transparent 70%),
+    linear-gradient(45deg, #5c3818 20%, #301b0b 80%);
+  border: 2px solid #1a0d05;
+  box-shadow: 0 0 12px 2px rgba(255, 140, 20, 0.7);
+  animation: fireFlicker 0.4s steps(2) infinite alternate;
+}
+
+@keyframes fireFlicker {
+  0% { transform: scaleY(1) translateY(0); filter: brightness(1); }
+  100% { transform: scaleY(1.12) translateY(-2px); filter: brightness(1.25); }
+}

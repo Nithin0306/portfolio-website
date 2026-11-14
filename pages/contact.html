@@ -1,74 +1,78 @@
-<!-- Contact: Interactive Direct Links & Quick Message Console -->
-<div class="contact-window-content">
+<!-- Contact: Clean Flat Layout (No Box-in-Box Nesting, No Emojis, Human Tone) -->
+<div class="contact-flat-container">
 
-  <div class="contact-status">
-    <span class="contact-dot"></span>
-    <span>AVAILABLE FOR WORK · SDE Internships &amp; New Grad Roles</span>
-    <span class="contact-badge-reply">&lt;24H REPLY</span>
+  <!-- Status Line -->
+  <div class="contact-status-line">
+    <span class="status-dot-pulse"></span>
+    <span class="status-text">Open to SDE internships · Summer 2027</span>
   </div>
 
-  <!-- Interactive Quick Message Console -->
-  <div class="contact-console">
-    <div class="console-title-bar">
-      <span>⚡ QUICK DISPATCH CONSOLE</span>
-      <span class="console-blinker">● READY</span>
+  <!-- Message Composer -->
+  <div class="contact-composer">
+    <div class="contact-chips-bar" role="group" aria-label="Select message topic">
+      <span class="chips-label">TOPIC:</span>
+      <button type="button" class="contact-topic-chip is-active" data-topic="internship">[Internship]</button>
+      <button type="button" class="contact-topic-chip" data-topic="project">[Project]</button>
+      <button type="button" class="contact-topic-chip" data-topic="sayhi">[Say hi]</button>
     </div>
 
-    <div class="console-chips-label">SELECT VIBE / TOPIC:</div>
-    <div class="console-vibe-chips">
-      <button type="button" class="vibe-chip is-active" data-vibe="sde">💼 SDE Opportunity</button>
-      <button type="button" class="vibe-chip" data-vibe="collab">🤝 Project Collab</button>
-      <button type="button" class="vibe-chip" data-vibe="coffee">☕ Coffee Chat</button>
-      <button type="button" class="vibe-chip" data-vibe="sayhi">💬 Say Hi</button>
-    </div>
+    <label for="contactMessageInput" class="sr-only">Message to Nithin</label>
+    <textarea id="contactMessageInput" class="contact-clean-textarea" rows="4" spellcheck="false">Hi Nithin, I saw your portfolio and would like to talk about an SDE internship for Summer 2027.</textarea>
 
-    <textarea id="contactMessageInput" class="console-textarea" rows="3" placeholder="Type your message to Nithin...">Hi Nithin, I saw your portfolio and would love to discuss a Software Engineering opportunity with our team.</textarea>
-
-    <div class="console-actions">
-      <a id="contactMailtoLink" class="btn-retro pri" href="mailto:nithin.p.m2006@gmail.com?subject=SDE%20Opportunity&body=Hi%20Nithin%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20discuss%20a%20Software%20Engineering%20opportunity%20with%20our%20team.">
-        Launch Email ↗
+    <div class="contact-actions-row">
+      <a id="contactMailtoLink" class="btn-retro pri" href="mailto:nithinvs2006@gmail.com?subject=SDE%20Internship%20Inquiry&body=Hi%20Nithin%2C%20I%20saw%20your%20portfolio%20and%20would%20like%20to%20talk%20about%20an%20SDE%20internship%20for%20Summer%202027.">
+        Send Email ↗
       </a>
       <button type="button" class="btn-retro" id="copyMsgBtn">
-        Copy Message 📋
+        Copy Message
       </button>
     </div>
   </div>
 
-  <!-- Direct Channels List -->
-  <div class="contact-links-list">
+  <div class="contact-divider-line"></div>
 
-    <div class="contact-link-item">
-      <div class="contact-link-label">DIRECT EMAIL</div>
-      <div class="contact-link-row">
-        <a href="mailto:nithin.p.m2006@gmail.com" class="contact-link-val">nithin.p.m2006@gmail.com</a>
-        <button type="button" class="copy-email-btn" id="copyEmailBtn" data-email="nithin.p.m2006@gmail.com">Copy Email</button>
+  <!-- Elsewhere & ASCII Campfire Section -->
+  <div class="contact-lower-grid">
+    <div class="contact-elsewhere-list">
+      <div class="elsewhere-heading">ELSEWHERE</div>
+
+      <div class="elsewhere-row">
+        <span class="elsewhere-label">Email</span>
+        <div class="elsewhere-val-group">
+          <a href="mailto:nithinvs2006@gmail.com" class="elsewhere-link">nithinvs2006@gmail.com</a>
+          <button type="button" class="copy-pill-btn" id="copyEmailBtn" data-email="nithinvs2006@gmail.com">copy</button>
+        </div>
+      </div>
+
+      <div class="elsewhere-row">
+        <span class="elsewhere-label">LinkedIn</span>
+        <a href="https://linkedin.com/in/nithin-p-m-" target="_blank" rel="noopener noreferrer" class="elsewhere-link">linkedin.com/in/nithin-p-m- ↗</a>
+      </div>
+
+      <div class="elsewhere-row">
+        <span class="elsewhere-label">GitHub</span>
+        <a href="https://github.com/Nithin-24" target="_blank" rel="noopener noreferrer" class="elsewhere-link">github.com/Nithin-24 ↗</a>
+      </div>
+
+      <div class="elsewhere-row">
+        <span class="elsewhere-label">Location</span>
+        <span class="elsewhere-text">Coimbatore, Tamil Nadu, India (IST / UTC+5:30)</span>
       </div>
     </div>
 
-    <div class="contact-link-item">
-      <div class="contact-link-label">LINKEDIN</div>
-      <div class="contact-link-row">
-        <a href="https://linkedin.com/in/nithin-p-m-" target="_blank" rel="noopener noreferrer" class="contact-link-val">linkedin.com/in/nithin-p-m- ↗</a>
-        <span class="social-tag">Verified</span>
-      </div>
+    <!-- Retro Pixel / ASCII Campfire Art -->
+    <div class="contact-campfire-panel" aria-hidden="true">
+      <pre class="ascii-campfire">
+      (  .      )
+   )           (
+  (    (  *  )  )
+    )  ) / \ ( (
+   (__( ( . ) )__)
+    /=====\=====\
+   /=============\
+      </pre>
+      <div class="campfire-caption">Rest by the fire</div>
     </div>
-
-    <div class="contact-link-item">
-      <div class="contact-link-label">GITHUB</div>
-      <div class="contact-link-row">
-        <a href="https://github.com/nithin0306" target="_blank" rel="noopener noreferrer" class="contact-link-val">github.com/nithin0306 ↗</a>
-        <span class="social-tag">Open Source</span>
-      </div>
-    </div>
-
-    <div class="contact-link-item">
-      <div class="contact-link-label">LOCATION</div>
-      <div class="contact-link-row">
-        <span class="contact-link-val" style="color: var(--ink);">Coimbatore, Tamil Nadu · India</span>
-        <span class="social-tag">IST (UTC+5:30)</span>
-      </div>
-    </div>
-
   </div>
 
 </div>

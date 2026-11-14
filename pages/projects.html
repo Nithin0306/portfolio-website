@@ -1,53 +1,49 @@
-<!-- Projects: Master-Detail Two-Panel Layout -->
+<!-- Projects: Master-Detail Two-Panel Layout (Clean & Human Tone) -->
 <div class="projects-master-detail">
   <div class="projects-master" role="list">
 
     <button class="proj-card" data-proj="gocdc" role="listitem">
-      <div class="proj-card-icon">⚡</div>
       <div class="proj-card-body">
         <div class="proj-card-head">
           <span class="proj-card-name">GOCDC</span>
           <span class="proj-card-badge">1,400 ev/s</span>
         </div>
-        <p class="proj-card-hook">Streams database changes to Kafka at 1,400 events/sec without polling.</p>
+        <p class="proj-card-hook">Streams PostgreSQL changes straight to Kafka without polling.</p>
       </div>
     </button>
 
     <button class="proj-card" data-proj="archivist" role="listitem">
-      <div class="proj-card-icon">🤖</div>
       <div class="proj-card-body">
         <div class="proj-card-head">
           <span class="proj-card-name">ARCHIVIST</span>
-          <span class="proj-card-badge">&lt;60s cycle</span>
+          <span class="proj-card-badge">&lt;60s feedback</span>
         </div>
-        <p class="proj-card-hook">Autonomous GitHub Action enforcing Architecture Decision Records on every PR.</p>
+        <p class="proj-card-hook">A GitHub Action that reviews PRs against architectural decision records.</p>
       </div>
     </button>
 
     <button class="proj-card" data-proj="dayta" role="listitem">
-      <div class="proj-card-icon">🔍</div>
       <div class="proj-card-body">
         <div class="proj-card-head">
           <span class="proj-card-name">DAYTA</span>
-          <span class="proj-card-badge">&lt;1s latency</span>
+          <span class="proj-card-badge">RAG knowledge</span>
         </div>
-        <p class="proj-card-hook">RAG knowledge base: semantic search over academic schedules in under a second.</p>
+        <p class="proj-card-hook">Turn PDFs and internal notes into answers with exact source links.</p>
       </div>
     </button>
 
     <button class="proj-card" data-proj="skillup" role="listitem">
-      <div class="proj-card-icon">🏆</div>
       <div class="proj-card-body">
         <div class="proj-card-head">
           <span class="proj-card-name">SKILLUP</span>
           <span class="proj-card-badge">Hack101 · 2nd</span>
         </div>
-        <p class="proj-card-hook">AI reskilling engine that maps skill gaps and curates learning roadmaps.</p>
+        <p class="proj-card-hook">Tells you what to learn next based on live job market postings.</p>
       </div>
     </button>
 
   </div>
   <div id="projectDetailPane" class="projects-detail">
-    <p style="color: var(--muted); text-align: center; padding: 60px 20px; font-size: 14px;">← Select a project to view details</p>
+    <p style="color: var(--muted); text-align: center; padding: 60px 20px; font-size: 14px;">← Select a project to view architecture and specs</p>
   </div>
 </div>

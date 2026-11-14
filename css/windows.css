@@ -181,9 +181,24 @@
   border: 2px solid var(--ink);
 }
 
-/* Active window state */
+/* Active & Inactive window states */
 .retro-window.is-active {
   box-shadow: 8px 8px 0 var(--ink);
+  z-index: 60 !important;
+}
+
+/* Inactive window: dimmed titlebar to grey-tan (#bfb799) */
+.retro-window:not(.is-active) .window-titlebar {
+  background-color: #bfb799 !important;
+}
+
+.retro-window:not(.is-active) .window-title-text {
+  color: #4a4538 !important;
+  text-shadow: none !important;
+}
+
+.retro-window:not(.is-active) {
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45);
 }
 
 /* Minimized window */
@@ -1543,4 +1558,363 @@ a.contact-link-val:hover { color: #004499; }
 .floor .taskbar {
   position: relative;
   height: 52px;
+}
+
+/* ==========================================================================
+   WINDOW NAVIGATION FOOTER
+   ========================================================================== */
+
+.window-footer {
+  height: 38px;
+  background-color: var(--paper-2);
+  border-top: 2px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+  z-index: 4;
+}
+
+.window-footer-path {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.window-footer-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.win-nav-btn {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--ink);
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  padding: 4px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  transition: transform var(--t-fast), background var(--t-fast);
+}
+
+.win-nav-btn:hover {
+  background: var(--gold);
+  transform: translateY(-1px);
+}
+
+.win-nav-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   CONTACT: CLEAN FLAT LAYOUT
+   ========================================================================== */
+
+.contact-flat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 4px;
+}
+
+.contact-status-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.status-dot-pulse {
+  width: 10px;
+  height: 10px;
+  background-color: var(--green);
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  display: inline-block;
+  animation: dotPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.contact-chips-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.chips-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.contact-topic-chip {
+  background: var(--paper-2);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+
+.contact-topic-chip:hover {
+  background: var(--gold);
+  transform: translateY(-1px);
+}
+
+.contact-topic-chip.is-active {
+  background: var(--gold);
+  border-color: var(--ink);
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,0.2), 2px 2px 0 var(--ink);
+}
+
+.contact-clean-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 2px solid var(--ink);
+  box-shadow: inset 2px 2px 0 rgba(0,0,0,0.08);
+  font-family: var(--pf);
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 12px 14px;
+  color: var(--ink);
+  resize: vertical;
+  margin-bottom: 12px;
+}
+
+.contact-clean-textarea:focus {
+  outline: 2px solid var(--gold);
+}
+
+.contact-actions-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.contact-divider-line {
+  height: 2px;
+  background: var(--ink);
+  opacity: 0.2;
+  margin: 4px 0;
+}
+
+.contact-lower-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .contact-lower-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-elsewhere-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.elsewhere-heading {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.elsewhere-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 14px;
+}
+
+.elsewhere-label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  width: 76px;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+
+.elsewhere-val-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.elsewhere-link {
+  color: #1a4ab0;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.elsewhere-text {
+  color: var(--ink);
+}
+
+.copy-pill-btn {
+  background: var(--paper-2);
+  border: 1.5px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 1px 6px;
+  cursor: pointer;
+  transition: all var(--t-fast);
+}
+
+.copy-pill-btn:hover {
+  background: var(--gold);
+}
+
+/* ASCII Campfire Panel */
+.contact-campfire-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 16px;
+  background: #251d18;
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  color: #ffaa33;
+}
+
+.ascii-campfire {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.25;
+  margin: 0;
+  color: #ff9933;
+  text-shadow: 0 0 6px rgba(255, 140, 0, 0.6);
+  user-select: none;
+}
+
+.campfire-caption {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: #d8c2aa;
+  margin-top: 6px;
+  letter-spacing: 0.06em;
+}
+
+/* ==========================================================================
+   TASKBAR TERMINAL BUTTON & THEME TOGGLE
+   ========================================================================== */
+
+.taskbar-terminal-btn {
+  background: #111111;
+  color: #00ff66;
+  border: 2px solid #333333;
+  border-top-color: #555555;
+  border-left-color: #555555;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  margin-left: 8px;
+  box-shadow: 1px 1px 0 #000;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+
+.taskbar-terminal-btn:hover {
+  background: #222222;
+  color: #33ff88;
+  transform: translateY(-1px);
+}
+
+.taskbar-terminal-btn:active {
+  transform: translate(1px, 1px);
+}
+
+.tray-item.theme-toggle {
+  background: var(--paper-2);
+  border: 1.5px solid var(--ink);
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  padding: 3px 8px;
+  cursor: pointer;
+  box-shadow: 1px 1px 0 var(--ink);
+  transition: all var(--t-fast);
+}
+
+.tray-item.theme-toggle:hover {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+/* ==========================================================================
+   AWARDS: PIXEL RANK BADGES (NO EMOJIS)
+   ========================================================================== */
+
+.award-rank-badge {
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 8px;
+  background: var(--paper-2);
+  border: 2px solid var(--ink);
+  box-shadow: 2px 2px 0 var(--ink);
+  color: var(--ink);
+  min-width: 50px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.award-item.gold .award-rank-badge {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+.award-item.silver .award-rank-badge {
+  background: #d4d4d4;
+  color: var(--ink);
+}
+
+.award-item.bronze .award-rank-badge {
+  background: #cd7f32;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #000;
+}
+
+.award-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.award-date {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 700;
 }

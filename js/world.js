@@ -1,11 +1,11 @@
-import { sprite, tile } from "./sprites.js?v=24";
-import { PROFILE, loadProfile } from "./portfolio-data.js?v=24";
-import { playBump, playPickup, playVictory, play1Up, playWarp, toggleSound, updateSoundButton } from "./audio.js?v=24";
+import { sprite, tile } from "./sprites.js?v=26";
+import { PROFILE, loadProfile } from "./portfolio-data.js?v=26";
+import { playBump, playPickup, playVictory, play1Up, playWarp, toggleSound, updateSoundButton } from "./audio.js?v=26";
 // openWindow is imported lazily to avoid circular dep (windows.js imports world.js)
 let _openWindow = null;
 async function getOpenWindow() {
   if (!_openWindow) {
-    const mod = await import("./windows.js?v=24");
+    const mod = await import("./windows.js?v=26");
     _openWindow = mod.openWindow;
   }
   return _openWindow;

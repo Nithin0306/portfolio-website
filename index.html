@@ -14,19 +14,25 @@
   <meta name="theme-color" content="#5c94fc">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 
-  <!-- Google Fonts: Pixelify Sans (400, 500, 600, 700) & Press Start 2P -->
+  <!-- Google Fonts: Inter (digits only to fix '5' looking like 'S'), Pixelify Sans & Press Start 2P -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&text=0123456789.,%25%2B%3C%2F&display=swap"
+    rel="stylesheet">
   <link
     href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap"
     rel="stylesheet">
 
+  <!-- ascii.rest component script for optional atmospheric pieces -->
+  <script type="module" src="https://ascii.rest/ascii.js"></script>
+
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/tokens.css?v=24">
-  <link rel="stylesheet" href="css/base.css?v=24">
-  <link rel="stylesheet" href="css/world.css?v=24">
-  <link rel="stylesheet" href="css/sign.css?v=24">
-  <link rel="stylesheet" href="css/windows.css?v=24">
+  <link rel="stylesheet" href="css/tokens.css?v=26">
+  <link rel="stylesheet" href="css/base.css?v=26">
+  <link rel="stylesheet" href="css/world.css?v=26">
+  <link rel="stylesheet" href="css/sign.css?v=26">
+  <link rel="stylesheet" href="css/windows.css?v=26">
 
   <script>
     // Mark JS as enabled so world scene renders
@@ -65,7 +71,7 @@
       <img class="scenery-bush b1" id="sceneryBush1" alt="">
       <img class="scenery-bush b2" id="sceneryBush2" alt="">
 
-      <!-- Hanging Wooden Sign (Phase 5) -->
+      <!-- Hanging Wooden Sign (Phase 5 - Matching Approved Reference) -->
       <div class="sign" id="sign">
         <div class="chain-left"></div>
         <div class="chain-right"></div>
@@ -80,11 +86,10 @@
         </div>
         <h1 class="name">NITHIN</h1>
         <div class="role-line">
-          <span id="roleText">SDE intern,</span><span class="cursor"></span>
+          <span id="roleText">Backend Developer,</span><span class="cursor"></span>
         </div>
         <p class="summary">
-          CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into
-          software people actually use.
+          Hey! I'm Nithin, a Computer Science student at Amrita. I enjoy building backend systems, experimenting with new technologies, and turning ideas into software that actually works. Currently exploring distributed systems, backend architecture, and AI-powered applications.
         </p>
         <div class="tech-stack-row" aria-label="Core Engineering Stack">
           <span class="tech-badge">Go</span>
@@ -102,8 +107,11 @@
         </div>
       </div>
 
-      <!-- Centered Hint -->
+      <!-- Centered Hint (Directly on sky, no border box) -->
       <div class="hint">▾ hit a block to explore</div>
+
+      <!-- Night Mode Animated Campfire -->
+      <div id="nightCampfire" class="night-campfire" aria-hidden="true" hidden></div>
 
       <!-- Blocks Stage Container (Phone 3x2 Grid & Desktop centered blocks) -->
       <div class="blocks-container" id="blocksContainer">
@@ -131,13 +139,15 @@
       <div id="startMenu" hidden class="start-menu">
         <div class="start-menu-banner">PORTFOLIO OS 1-1</div>
         <div class="start-menu-items">
-          <button class="start-item" data-action="about">👤 About Me</button>
-          <button class="start-item" data-action="projects">⚡ Projects</button>
-          <button class="start-item" data-action="experience">💼 Experience</button>
-          <button class="start-item" data-action="awards">🏆 Awards</button>
-          <button class="start-item" data-action="resume">📄 Resume</button>
-          <button class="start-item" data-action="contact">✉️ Contact</button>
+          <button class="start-item" data-action="about">[ABOUT] About Me</button>
+          <button class="start-item" data-action="projects">[PROJECTS] Projects</button>
+          <button class="start-item" data-action="experience">[EXP] Experience</button>
+          <button class="start-item" data-action="awards">[AWARDS] Awards</button>
+          <button class="start-item" data-action="resume">[RESUME] Resume</button>
+          <button class="start-item" data-action="contact">[CONTACT] Contact</button>
           <div class="start-divider"></div>
+          <button class="start-item" data-action="terminal">&gt;_ Terminal</button>
+          <button class="start-item" data-action="toggle-theme"><span id="startThemeLabel">Theme: Day</span></button>
           <button class="start-item" data-action="toggle-sfx"><span id="startSfxLabel">SFX: Off</span></button>
         </div>
       </div>
@@ -150,9 +160,11 @@
             <img id="startHeroIcon" class="start-icon" alt="">
             START
           </button>
+          <button id="taskbarTerminal" class="taskbar-terminal-btn" title="Open Interactive Terminal">&gt;_ TERM</button>
           <div id="taskbarTabs" class="taskbar-tabs"></div>
           <div class="taskbar-tray">
-            <div id="trayAchievements" class="tray-item achievements" title="Achievements">🏆 <span id="trayScore">0/6</span></div>
+            <button id="trayDayNight" class="tray-item theme-toggle" title="Toggle Day/Night mode">DAY</button>
+            <div id="trayAchievements" class="tray-item achievements" title="Achievements">★ <span id="trayScore">0/6</span></div>
             <div id="traySfx" class="tray-item sfx-toggle" title="Toggle sound effects">SFX: OFF</div>
           </div>
         </div>
@@ -177,7 +189,7 @@
     </noscript>
   </main>
 
-  <script type="module" src="js/main.js?v=24"></script>
+  <script type="module" src="js/main.js?v=26"></script>
 </body>
 
 </html>

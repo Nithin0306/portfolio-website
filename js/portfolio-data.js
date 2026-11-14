@@ -6,10 +6,11 @@ export const PROFILE = {
   fullName: "Nithin Venkat Sharma P M",
   location: "Coimbatore, Tamil Nadu",
   tagline: "Software engineer in the making",
-  lead: "CSE student at Amrita, SDE intern, and Hack101 2nd place runner-up. Focused on backend engineering, distributed systems, and AI-driven architectures.",
+  lead: "B.Tech Computer Science student at Amrita (graduating 2028). Backend systems, event-driven pipelines, and LLM-powered tools.",
 
   status: "Open to opportunities",
-  summary: "CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into software people actually use.",
+  summary: "Hey! I'm Nithin, a Computer Science student at Amrita. I enjoy building backend systems, experimenting with new technologies, and turning ideas into software that actually works. Currently exploring distributed systems, backend architecture, and AI-powered applications.",
+  techStack: ["Go", "Python", "TypeScript", "Kafka", "FastAPI", "PostgreSQL", "Docker"],
   chips: [
     { label: "CSE @ Amrita", href: "#/about" },
     { label: "SDE Intern", href: "#/experience" },
@@ -24,21 +25,19 @@ export const PROFILE = {
 
   // Rotating titles for typewriter on the hanging wooden sign
   roles: [
+    "Backend Developer,",
     "SDE intern,",
-    "Backend & Systems Developer,",
     "AI-driven Architectures,",
-    "Hack101 runner-up,",
     "Building scalable software,"
   ],
 
   // Contact Coordinates
   contact: {
-    email: "nithin.p.m2006@gmail.com",
-    phone: "+91 73730 93900",
+    email: "nithinvs2006@gmail.com",
     linkedin: "https://linkedin.com/in/nithin-p-m-",
     linkedinDisplay: "linkedin.com/in/nithin-p-m-",
-    github: "https://github.com/nithin0306",
-    githubDisplay: "github.com/nithin0306",
+    github: "https://github.com/Nithin-24",
+    githubDisplay: "github.com/Nithin-24",
     resumePdf: "assets/resume.pdf"
   },
 
@@ -199,7 +198,7 @@ export const PROFILE = {
 
 export async function loadProfile() {
   try {
-    const res = await fetch("data/portfolio.json?v=24");
+    const res = await fetch("data/portfolio.json?v=26");
     if (res.ok) {
       const data = await res.json();
       Object.assign(PROFILE, data);

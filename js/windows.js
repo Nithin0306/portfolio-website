@@ -1,8 +1,8 @@
 // Retro OS Window Manager: manages draggable, stackable windows over the Mario surface world
 
-import { sprite } from "./sprites.js?v=24";
-import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=24";
-import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=24";
+import { sprite } from "./sprites.js?v=26";
+import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=26";
+import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=26";
 
 const SECTION_CONFIG = {
   about: { title: "ABOUT-ME", icon: "bulb", color: "about" },
@@ -10,8 +10,11 @@ const SECTION_CONFIG = {
   experience: { title: "EXPERIENCE", icon: "gear", color: "experience" },
   awards: { title: "AWARDS", icon: "trophy", color: "awards" },
   resume: { title: "RESUME", icon: "doc", color: "resume" },
-  contact: { title: "CONTACT", icon: "mail", color: "contact" }
+  contact: { title: "CONTACT", icon: "mail", color: "contact" },
+  terminal: { title: "TERMINAL", icon: "term", color: "projects" }
 };
+
+const SECTIONS_ORDER = ["about", "projects", "experience", "awards", "resume", "contact"];
 
 const pageCache = new Map();
 const openWindows = new Map(); // id -> element
@@ -33,6 +36,14 @@ export function initWindows() {
   taskbarTabsEl = document.getElementById("taskbarTabs");
   startMenuEl = document.getElementById("startMenu");
 
+  // Restore saved Theme (Day / Night)
+  try {
+    const savedTheme = localStorage.getItem("portfolio_theme");
+    if (savedTheme === "night") {
+      setTheme(true);
+    }
+  } catch {}
+
   // Wire Start Menu button
   const startBtn = document.getElementById("taskbarStart");
   if (startBtn) {
@@ -45,6 +56,15 @@ export function initWindows() {
     });
   }
 
+  // Wire Taskbar Terminal button
+  const termBtn = document.getElementById("taskbarTerminal");
+  if (termBtn) {
+    termBtn.addEventListener("click", () => {
+      playPickup();
+      openWindow("terminal");
+    });
+  }
+
   // Wire Start Menu items
   if (startMenuEl) {
     startMenuEl.addEventListener("click", (e) => {
@@ -54,6 +74,11 @@ export function initWindows() {
       if (action === "toggle-sfx") {
         toggleSound();
         updateSfxUi();
+      } else if (action === "toggle-theme") {
+        toggleTheme();
+      } else if (action === "terminal") {
+        playPickup();
+        openWindow("terminal");
       } else if (action && SECTION_CONFIG[action]) {
         openWindow(action);
       }
@@ -88,6 +113,13 @@ export function initWindows() {
     });
   }
 
+  const trayDayNight = document.getElementById("trayDayNight");
+  if (trayDayNight) {
+    trayDayNight.addEventListener("click", () => {
+      toggleTheme();
+    });
+  }
+
   const trayAch = document.getElementById("trayAchievements");
   if (trayAch) {
     trayAch.addEventListener("click", () => {
@@ -112,6 +144,32 @@ function updateSfxUi() {
   updateSoundButton();
 }
 
+function toggleTheme() {
+  const world = document.getElementById("world");
+  if (!world) return;
+  const isNight = world.classList.toggle("night-mode");
+  applyThemeUi(isNight);
+  try {
+    localStorage.setItem("portfolio_theme", isNight ? "night" : "day");
+  } catch {}
+}
+
+function setTheme(isNight) {
+  const world = document.getElementById("world");
+  if (!world) return;
+  world.classList.toggle("night-mode", isNight);
+  applyThemeUi(isNight);
+}
+
+function applyThemeUi(isNight) {
+  const trayBtn = document.getElementById("trayDayNight");
+  if (trayBtn) trayBtn.textContent = isNight ? "NIGHT" : "DAY";
+  const startThemeLabel = document.getElementById("startThemeLabel");
+  if (startThemeLabel) startThemeLabel.textContent = isNight ? "Theme: Night" : "Theme: Day";
+  const campfire = document.getElementById("nightCampfire");
+  if (campfire) campfire.hidden = !isNight;
+}
+
 function toggleStartMenu() {
   if (!startMenuEl) return;
   const isHidden = startMenuEl.hidden;
@@ -130,8 +188,8 @@ function closeStartMenu() {
 export async function openWindow(id, originRect = null) {
   if (!SECTION_CONFIG[id]) return;
 
-  // Mark section as seen and update score
-  if (!seen.has(id)) {
+  // Mark section as seen and update score (for portfolio main sections)
+  if (SECTIONS_ORDER.includes(id) && !seen.has(id)) {
     seen.add(id);
     syncBlockSprites();
     updateScore();
@@ -147,11 +205,20 @@ export async function openWindow(id, originRect = null) {
     return;
   }
 
+  // Auto-minimize oldest window if 4 non-minimized windows are already open
+  const openNonMin = [];
+  openWindows.forEach((w, wId) => {
+    if (!w.classList.contains("is-minimized")) openNonMin.push(wId);
+  });
+  if (openNonMin.length >= 4) {
+    minimizeWindow(openNonMin[0]);
+  }
+
   // Fetch page content
   let html = pageCache.get(id);
   if (!html) {
     try {
-      const res = await fetch(`pages/${id}.html?v=24`);
+      const res = await fetch(`pages/${id}.html?v=26`);
       if (res.ok) {
         html = await res.text();
         pageCache.set(id, html);
@@ -172,6 +239,26 @@ export async function openWindow(id, originRect = null) {
 
   const iconSrc = sprite(cfg.icon, 2);
 
+  // Calculate Navigation targets for window footer
+  const currentIdx = SECTIONS_ORDER.indexOf(id);
+  let navFooterHtml = "";
+  if (currentIdx !== -1) {
+    const prevId = SECTIONS_ORDER[(currentIdx - 1 + SECTIONS_ORDER.length) % SECTIONS_ORDER.length];
+    const nextId = SECTIONS_ORDER[(currentIdx + 1) % SECTIONS_ORDER.length];
+    const prevTitle = SECTION_CONFIG[prevId].title;
+    const nextTitle = SECTION_CONFIG[nextId].title;
+
+    navFooterHtml = `
+      <div class="window-footer">
+        <span class="window-footer-path">PORTFOLIO-OS 1-1 / ${cfg.title}</span>
+        <div class="window-footer-nav">
+          <button type="button" class="win-nav-btn btn-prev" data-target="${prevId}">◂ ${prevTitle}</button>
+          <button type="button" class="win-nav-btn btn-next" data-target="${nextId}">${nextTitle} ▸</button>
+        </div>
+      </div>
+    `;
+  }
+
   win.innerHTML = `
     <div class="window-titlebar">
       <div class="window-title-left">
@@ -186,11 +273,12 @@ export async function openWindow(id, originRect = null) {
     <div class="window-content" tabindex="-1">
       ${html}
     </div>
+    ${navFooterHtml}
   `;
 
-  // Stagger window position on desktop
+  // 28px Cascade positioning offset
   const count = openWindows.size;
-  const offset = (count % 4) * 26;
+  const offset = (count % 4) * 28;
   const isMobile = window.innerWidth <= 768;
 
   if (!isMobile) {
@@ -226,6 +314,23 @@ export async function openWindow(id, originRect = null) {
     closeBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       closeWindow(id);
+    });
+  }
+
+  // Wire footer navigation buttons
+  const prevBtn = win.querySelector(".btn-prev");
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      const target = prevBtn.dataset.target;
+      if (target) openWindow(target);
+    });
+  }
+
+  const nextBtn = win.querySelector(".btn-next");
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      const target = nextBtn.dataset.target;
+      if (target) openWindow(target);
     });
   }
 
@@ -274,6 +379,11 @@ export async function openWindow(id, originRect = null) {
   // If contact, wire copy email button & interactive console
   if (id === "contact") {
     initContactConsole(win);
+  }
+
+  // If terminal, wire interactive terminal prompt
+  if (id === "terminal") {
+    initTerminal(win);
   }
 
   // Update hash
@@ -361,48 +471,44 @@ function initResumeTabs(win) {
 }
 
 function initContactConsole(win) {
-  const vibeChips = win.querySelectorAll(".vibe-chip");
+  const topicChips = win.querySelectorAll(".contact-topic-chip");
   const msgInput = win.querySelector("#contactMessageInput");
   const mailtoLink = win.querySelector("#contactMailtoLink");
   const copyMsgBtn = win.querySelector("#copyMsgBtn");
   const copyEmailBtn = win.querySelector("#copyEmailBtn");
 
   const TEMPLATES = {
-    sde: {
-      subj: "SDE Opportunity @ [Company]",
-      msg: "Hi Nithin, I saw your portfolio and would love to discuss a Software Engineering opportunity with our team."
+    internship: {
+      subj: "SDE Internship Inquiry",
+      msg: "Hi Nithin, I saw your portfolio and would like to talk about an SDE internship for Summer 2027."
     },
-    collab: {
-      subj: "Project Collaboration Proposal",
-      msg: "Hey Nithin, I have an interesting distributed systems / AI project and would love to collaborate with you."
-    },
-    coffee: {
-      subj: "Casual Tech Chat",
-      msg: "Hi Nithin, let's grab a coffee or jump on a quick call to talk tech and engineering architecture."
+    project: {
+      subj: "Engineering Project Collaboration",
+      msg: "Hey Nithin, I came across your GoCDC and Archivist projects and would love to discuss a project collaboration."
     },
     sayhi: {
-      subj: "Hello from your portfolio visitor!",
-      msg: "Loved the NES Mario + Retro OS aesthetic of your portfolio! Wanted to drop a quick hello."
+      subj: "Hello from your portfolio visitor",
+      msg: "Loved the NES world and clean retro OS setup of your portfolio! Wanted to drop a quick hello."
     }
   };
 
-  let currentSubj = "SDE Opportunity @ [Company]";
+  let currentSubj = "SDE Internship Inquiry";
 
   function syncMailto() {
     if (!mailtoLink || !msgInput) return;
     const body = encodeURIComponent(msgInput.value);
     const subj = encodeURIComponent(currentSubj);
-    mailtoLink.href = `mailto:nithin.p.m2006@gmail.com?subject=${subj}&body=${body}`;
+    mailtoLink.href = `mailto:nithinvs2006@gmail.com?subject=${subj}&body=${body}`;
   }
 
-  vibeChips.forEach((chip) => {
+  topicChips.forEach((chip) => {
     chip.addEventListener("click", () => {
       playPickup();
-      vibeChips.forEach((c) => c.classList.remove("is-active"));
+      topicChips.forEach((c) => c.classList.remove("is-active"));
       chip.classList.add("is-active");
 
-      const vibe = chip.dataset.vibe;
-      const t = TEMPLATES[vibe] || TEMPLATES.sde;
+      const topic = chip.dataset.topic || "internship";
+      const t = TEMPLATES[topic] || TEMPLATES.internship;
       currentSubj = t.subj;
       if (msgInput) {
         msgInput.value = t.msg;
@@ -419,23 +525,66 @@ function initContactConsole(win) {
     copyMsgBtn.addEventListener("click", () => {
       navigator.clipboard.writeText(msgInput.value).then(() => {
         playPickup();
-        const orig = copyMsgBtn.innerHTML;
-        copyMsgBtn.innerHTML = "<span>✓ Copied!</span>";
-        setTimeout(() => { copyMsgBtn.innerHTML = orig; }, 2000);
+        const orig = copyMsgBtn.textContent;
+        copyMsgBtn.textContent = "✓ Copied!";
+        setTimeout(() => { copyMsgBtn.textContent = orig; }, 2000);
       });
     });
   }
 
   if (copyEmailBtn) {
     copyEmailBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText("nithin.p.m2006@gmail.com").then(() => {
+      const email = copyEmailBtn.dataset.email || "nithinvs2006@gmail.com";
+      navigator.clipboard.writeText(email).then(() => {
         playPickup();
-        const orig = copyEmailBtn.innerHTML;
-        copyEmailBtn.innerHTML = "<span>✓ Copied!</span>";
-        setTimeout(() => { copyEmailBtn.innerHTML = orig; }, 2000);
+        const orig = copyEmailBtn.textContent;
+        copyEmailBtn.textContent = "✓ copied!";
+        setTimeout(() => { copyEmailBtn.textContent = orig; }, 2000);
       });
     });
   }
+}
+
+function initTerminal(win) {
+  const form = win.querySelector("#termForm");
+  const input = win.querySelector("#termInput");
+  const output = win.querySelector("#termOutput");
+  if (!form || !input || !output) return;
+
+  const COMMANDS = {
+    help: "Available commands:\n  help        Show this list\n  about       View bio and education\n  projects    List key engineering builds\n  skills      Show core stack\n  clear       Clear terminal buffer\n  contact     Show email and links\n  exit        Close terminal",
+    about: "Nithin Venkat Sharma P M\nB.Tech CSE, Amrita Vishwa Vidyapeetham (2024-2028), CGPA: 8.85 / 10\nFocus: Backend systems, distributed engineering, LLM workflows",
+    projects: "Key Projects:\n  1. GoCDC      - 1,400 ev/s PostgreSQL WAL to Kafka engine (Go)\n  2. Archivist  - Autonomous ADR reviewer Action (Python, LangGraph)\n  3. Dayta      - RAG knowledge base with Pinecone (FastAPI, React)\n  4. SkillUp    - Job market path finder, Hack101 2nd place (TS)",
+    skills: "Languages: Go, Python, TypeScript, SQL, C, C++\nBackend:   PostgreSQL, Redis, Kafka/Redpanda, FastAPI\nInfra:     Docker, Linux, Git, GitHub Actions",
+    contact: "Email:    nithinvs2006@gmail.com\nGitHub:   github.com/Nithin-24\nLinkedIn: linkedin.com/in/nithin-p-m-\nLocation: Coimbatore, Tamil Nadu, India"
+  };
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const cmd = input.value.trim().toLowerCase();
+    input.value = "";
+    if (!cmd) return;
+
+    if (cmd === "clear") {
+      output.textContent = "";
+      return;
+    }
+
+    if (cmd === "exit") {
+      closeWindow("terminal");
+      return;
+    }
+
+    output.textContent += `\n\nvisitor@nithin.world:~$ ${cmd}\n`;
+    if (COMMANDS[cmd]) {
+      output.textContent += COMMANDS[cmd];
+    } else {
+      output.textContent += `Command not found: '${cmd}'. Type 'help' for available commands.`;
+    }
+
+    const content = win.querySelector(".window-content");
+    if (content) content.scrollTop = content.scrollHeight;
+  });
 }
 
 function addTaskbarTab(id, cfg, iconSrc) {
@@ -556,38 +705,38 @@ function closeTopWindow() {
   if (highest) closeWindow(highest);
 }
 
-// Master-detail interactive handler for Projects Window (Image 3 & 4)
+// Master-detail interactive handler for Projects Window
 const PROJECTS_DATA = {
   gocdc: {
-    title: "GOCDC · EVENT-DRIVEN PIPELINE",
+    title: "GOCDC · HIGH-THROUGHPUT CDC ENGINE",
     status: "SHIPPED",
     statusColor: "green",
     shot: "assets/shots/gocdc.png",
-    desc: "A Go-based Change Data Capture (CDC) streaming engine utilizing PostgreSQL WAL logical decoding via pgoutput to stream database events directly to Apache Kafka at 1,400 events/sec, completely eliminating database polling overhead.",
+    desc: "A change data capture engine written in Go. Reads the PostgreSQL write-ahead log directly via the pgoutput logical replication plugin, decodes row-level insert/update/delete events, and streams them into Kafka topics with sub-150ms replication lag. Built to understand how production pipelines handle crash recovery and backpressure.",
     metrics: [
       { val: "1,400 ev/s", lbl: "THROUGHPUT" },
       { val: "<150ms", lbl: "SYNC LAG" },
-      { val: "100%", lbl: "ORDERING" }
+      { val: "0", lbl: "LOST EVENTS" }
     ],
-    stack: ["Go (Golang)", "PostgreSQL WAL", "Apache Kafka", "Redis", "Docker"],
+    stack: ["Go (Golang)", "PostgreSQL WAL", "Kafka", "Docker"],
     links: [
-      { label: "Source Code ↗", href: "https://github.com/nithin0306/gocdc" }
+      { label: "Source Code ↗", href: "https://github.com/Nithin-24/gocdc" }
     ]
   },
   archivist: {
-    title: "ARCHIVIST · ARCHITECTURE BOT",
+    title: "ARCHIVIST · AI PR REVIEWER",
     status: "ACTIVE",
     statusColor: "green",
     shot: "assets/shots/archivist.png",
-    desc: "An autonomous GitHub Action utilizing LangGraph state machines and Model Context Protocol (MCP) to dynamically parse pull request diffs, achieving 100% automated enforcement of Architecture Decision Records (ADRs).",
+    desc: "A GitHub Action that catches architectural drift before merge. When a pull request is opened, Archivist parses the diff, queries the repo ADRs using LangGraph, checks whether the change violates team conventions (or leaks secrets), and posts inline review comments within 60 seconds.",
     metrics: [
-      { val: "<60s", lbl: "CYCLE TIME" },
-      { val: "100%", lbl: "ENFORCEMENT" },
-      { val: "0", lbl: "DRIFT" }
+      { val: "<60s", lbl: "FEEDBACK" },
+      { val: "100%", lbl: "ADR REVIEWS" },
+      { val: "0", lbl: "SECRET LEAKS" }
     ],
-    stack: ["Python", "LangGraph", "GitHub Actions", "MCP Protocol", "LLMs"],
+    stack: ["Python", "LangGraph", "GitHub Actions", "OpenAI API"],
     links: [
-      { label: "Source Code ↗", href: "https://github.com/nithin0306/archivist" }
+      { label: "Source Code ↗", href: "https://github.com/Nithin-24/archivist" }
     ]
   },
   dayta: {
@@ -595,31 +744,31 @@ const PROJECTS_DATA = {
     status: "LIVE",
     statusColor: "gold",
     shot: "assets/shots/dayta.png",
-    desc: "Processes multi-page academic schedules and course syllabi, generating high-density vector embeddings stored in Pinecone for rapid semantic search and sub-second conversational schedule querying.",
+    desc: "A retrieval-augmented generation app that indexes documents into Pinecone, performs hybrid search, and answers questions with direct citations. Built with conversational memory so follow-up questions stay in context.",
     metrics: [
-      { val: "<1s", lbl: "LATENCY" },
-      { val: "768-D", lbl: "VECTORS" },
-      { val: "100%", lbl: "ACCURACY" }
+      { val: "<1s", lbl: "QUERY TIME" },
+      { val: "Hybrid", lbl: "LEXICAL + SEMANTIC" },
+      { val: "100%", lbl: "SOURCED CITATIONS" }
     ],
-    stack: ["React (Vite)", "TypeScript", "FastAPI", "Pinecone", "Gemini API"],
+    stack: ["FastAPI", "Pinecone", "LangChain", "React"],
     links: [
-      { label: "Source Code ↗", href: "https://github.com/nithin0306/dayta" }
+      { label: "Source Code ↗", href: "https://github.com/Nithin-24/dayta" }
     ]
   },
   skillup: {
-    title: "SKILLUP · RESKILLING ENGINE",
+    title: "SKILLUP · CAREER PATH NAVIGATOR",
     status: "AWARDED",
     statusColor: "gold",
     shot: "assets/shots/skillup.png",
-    desc: "AI-driven workforce reskilling engine that detects engineering skill gaps against target roles and curates personalized roadmaps. Built in a 36-hour sprint and awarded 2nd place out of 30+ teams at Hack101.",
+    desc: "Parses job descriptions, compares required skills against what you already know, and generates a sequenced learning path. Won 2nd place out of 30+ teams at Hack101.",
     metrics: [
-      { val: "2ND", lbl: "HACK101" },
-      { val: "50+", lbl: "DOMAINS" },
-      { val: "36H", lbl: "SPRINT" }
+      { val: "2ND", lbl: "HACK101 RUNNER-UP" },
+      { val: "30+", lbl: "COMPETING TEAMS" },
+      { val: "36H", lbl: "HACKATHON SPRINT" }
     ],
-    stack: ["FastAPI", "Python", "Vector Search", "NLP", "React"],
+    stack: ["TypeScript", "Next.js", "Gemini API", "Tailwind CSS"],
     links: [
-      { label: "Source Code ↗", href: "https://github.com/nithin0306/skillup" }
+      { label: "Source Code ↗", href: "https://github.com/Nithin-24/skillup" }
     ]
   }
 };
