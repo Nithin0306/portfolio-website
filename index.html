@@ -28,11 +28,11 @@
   <script type="module" src="https://ascii.rest/ascii.js"></script>
 
   <!-- CSS Stylesheets -->
-  <link rel="stylesheet" href="css/tokens.css?v=26">
-  <link rel="stylesheet" href="css/base.css?v=26">
-  <link rel="stylesheet" href="css/world.css?v=26">
-  <link rel="stylesheet" href="css/sign.css?v=26">
-  <link rel="stylesheet" href="css/windows.css?v=26">
+  <link rel="stylesheet" href="css/tokens.css?v=28">
+  <link rel="stylesheet" href="css/base.css?v=28">
+  <link rel="stylesheet" href="css/world.css?v=28">
+  <link rel="stylesheet" href="css/sign.css?v=28">
+  <link rel="stylesheet" href="css/windows.css?v=28">
 
   <script>
     // Mark JS as enabled so world scene renders
@@ -63,8 +63,8 @@
   <div id="world" class="scene">
     <!-- Surface Layer -->
     <div class="layer over" id="over">
-      <!-- Sun & Randomized Clouds Container -->
-      <div class="sun"><i></i></div>
+      <!-- Sun / Moon & Randomized Clouds Container (Click to toggle Day/Night) -->
+      <div class="sun" id="sunToggle" role="button" tabindex="0" title="Click to toggle Night Mode" aria-label="Toggle Day and Night mode"><i></i></div>
       <div id="cloudsContainer" class="clouds-container"></div>
 
       <!-- Scenery: Authentic Pixel Bushes -->
@@ -89,7 +89,8 @@
           <span id="roleText">Backend Developer,</span><span class="cursor"></span>
         </div>
         <p class="summary">
-          Hey! I'm Nithin, a Computer Science student at Amrita. I enjoy building backend systems, experimenting with new technologies, and turning ideas into software that actually works. Currently exploring distributed systems, backend architecture, and AI-powered applications.
+          CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into
+          software people actually use.
         </p>
         <div class="tech-stack-row" aria-label="Core Engineering Stack">
           <span class="tech-badge">Go</span>
@@ -163,7 +164,6 @@
           <button id="taskbarTerminal" class="taskbar-terminal-btn" title="Open Interactive Terminal">&gt;_ TERM</button>
           <div id="taskbarTabs" class="taskbar-tabs"></div>
           <div class="taskbar-tray">
-            <button id="trayDayNight" class="tray-item theme-toggle" title="Toggle Day/Night mode">DAY</button>
             <div id="trayAchievements" class="tray-item achievements" title="Achievements">★ <span id="trayScore">0/6</span></div>
             <div id="traySfx" class="tray-item sfx-toggle" title="Toggle sound effects">SFX: OFF</div>
           </div>
@@ -189,7 +189,7 @@
     </noscript>
   </main>
 
-  <script type="module" src="js/main.js?v=26"></script>
+  <script type="module" src="js/main.js?v=28"></script>
 </body>
 
 </html>

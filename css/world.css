@@ -160,10 +160,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
-  pointer-events: none;
+  z-index: 20;
+  pointer-events: auto;
+  cursor: pointer;
   border-radius: 2px;
   animation: sunRingPulse 3.6s ease-in-out infinite;
+  transition: transform var(--t-fast);
+  user-select: none;
+}
+
+.sun:hover {
+  transform: scale(1.08);
+}
+
+.sun:active {
+  transform: scale(0.96);
 }
 
 .sun i {
@@ -788,7 +799,9 @@
     left: auto !important;
     width: 48px !important;
     height: 48px !important;
-    z-index: 4 !important;
+    z-index: 10 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -1066,20 +1079,47 @@
   z-index: 1;
 }
 
-/* Sun becomes flat square moon */
+/* Sun becomes glowing retro moon in night mode */
 .scene.night-mode .sun {
-  background-color: #2b395e;
-  border-color: #43547f;
+  background-color: rgba(185, 210, 245, 0.45);
+  border-radius: 2px;
+  animation: moonRingPulse 3.6s ease-in-out infinite;
 }
 
 .scene.night-mode .sun i {
-  background-color: #e0e6ed;
-  border-color: #cbd5e1;
+  display: block;
+  background-color: #e2eafc;
+  border: 5px solid #ffffff;
+  border-radius: 2px;
+  animation: moonInnerGlow 3.6s ease-in-out infinite;
 }
 
-.scene.night-mode .sun i::after {
-  background-color: #cbd5e1;
-  border-color: #94a3b8;
+@keyframes moonRingPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 20px 5px rgba(180, 215, 255, 0.65),
+      0 0 46px 16px rgba(120, 165, 245, 0.4);
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 38px 14px rgba(210, 235, 255, 0.95),
+      0 0 72px 26px rgba(150, 190, 255, 0.65);
+    filter: brightness(1.25);
+    transform: scale(1.04);
+  }
+}
+
+@keyframes moonInnerGlow {
+  0%, 100% {
+    filter: brightness(1);
+    box-shadow: inset -6px -6px 0 rgba(140, 170, 215, 0.45);
+  }
+  50% {
+    filter: brightness(1.22);
+    box-shadow: inset -6px -6px 0 rgba(140, 170, 215, 0.25);
+  }
 }
 
 /* Night Campfire beside Mario */

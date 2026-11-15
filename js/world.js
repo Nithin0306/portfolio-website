@@ -1,11 +1,11 @@
-import { sprite, tile } from "./sprites.js?v=26";
-import { PROFILE, loadProfile } from "./portfolio-data.js?v=26";
-import { playBump, playPickup, playVictory, play1Up, playWarp, toggleSound, updateSoundButton } from "./audio.js?v=26";
+import { sprite, tile } from "./sprites.js?v=28";
+import { PROFILE, loadProfile } from "./portfolio-data.js?v=28";
+import { playBump, playPickup, playVictory, play1Up, playWarp, toggleSound, updateSoundButton } from "./audio.js?v=28";
 // openWindow is imported lazily to avoid circular dep (windows.js imports world.js)
 let _openWindow = null;
 async function getOpenWindow() {
   if (!_openWindow) {
-    const mod = await import("./windows.js?v=26");
+    const mod = await import("./windows.js?v=28");
     _openWindow = mod.openWindow;
   }
   return _openWindow;
@@ -135,12 +135,29 @@ export function updateSignContent() {
   const nameEl = document.querySelector("#sign .name");
   if (nameEl && PROFILE.name) nameEl.textContent = PROFILE.name;
 
+  const roleEl = document.querySelector("#roleText");
+  if (roleEl && PROFILE.roles && PROFILE.roles.length === 1) {
+    roleEl.textContent = PROFILE.roles[0];
+  }
+
   const summaryEl = document.querySelector("#sign .summary");
-  if (summaryEl && PROFILE.summary) summaryEl.textContent = PROFILE.summary;
+  if (summaryEl && PROFILE.summary) {
+    if (typeof PROFILE.summary === "string" && PROFILE.summary.includes("\n\n")) {
+      summaryEl.innerHTML = PROFILE.summary.split("\n\n").map(p => `<p>${p.trim()}</p>`).join("");
+    } else {
+      summaryEl.innerHTML = `<p>${PROFILE.summary}</p>`;
+    }
+  }
 
   const techEl = document.querySelector("#sign .tech-stack-row");
-  if (techEl && Array.isArray(PROFILE.techStack)) {
-    techEl.innerHTML = PROFILE.techStack.map(t => `<span class="tech-badge">${t}</span>`).join("\n");
+  if (techEl) {
+    if (Array.isArray(PROFILE.techStack) && PROFILE.techStack.length > 0) {
+      techEl.innerHTML = PROFILE.techStack.map(t => `<span class="tech-badge">${t}</span>`).join("\n");
+      techEl.style.display = "";
+    } else {
+      techEl.innerHTML = "";
+      techEl.style.display = "none";
+    }
   }
 
   const chipsEl = document.querySelector("#sign .chips-row");
@@ -475,11 +492,12 @@ function startTypewriter() {
       charIndex++;
       roleTextEl.textContent = currentLine.substring(0, charIndex);
       if (charIndex === currentLine.length) {
+        if (roles.length === 1) return; // stay once typed!
         isDeleting = true;
         setTimeout(typeStep, 2400); // hold for 2.4s
         return;
       }
-      setTimeout(typeStep, 55); // 55ms per char
+      setTimeout(typeStep, 40); // 40ms per char
     }
   }
 

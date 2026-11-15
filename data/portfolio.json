@@ -5,11 +5,12 @@
   "location": "Coimbatore, Tamil Nadu",
   "tagline": "Software engineer in the making",
   "lead": "CSE student at Amrita, SDE intern, and Hack101 2nd place runner-up. Focused on backend engineering, distributed systems, and AI-driven architectures.",
-  "summary": "Hey! I'm Nithin, a Computer Science student at Amrita. I enjoy building backend systems, experimenting with new technologies, and turning ideas into software that actually works. Currently exploring distributed systems, backend architecture, and AI-powered applications.",
+  "summary": "CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into software people actually use.",
   "roles": [
-    "Backend Developer,",
     "SDE intern,",
+    "Backend & Systems Developer,",
     "AI-driven Architectures,",
+    "Hack101 runner-up,",
     "Building scalable software,"
   ],
   "techStack": [

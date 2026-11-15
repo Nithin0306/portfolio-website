@@ -111,6 +111,12 @@
 }
 
 .window-btn {
+  position: relative;
+  z-index: 20;
+  pointer-events: auto;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
   width: 22px;
   height: 22px;
   background: #ffffff;
@@ -184,7 +190,6 @@
 /* Active & Inactive window states */
 .retro-window.is-active {
   box-shadow: 8px 8px 0 var(--ink);
-  z-index: 60 !important;
 }
 
 /* Inactive window: dimmed titlebar to grey-tan (#bfb799) */
@@ -275,6 +280,14 @@
   line-height: 1.6;
   margin-bottom: 20px;
   color: var(--ink);
+}
+
+.about-bio-text p {
+  margin: 0 0 14px 0;
+}
+
+.about-bio-text p:last-child {
+  margin-bottom: 0;
 }
 
 .about-spec-grid {
@@ -1793,34 +1806,25 @@ a.contact-link-val:hover { color: #004499; }
   background: var(--gold);
 }
 
-/* ASCII Campfire Panel */
-.contact-campfire-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 16px;
-  background: #251d18;
+/* Contact Photo Panel */
+.contact-photo-panel {
+  width: 140px;
+  height: 140px;
   border: 2px solid var(--ink);
   box-shadow: 3px 3px 0 var(--ink);
-  color: #ffaa33;
+  background: var(--paper-2);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.ascii-campfire {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 1.25;
-  margin: 0;
-  color: #ff9933;
-  text-shadow: 0 0 6px rgba(255, 140, 0, 0.6);
-  user-select: none;
-}
-
-.campfire-caption {
-  font-family: var(--font-pixel);
-  font-size: 9px;
-  color: #d8c2aa;
-  margin-top: 6px;
-  letter-spacing: 0.06em;
+.contact-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 /* ==========================================================================

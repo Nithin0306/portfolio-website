@@ -125,12 +125,12 @@
   font-weight: 700;
   color: var(--sign-text);
   min-height: 28px;
-  height: 28px;
-  line-height: 28px;
+  height: auto;
+  line-height: 1.4;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   margin-bottom: 12px;
-  overflow: hidden;
 }
 
 .sign .role-line .cursor {
@@ -148,13 +148,21 @@
   50% { opacity: 0; }
 }
 
-/* 6. Summary Paragraph */
+/* 6. Summary Paragraphs */
 .sign .summary {
   font-family: var(--font-body);
-  font-size: 15px;
-  line-height: 1.6;
+  font-size: 14.5px;
+  line-height: 1.55;
   color: var(--sign-soft);
   margin-bottom: 16px;
+}
+
+.sign .summary p {
+  margin: 0 0 10px 0;
+}
+
+.sign .summary p:last-child {
+  margin-bottom: 0;
 }
 
 /* 7. Core Tech Stack Row (Replaced Redundant Tags) */

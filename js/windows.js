@@ -1,8 +1,8 @@
 // Retro OS Window Manager: manages draggable, stackable windows over the Mario surface world
 
-import { sprite } from "./sprites.js?v=26";
-import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=26";
-import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=26";
+import { sprite } from "./sprites.js?v=28";
+import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=28";
+import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=28";
 
 const SECTION_CONFIG = {
   about: { title: "ABOUT-ME", icon: "bulb", color: "about" },
@@ -113,17 +113,19 @@ export function initWindows() {
     });
   }
 
-  const trayDayNight = document.getElementById("trayDayNight");
-  if (trayDayNight) {
-    trayDayNight.addEventListener("click", () => {
+  // Wire Sun/Moon click to toggle Day/Night mode
+  const sunBtn = document.getElementById("sunToggle") || document.querySelector(".sun");
+  if (sunBtn) {
+    sunBtn.addEventListener("click", () => {
+      playPickup();
       toggleTheme();
     });
-  }
-
-  const trayAch = document.getElementById("trayAchievements");
-  if (trayAch) {
-    trayAch.addEventListener("click", () => {
-      openWindow("awards");
+    sunBtn.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        playPickup();
+        toggleTheme();
+      }
     });
   }
 
@@ -162,8 +164,11 @@ function setTheme(isNight) {
 }
 
 function applyThemeUi(isNight) {
-  const trayBtn = document.getElementById("trayDayNight");
-  if (trayBtn) trayBtn.textContent = isNight ? "NIGHT" : "DAY";
+  const sunBtn = document.getElementById("sunToggle") || document.querySelector(".sun");
+  if (sunBtn) {
+    sunBtn.title = isNight ? "Click to toggle Day Mode (Sun)" : "Click to toggle Night Mode (Moon)";
+    sunBtn.setAttribute("aria-label", isNight ? "Switch to day mode" : "Switch to night mode");
+  }
   const startThemeLabel = document.getElementById("startThemeLabel");
   if (startThemeLabel) startThemeLabel.textContent = isNight ? "Theme: Night" : "Theme: Day";
   const campfire = document.getElementById("nightCampfire");
@@ -218,7 +223,7 @@ export async function openWindow(id, originRect = null) {
   let html = pageCache.get(id);
   if (!html) {
     try {
-      const res = await fetch(`pages/${id}.html?v=26`);
+      const res = await fetch(`pages/${id}.html?v=28`);
       if (res.ok) {
         html = await res.text();
         pageCache.set(id, html);
@@ -303,18 +308,28 @@ export async function openWindow(id, originRect = null) {
   // Wire titlebar controls
   const minBtn = win.querySelector(".btn-min");
   if (minBtn) {
-    minBtn.addEventListener("click", (e) => {
+    const handleMin = (e) => {
       e.stopPropagation();
+      e.preventDefault();
+      playPickup();
       minimizeWindow(id);
-    });
+    };
+    minBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
+    minBtn.addEventListener("mousedown", (e) => e.stopPropagation());
+    minBtn.addEventListener("click", handleMin);
   }
 
   const closeBtn = win.querySelector(".btn-close");
   if (closeBtn) {
-    closeBtn.addEventListener("click", (e) => {
+    const handleClose = (e) => {
       e.stopPropagation();
+      e.preventDefault();
+      playPickup();
       closeWindow(id);
-    });
+    };
+    closeBtn.addEventListener("pointerdown", (e) => e.stopPropagation());
+    closeBtn.addEventListener("mousedown", (e) => e.stopPropagation());
+    closeBtn.addEventListener("click", handleClose);
   }
 
   // Wire footer navigation buttons
@@ -334,8 +349,9 @@ export async function openWindow(id, originRect = null) {
     });
   }
 
-  // Clicking window raises it to front
-  win.addEventListener("pointerdown", () => {
+  // Clicking window raises it to front (ignore clicks on window control buttons)
+  win.addEventListener("pointerdown", (e) => {
+    if (e.target.closest(".window-btn")) return;
     focusWindow(id);
   });
 
@@ -619,6 +635,9 @@ export function focusWindow(id) {
   if (!win) return;
 
   win.style.zIndex = ++topZIndex;
+  if (containerEl && win.parentElement === containerEl && containerEl.lastElementChild !== win) {
+    containerEl.appendChild(win);
+  }
 
   // Toggle active class on all windows
   openWindows.forEach((w) => w.classList.remove("is-active"));
