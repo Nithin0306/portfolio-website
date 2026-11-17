@@ -60,17 +60,17 @@
   --study-2: #2a9a88;
 
   /* 2.2 Type tokens */
-  --fs-xs: 12px;
-  --fs-s: 14px;
-  --fs-m: 16px;
+  --fs-xs: 13px;
+  --fs-s: 15px;
+  --fs-m: 17px;
   --fs-l: 24px;
   --fs-xl: clamp(32px, 5vw, 56px);
 
-  --pf: "Inter", "Pixelify Sans", "Courier New", monospace;
+  --pf: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --ps: "Press Start 2P", "Courier New", monospace;
 
   --font-pixel: var(--ps);
-  --font-mono: var(--pf);
+  --font-mono: "Inter", "Courier New", monospace;
   --font-body: var(--pf);
 
   /* 2.3 Space, borders, shadows */

@@ -1,8 +1,8 @@
 // Retro OS Window Manager: manages draggable, stackable windows over the Mario surface world
 
-import { sprite } from "./sprites.js?v=28";
-import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=28";
-import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=28";
+import { sprite } from "./sprites.js?v=30";
+import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=30";
+import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=30";
 
 const SECTION_CONFIG = {
   about: { title: "ABOUT-ME", icon: "bulb", color: "about" },
@@ -223,7 +223,7 @@ export async function openWindow(id, originRect = null) {
   let html = pageCache.get(id);
   if (!html) {
     try {
-      const res = await fetch(`pages/${id}.html?v=28`);
+      const res = await fetch(`pages/${id}.html?v=30`);
       if (res.ok) {
         html = await res.text();
         pageCache.set(id, html);
@@ -255,7 +255,7 @@ export async function openWindow(id, originRect = null) {
 
     navFooterHtml = `
       <div class="window-footer">
-        <span class="window-footer-path">PORTFOLIO-OS 1-1 / ${cfg.title}</span>
+        <span class="window-footer-path">${cfg.title}</span>
         <div class="window-footer-nav">
           <button type="button" class="win-nav-btn btn-prev" data-target="${prevId}">◂ ${prevTitle}</button>
           <button type="button" class="win-nav-btn btn-next" data-target="${nextId}">${nextTitle} ▸</button>
@@ -287,8 +287,8 @@ export async function openWindow(id, originRect = null) {
   const isMobile = window.innerWidth <= 768;
 
   if (!isMobile) {
-    const desktopLeft = Math.max(20, Math.round((window.innerWidth - 860) / 2) + offset - 30);
-    const desktopTop = Math.max(30, Math.round((window.innerHeight - 560) / 2) + offset - 40);
+    const desktopLeft = Math.max(16, Math.round((window.innerWidth - 900) / 2) + offset - 30);
+    const desktopTop = Math.max(20, Math.round((window.innerHeight - 580) / 2) + offset - 40);
     win.style.left = `${desktopLeft}px`;
     win.style.top = `${desktopTop}px`;
     win.style.setProperty("--win-left", `${desktopLeft}px`);
@@ -458,29 +458,15 @@ function makeDraggable(win) {
 }
 
 function initResumeTabs(win) {
-  const tabBtns = win.querySelectorAll(".resume-tab-btn");
-  const tabPanes = win.querySelectorAll(".resume-tab-pane");
-
-  tabBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const target = btn.dataset.tab;
-      playPickup();
-
-      tabBtns.forEach((b) => {
-        const active = b === btn;
-        b.classList.toggle("is-active", active);
-        b.setAttribute("aria-selected", String(active));
-      });
-
-      tabPanes.forEach((pane) => {
-        pane.style.display = pane.id === `resumeTab-${target}` ? "block" : "none";
-      });
-    });
-  });
+  const downloadBtn = win.querySelector("#resumeDownloadBtn");
+  if (downloadBtn) {
+    downloadBtn.addEventListener("click", () => playPickup());
+  }
 
   const printBtn = win.querySelector("#resumePrintBtn");
   if (printBtn) {
     printBtn.addEventListener("click", () => {
+      playPickup();
       window.print();
     });
   }
@@ -759,14 +745,14 @@ const PROJECTS_DATA = {
     ]
   },
   dayta: {
-    title: "DAYTA · RAG KNOWLEDGE BASE",
+    title: "DAYTA · AI DOCUMENT ASSISTANT",
     status: "LIVE",
     statusColor: "gold",
     shot: "assets/shots/dayta.png",
     desc: "A retrieval-augmented generation app that indexes documents into Pinecone, performs hybrid search, and answers questions with direct citations. Built with conversational memory so follow-up questions stay in context.",
     metrics: [
       { val: "<1s", lbl: "QUERY TIME" },
-      { val: "Hybrid", lbl: "LEXICAL + SEMANTIC" },
+      { val: "Pinecone", lbl: "VECTOR DATABASE" },
       { val: "100%", lbl: "SOURCED CITATIONS" }
     ],
     stack: ["FastAPI", "Pinecone", "LangChain", "React"],

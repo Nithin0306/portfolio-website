@@ -9,7 +9,8 @@ export const PROFILE = {
   lead: "CSE student at Amrita, SDE intern, and Hack101 2nd place runner-up. Focused on backend engineering, distributed systems, and AI-driven architectures.",
 
   status: "Open to opportunities",
-  summary: "CSE student at Amrita and SDE intern. I build AI-driven and web products, and I like turning ideas into software people actually use.",
+  summary:
+    "Computer Science student at Amrita, exploring backend engineering, distributed systems, and AI agents. I enjoy exploring ideas and bringing them to life through code.",
   techStack: [
     "Go",
     "Python",
@@ -17,18 +18,23 @@ export const PROFILE = {
     "Kafka",
     "FastAPI",
     "PostgreSQL",
-    "Docker"
+    "Docker",
   ],
   chips: [
     { label: "CSE @ Amrita", href: "#/about" },
     { label: "SDE Intern", href: "#/experience" },
     { label: "Hack101 · 2nd place", href: "#/awards" },
-    { label: "4 projects", href: "#/projects" }
+    { label: "4 projects", href: "#/projects" },
   ],
   buttons: [
-    { label: "Resume ↓", href: "assets/resume.pdf", primary: true, download: true },
+    {
+      label: "Resume ↓",
+      href: "assets/resume.pdf",
+      primary: true,
+      download: true,
+    },
     { label: "View projects", href: "#/projects" },
-    { label: "Contact", href: "#/contact" }
+    { label: "Contact", href: "#/contact" },
   ],
 
   // Rotating titles for typewriter on the hanging wooden sign
@@ -37,17 +43,17 @@ export const PROFILE = {
     "Backend & Systems Developer,",
     "AI-driven Architectures,",
     "Hack101 runner-up,",
-    "Building scalable software,"
+    "Building scalable software,",
   ],
 
   // Contact Coordinates
   contact: {
-    email: "nithinvs2006@gmail.com",
+    email: "nithin.p.m2006@gmail.com",
     linkedin: "https://linkedin.com/in/nithin-p-m-",
     linkedinDisplay: "linkedin.com/in/nithin-p-m-",
-    github: "https://github.com/Nithin-24",
-    githubDisplay: "github.com/Nithin-24",
-    resumePdf: "assets/resume.pdf"
+    github: "https://github.com/Nithin0306",
+    githubDisplay: "github.com/Nithin0306",
+    resumePdf: "assets/resume.pdf",
   },
 
   // Education
@@ -56,7 +62,7 @@ export const PROFILE = {
     location: "Coimbatore, Tamil Nadu",
     degree: "B.Tech in Computer Science and Engineering",
     period: "Aug 2024 – May 2028",
-    cgpa: "8.85 / 10"
+    cgpa: "8.85 / 10",
   },
 
   // Work & Club Experience
@@ -68,8 +74,8 @@ export const PROFILE = {
       period: "Jul 2025 – Apr 2026",
       bullets: [
         "Built the 'Featured Projects' and 'All Projects' pages with React and Tailwind CSS, achieving a 99 Lighthouse performance score with 0.3s First Contentful Paint and zero cumulative layout shift.",
-        "Implemented responsive, terminal-style interactive card layouts with uniform rendering across mobile and desktop viewports, contributing to 98 accessibility and 100 SEO scores for the pages."
-      ]
+        "Implemented responsive, terminal-style interactive card layouts with uniform rendering across mobile and desktop viewports, contributing to 98 accessibility and 100 SEO scores for the pages.",
+      ],
     },
     {
       id: "pedagogy",
@@ -79,9 +85,9 @@ export const PROFILE = {
       bullets: [
         "Architected an AI pipeline that transforms raw webinar recordings into structured courses, reducing manual production time from 8 hours to under 15 minutes.",
         "Bypassed API file-size constraints by building a multi-threaded chunking engine that runs 20-minute audio slices in parallel, maintaining perfect timestamp alignment.",
-        "Developed an automated speech-stitching and MCQ generation system that strips awkward Q&A pauses via FFmpeg and builds 5 scenario-based quizzes per lesson."
-      ]
-    }
+        "Developed an automated speech-stitching and MCQ generation system that strips awkward Q&A pauses via FFmpeg and builds 5 scenario-based quizzes per lesson.",
+      ],
+    },
   ],
 
   // 4 Featured Level Projects
@@ -95,17 +101,24 @@ export const PROFILE = {
       badge: "Gemini + Pinecone",
       shot: "assets/shots/dayta.png",
       theme: "study", // study / knowledge ingestion
-      overview: "Processes multi-page academic schedules and course syllabi, generating high-density vector embeddings stored in Pinecone for rapid semantic search and conversational schedule querying.",
+      overview:
+        "Processes multi-page academic schedules and course syllabi, generating high-density vector embeddings stored in Pinecone for rapid semantic search and conversational schedule querying.",
       highlights: [
         "Engineered an automated document ingestion pipeline converting multi-page academic schedules into high-density vector embeddings.",
         "Implemented conversational guardrails with windowed session memory, confining responses strictly to official university data to eliminate hallucinations.",
-        "Built a lightweight, modular backend architecture utilizing FastAPI and asynchronous pipeline execution for sub-second query turnaround."
+        "Built a lightweight, modular backend architecture utilizing FastAPI and asynchronous pipeline execution for sub-second query turnaround.",
       ],
-      stack: ["React (Vite)", "TypeScript", "FastAPI", "Pinecone", "Google Gemini API"],
+      stack: [
+        "React (Vite)",
+        "TypeScript",
+        "FastAPI",
+        "Pinecone",
+        "Google Gemini API",
+      ],
       links: {
         live: "https://dayta.example.com",
-        github: "https://github.com/nithin0306/dayta"
-      }
+        github: "https://github.com/nithin0306/dayta",
+      },
     },
     {
       id: "archivist",
@@ -116,16 +129,23 @@ export const PROFILE = {
       badge: "LangGraph + MCP",
       shot: "assets/shots/archivist.png",
       theme: "cinema", // agent graph inspection
-      overview: "An autonomous GitHub Action utilizing LangGraph and Model Context Protocol (MCP) to dynamically parse pull request diffs, achieving 100% automated enforcement of Architecture Decision Records (ADRs).",
+      overview:
+        "An autonomous GitHub Action utilizing LangGraph and Model Context Protocol (MCP) to dynamically parse pull request diffs, achieving 100% automated enforcement of Architecture Decision Records (ADRs).",
       highlights: [
         "Engineered an autonomous GitHub Action using LangGraph and MCP to dynamically parse PR diffs and enforce ADR compliance.",
         "Enforced CI/CD governance via GitHub API, catching and blocking injected violations such as client-side secret leaks during pipeline simulations.",
-        "Reduced architectural review feedback loop from hours of manual inspection to under 60 seconds with a secure webhook-driven override command."
+        "Reduced architectural review feedback loop from hours of manual inspection to under 60 seconds with a secure webhook-driven override command.",
       ],
-      stack: ["Python", "LangGraph", "GitHub Actions", "LLMs", "Model Context Protocol (MCP)"],
+      stack: [
+        "Python",
+        "LangGraph",
+        "GitHub Actions",
+        "LLMs",
+        "Model Context Protocol (MCP)",
+      ],
       links: {
-        github: "https://github.com/nithin0306/archivist"
-      }
+        github: "https://github.com/nithin0306/archivist",
+      },
     },
     {
       id: "gocdc",
@@ -136,16 +156,24 @@ export const PROFILE = {
       badge: "1,400 events/sec",
       shot: "assets/shots/gocdc.png",
       theme: "water", // high-velocity data stream
-      overview: "A Go-based Change Data Capture (CDC) engine utilizing PostgreSQL WAL logical decoding to stream DML events to Redpanda and Kafka at 1,400 events/sec, completely eliminating database polling overhead.",
+      overview:
+        "A Go-based Change Data Capture (CDC) engine utilizing PostgreSQL WAL logical decoding to stream DML events to Redpanda and Kafka at 1,400 events/sec, completely eliminating database polling overhead.",
       highlights: [
         "Engineered a Go-based CDC engine streaming DML events to Redpanda at 1,400 events/sec utilizing PostgreSQL WAL logical decoding.",
         "Architected a fault-tolerant polyglot persistence pipeline routing data from Postgres to Redis and MongoDB via Kafka with <150ms replication lag.",
-        "Containerized a 6-node microservice ecosystem using multi-stage Docker builds, reducing Go binary image sizes to 20MB."
+        "Containerized a 6-node microservice ecosystem using multi-stage Docker builds, reducing Go binary image sizes to 20MB.",
       ],
-      stack: ["Go (Golang)", "PostgreSQL", "Apache Kafka", "Redis", "MongoDB", "Docker"],
+      stack: [
+        "Go (Golang)",
+        "PostgreSQL",
+        "Apache Kafka",
+        "Redis",
+        "MongoDB",
+        "Docker",
+      ],
       links: {
-        github: "https://github.com/nithin0306/gocdc"
-      }
+        github: "https://github.com/nithin0306/gocdc",
+      },
     },
     {
       id: "skillup",
@@ -156,26 +184,48 @@ export const PROFILE = {
       badge: "Hack101 · 2nd Place",
       shot: "assets/shots/skillup.png",
       theme: "gap", // stepping block gap
-      overview: "An AI-powered workforce reskilling and resume analyzer that detects skill gaps against target roles and curates personalized project and course roadmaps.",
+      overview:
+        "An AI-powered workforce reskilling and resume analyzer that detects skill gaps against target roles and curates personalized project and course roadmaps.",
       highlights: [
         "Secured 2nd place out of 30+ teams at the Hack101 Hackathon.",
         "Built automated parser extracting requirement matrices across 50+ technology domains.",
-        "Generates milestone-driven learning roadmaps with step-by-step project suggestions."
+        "Generates milestone-driven learning roadmaps with step-by-step project suggestions.",
       ],
       stack: ["Python", "FastAPI", "NLP", "Machine Learning", "Vector Search"],
       links: {
-        github: "https://github.com/nithin0306/SkillUp"
-      }
-    }
+        github: "https://github.com/nithin0306/SkillUp",
+      },
+    },
   ],
 
   // Skills
   skills: {
-    languages: ["C", "C++", "Java", "JavaScript", "Python", "SQL", "Go (Golang)"],
-    frameworks: ["React.js", "FastAPI", "Node.js", "Express.js", "LangChain", "LangGraph"],
+    languages: [
+      "C",
+      "C++",
+      "Java",
+      "JavaScript",
+      "Python",
+      "SQL",
+      "Go (Golang)",
+    ],
+    frameworks: [
+      "React.js",
+      "FastAPI",
+      "Node.js",
+      "Express.js",
+      "LangChain",
+      "LangGraph",
+    ],
     databases: ["PostgreSQL", "MongoDB", "Supabase", "Redis", "Pinecone"],
     tools: ["Git", "GitHub", "Docker", "Postman", "Linux", "Kafka", "FFmpeg"],
-    concepts: ["Data Structures", "System Design", "Event-Driven Architecture", "SDLC", "RAG Pipelines"]
+    concepts: [
+      "Data Structures",
+      "System Design",
+      "Event-Driven Architecture",
+      "SDLC",
+      "RAG Pipelines",
+    ],
   },
 
   // Achievements & Hackathons
@@ -186,28 +236,28 @@ export const PROFILE = {
       event: "Hack101 (out of 30+ teams)",
       project: "SkillUp",
       projectLink: "#/projects/skillup",
-      note: "Developed SkillUp, an AI-powered resume analyzer that detects skill gaps and curates personalized project and course recommendations for target job roles."
+      note: "Developed SkillUp, an AI-powered resume analyzer that detects skill gaps and curates personalized project and course recommendations for target job roles.",
     },
     {
       id: "build2break",
       rank: "3rd place",
       event: "Build2Break Hackathon (out of 80+ teams)",
       project: "VITA-CARE",
-      note: "Built VITA-CARE, a voice-integrated, Gemini AI-powered microservice ecosystem that automates healthcare appointment scheduling and WhatsApp medication reminders."
+      note: "Built VITA-CARE, a voice-integrated, Gemini AI-powered microservice ecosystem that automates healthcare appointment scheduling and WhatsApp medication reminders.",
     },
     {
       id: "gssoc",
       rank: "Contributor",
       event: "GirlScript Summer of Code (GSSoC)",
       project: "Open Source",
-      note: "Merged 4 pull requests across independent open-source repositories, spanning Redis-backed setup automation, API unit test coverage, and SEO metadata improvements."
-    }
-  ]
+      note: "Merged 4 pull requests across independent open-source repositories, spanning Redis-backed setup automation, API unit test coverage, and SEO metadata improvements.",
+    },
+  ],
 };
 
 export async function loadProfile() {
   try {
-    const res = await fetch("data/portfolio.json?v=28");
+    const res = await fetch("data/portfolio.json?v=30");
     if (res.ok) {
       const data = await res.json();
       Object.assign(PROFILE, data);

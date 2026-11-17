@@ -1,11 +1,11 @@
-import { sprite, tile } from "./sprites.js?v=28";
-import { PROFILE, loadProfile } from "./portfolio-data.js?v=28";
-import { playBump, playPickup, playVictory, play1Up, playWarp, toggleSound, updateSoundButton } from "./audio.js?v=28";
+import { sprite, tile } from "./sprites.js?v=30";
+import { PROFILE, loadProfile } from "./portfolio-data.js?v=30";
+import { playBump, playPickup, playVictory, play1Up, playWarp, toggleSound, updateSoundButton } from "./audio.js?v=30";
 // openWindow is imported lazily to avoid circular dep (windows.js imports world.js)
 let _openWindow = null;
 async function getOpenWindow() {
   if (!_openWindow) {
-    const mod = await import("./windows.js?v=28");
+    const mod = await import("./windows.js?v=30");
     _openWindow = mod.openWindow;
   }
   return _openWindow;
@@ -328,7 +328,7 @@ function triggerCastleToast() {
   const toast = document.createElement("div");
   toast.id = "castleToast";
   toast.className = "castle-toast";
-  toast.innerHTML = `<span>🏰 STAGE 1-1 CLEARED!</span><br><span style="font-size: 11px; opacity: 0.9;">Nithin is ready for new quests.</span>`;
+  toast.innerHTML = `<span>🏰 CASTLE REACHED!</span><br><span style="font-size: 11px; opacity: 0.9;">Nithin is ready for new quests.</span>`;
   sceneEl.appendChild(toast);
 
   if (heroEl) {
