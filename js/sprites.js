@@ -298,6 +298,26 @@ export const MAPS = {
     ".kWkkWk.",
     ".kkkkkk."
   ],
+  medal: [
+    "..rr.rr.",
+    "..rr.rr.",
+    "...rrr..",
+    "..kkkk..",
+    ".kyyyyk.",
+    ".kywyyk.",
+    ".kyyyyk.",
+    "..kkkk.."
+  ],
+  medalB: [
+    "..rr.rr.",
+    "..rr.rr.",
+    "...rrr..",
+    "..kkkk..",
+    ".kooook.",
+    ".kowook.",
+    ".kooook.",
+    "..kkkk.."
+  ],
   castle: [
     ".......G......",
     "......Grrr....",

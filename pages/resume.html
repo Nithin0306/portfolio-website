@@ -1,196 +1,94 @@
-<!-- Resume: 1-Page Mario World Adventurer Dossier & Character Sheet -->
-<div class="world-resume-page">
-
-  <!-- Header Banner: Character Card -->
-  <div class="world-resume-header">
-    <div class="world-resume-badge-row">
-      <span class="world-class-pill">BACKEND ENGINEER</span>
-      <span class="world-status-pill">★ READY FOR SDE INTERNSHIPS</span>
+<!-- Resume: Mario World Career Map & Adventurer Sheet -->
+<div class="resume-sheet">
+  <aside class="resume-pcard">
+    <div class="resume-avatar-frame">
+      <img id="resumeHeroAvatar" alt="Nithin pixel avatar" />
     </div>
-
-    <h2 class="world-resume-name">NITHIN VENKAT SHARMA P M</h2>
-
-    <div class="world-resume-sub">
-      B.Tech Computer Science &amp; Engineering · Amrita Vishwa Vidyapeetham (CGPA: 8.85 / 10)
+    <div class="resume-nm">NITHIN VENKAT SHARMA P M</div>
+    <div class="resume-cls">Backend &amp; systems engineer</div>
+    <div class="resume-mt">
+      Amrita · B.Tech CSE · 2028<br>
+      CGPA 8.85 / 10 · Coimbatore, India
     </div>
-
-    <div class="world-resume-coords">
-      <span>📍 Coimbatore, Tamil Nadu</span>
-      <span>✉️ <a href="mailto:nithinvs2006@gmail.com">nithinvs2006@gmail.com</a></span>
-      <span>🐙 <a href="https://github.com/Nithin-24" target="_blank" rel="noopener noreferrer">github.com/Nithin-24</a></span>
-      <span>💼 <a href="https://linkedin.com/in/nithin-p-m-" target="_blank" rel="noopener noreferrer">linkedin.com/in/nithin-p-m-</a></span>
+    <div class="resume-st">
+      <i aria-hidden="true"></i>Open to SDE internships · Looking for an internship
     </div>
-  </div>
-
-  <!-- Prominent Actions Bar -->
-  <div class="world-resume-actions">
-    <a class="btn-retro pri" href="assets/resume.pdf" download id="resumeDownloadBtn">
-      Download Official Resume PDF ↓
+    <a class="btn-retro pri resume-btn-dl" href="assets/resume.pdf" download id="resumeDownloadBtn">
+      ▶ Download PDF
     </a>
-    <a class="btn-retro" href="assets/resume.pdf" target="_blank" rel="noopener noreferrer">
-      Open PDF in New Tab ↗
-    </a>
-    <button type="button" class="btn-retro" id="resumePrintBtn">
-      Print Dossier
-    </button>
-  </div>
+    <div class="resume-lk">
+      <a class="btn-retro" href="https://linkedin.com/in/nithin-p-m-" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a class="btn-retro" href="https://github.com/Nithin0306" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="btn-retro" href="mailto:nithin.p.m2006@gmail.com">Email</a>
+    </div>
+  </aside>
 
-  <!-- Section 1: World Campaigns (Experience) -->
-  <div class="world-resume-card">
-    <div class="world-card-title">
-      <span class="world-title-icon">🪙</span>
-      <span>WORLD CAMPAIGNS &amp; EXPERIENCE</span>
+  <div class="resume-main">
+    <!-- Career map section -->
+    <div class="resume-sec">
+      <div class="resume-lb">Career map · click a stop</div>
+      <div class="resume-map" id="resumeMap">
+        <div class="resume-map-gr" id="resumeMapGround"></div>
+        <span class="resume-coin-marker" style="left:24%;bottom:36px;margin-left:-8px">
+          <img class="resume-coin-img" alt="" />
+        </span>
+        <span class="resume-coin-marker" style="left:49%;bottom:36px;margin-left:-8px">
+          <img class="resume-coin-img" alt="" />
+        </span>
+        <span class="resume-coin-marker" style="left:74%;bottom:36px;margin-left:-8px">
+          <img class="resume-coin-img" alt="" />
+        </span>
+        <span class="resume-hero-marker" style="left:75%;bottom:28px;margin-left:-5px">
+          <img class="resume-hero-img" alt="" />
+        </span>
+        <span class="resume-here-tag" style="left:75%;bottom:68px;">you are here</span>
+
+        <button type="button" class="resume-node" data-n="amrita" style="left:11%">
+          <span>Aug 2024</span>
+          <img class="resume-node-img" alt="Amrita Vishwa Vidyapeetham" />
+        </button>
+        <button type="button" class="resume-node" data-n="tensor" style="left:36%">
+          <span>Jul 2025</span>
+          <img class="resume-node-img" alt="Tensor Club" />
+        </button>
+        <button type="button" class="resume-node sel" data-n="ped" style="left:61%">
+          <span>Apr 2026</span>
+          <img class="resume-node-img" alt="The Pedagogy Community" />
+        </button>
+        <button type="button" class="resume-node" data-n="next" style="left:88%">
+          <span>Summer 2027</span>
+          <img class="resume-node-img" alt="Looking for an internship" />
+        </button>
+      </div>
+      <div class="resume-dp" id="resumeDp"></div>
     </div>
 
-    <div class="world-item">
-      <div class="world-item-head">
-        <div>
-          <span class="world-item-role">Automation Intern</span>
-          <span class="world-item-org">@ The Pedagogy Community</span>
+    <!-- Achievements section -->
+    <div class="resume-sec">
+      <div class="resume-lb">Achievements</div>
+      <div class="resume-ach">
+        <div class="resume-ach-box">
+          <img class="resume-ach-icon" id="resumeMedal1" alt="" />
+          <span><b>Hack101 · 2nd</b>of 30+ teams</span>
         </div>
-        <span class="world-item-date">Apr 2026 – Jun 2026</span>
-      </div>
-      <ul class="world-item-bullets">
-        <li>Automated the webinar-to-course workflow using Python, FFmpeg, and LLM APIs, cutting production time from 8 hours to under 18 minutes per webinar.</li>
-        <li>Engineered a multi-threaded chunking engine to process 20-minute video slices concurrently without audio-video desync.</li>
-        <li>Built automated speech stitching and scenario-based quiz generation stripping dead pauses cleanly.</li>
-      </ul>
-      <div class="world-item-tags">
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">FFmpeg</span>
-        <span class="skill-pill">LLM APIs</span>
-        <span class="skill-pill">Multi-threading</span>
+        <div class="resume-ach-box">
+          <img class="resume-ach-icon" id="resumeMedal2" alt="" />
+          <span><b>Build2Break · 3rd</b>of 80+ teams</span>
+        </div>
+        <div class="resume-ach-box">
+          <img class="resume-ach-icon" id="resumeTermIcon" alt="" />
+          <span><b>GSSoC</b>4 merged PRs</span>
+        </div>
       </div>
     </div>
 
-    <div class="world-item-divider"></div>
-
-    <div class="world-item">
-      <div class="world-item-head">
-        <div>
-          <span class="world-item-role">Web Developer</span>
-          <span class="world-item-org">@ Tensor Club, Amrita</span>
-        </div>
-        <span class="world-item-date">Jul 2025 – Apr 2026</span>
+    <!-- Inventory section -->
+    <div class="resume-sec">
+      <div class="resume-lb">Inventory · where I used it</div>
+      <div class="resume-inv" id="resumeInv">
+        <!-- Hotbar slots injected dynamically by JS -->
       </div>
-      <ul class="world-item-bullets">
-        <li>Built the club website and project showcase pages using React and Tailwind CSS.</li>
-        <li>Achieved 99 Lighthouse performance score with 0.3s First Contentful Paint and zero cumulative layout shift.</li>
-        <li>Designed terminal-style responsive layouts maintaining accessibility and cross-browser consistency.</li>
-      </ul>
-      <div class="world-item-tags">
-        <span class="skill-pill">React</span>
-        <span class="skill-pill">Tailwind CSS</span>
-        <span class="skill-pill">TypeScript</span>
-        <span class="skill-pill">Vite</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 2: Key Artifacts & Builds (Projects) -->
-  <div class="world-resume-card">
-    <div class="world-card-title">
-      <span class="world-title-icon">🧱</span>
-      <span>KEY BUILDS &amp; ARTIFACTS</span>
-    </div>
-
-    <div class="world-projects-grid">
-      <div class="world-proj-box">
-        <div class="world-proj-top">
-          <span class="world-proj-name">GoCDC</span>
-          <span class="world-proj-metric">1,400 ev/s</span>
-        </div>
-        <p class="world-proj-desc">High-throughput Change Data Capture engine streaming PostgreSQL logical decoding WAL straight to Kafka topics without database polling.</p>
-        <div class="world-proj-stack">Go · PostgreSQL · Apache Kafka · Docker</div>
-      </div>
-
-      <div class="world-proj-box">
-        <div class="world-proj-top">
-          <span class="world-proj-name">Archivist</span>
-          <span class="world-proj-metric">&lt;60s PR review</span>
-        </div>
-        <p class="world-proj-desc">LangGraph AI GitHub Action that analyzes incoming pull request diffs against team Architecture Decision Records (ADRs) to catch drift.</p>
-        <div class="world-proj-stack">Python · LangGraph · GitHub Actions · OpenAI API</div>
-      </div>
-
-      <div class="world-proj-box">
-        <div class="world-proj-top">
-          <span class="world-proj-name">Dayta</span>
-          <span class="world-proj-metric">Vector RAG</span>
-        </div>
-        <p class="world-proj-desc">Retrieval-augmented generation assistant indexing documents into Pinecone, performing hybrid search, and citing official sources with multi-turn memory.</p>
-        <div class="world-proj-stack">FastAPI · Pinecone · LangChain · React</div>
-      </div>
-
-      <div class="world-proj-box">
-        <div class="world-proj-top">
-          <span class="world-proj-name">SkillUp</span>
-          <span class="world-proj-metric">Hack101 · 2nd</span>
-        </div>
-        <p class="world-proj-desc">AI-powered workforce reskilling engine that detects technical skill gaps against target jobs and maps personalized step-by-step learning roadmaps.</p>
-        <div class="world-proj-stack">TypeScript · Next.js · Gemini API · Tailwind CSS</div>
-      </div>
+      <div class="resume-tip" id="resumeTip" aria-live="polite">Hover or tap a slot.</div>
     </div>
   </div>
-
-  <!-- Section 3: Inventory & Primary Attributes (Core Stack) -->
-  <div class="world-resume-card">
-    <div class="world-card-title">
-      <span class="world-title-icon">🎒</span>
-      <span>INVENTORY &amp; CORE ATTRIBUTES</span>
-    </div>
-    <div class="world-inventory-list">
-      <div class="world-inv-group">
-        <span class="world-inv-k">Languages:</span>
-        <span class="world-inv-v">Go (Golang), Python, TypeScript, JavaScript, C, C++, Java, SQL</span>
-      </div>
-      <div class="world-inv-group">
-        <span class="world-inv-k">Backend &amp; Data:</span>
-        <span class="world-inv-v">FastAPI, Apache Kafka, PostgreSQL, Redis, MongoDB, Docker</span>
-      </div>
-      <div class="world-inv-group">
-        <span class="world-inv-k">AI &amp; Retrieval:</span>
-        <span class="world-inv-v">LangGraph, LangChain, Pinecone, Model Context Protocol (MCP), Gemini API</span>
-      </div>
-      <div class="world-inv-group">
-        <span class="world-inv-k">Frontend &amp; Tools:</span>
-        <span class="world-inv-v">React, Tailwind CSS, Next.js, Git, GitHub Actions, Linux, FFmpeg</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section 4: Clear Stages & Trophies (Education & Awards) -->
-  <div class="world-resume-card">
-    <div class="world-card-title">
-      <span class="world-title-icon">🏆</span>
-      <span>CLEAR STAGES &amp; ACHIEVEMENTS</span>
-    </div>
-    <div class="world-achieve-list">
-      <div class="world-achieve-row">
-        <span class="world-trophy-tag">2ND PLACE</span>
-        <div class="world-achieve-body">
-          <strong>Hack101 Hackathon (Oct 2025):</strong> Runner-up among 30+ competing teams for <em>SkillUp</em>, building an AI career skill gap analyzer in 36 hours.
-        </div>
-      </div>
-      <div class="world-achieve-row">
-        <span class="world-trophy-tag">3RD PLACE</span>
-        <div class="world-achieve-body">
-          <strong>Build2Break Hackathon (Jan 2026):</strong> 3rd place among 80+ teams for <em>Vita-Care</em>, clinical appointment scheduling via voice triage.
-        </div>
-      </div>
-      <div class="world-achieve-row">
-        <span class="world-trophy-tag">OSS</span>
-        <div class="world-achieve-body">
-          <strong>GirlScript Summer of Code (2025):</strong> Contributed bug fixes, Redis setup automation, and documentation across open-source dev tooling.
-        </div>
-      </div>
-      <div class="world-achieve-row">
-        <span class="world-trophy-tag">ACADEMIC</span>
-        <div class="world-achieve-body">
-          <strong>Amrita Vishwa Vidyapeetham, Coimbatore:</strong> B.Tech Computer Science &amp; Engineering (2024–2028) · CGPA: <strong>8.85 / 10</strong>.
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>

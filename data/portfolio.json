@@ -31,8 +31,8 @@
     "email": "nithin.p.m2006@gmail.com",
     "linkedin": "https://linkedin.com/in/nithin-p-m-",
     "linkedinDisplay": "linkedin.com/in/nithin-p-m-",
-    "github": "https://github.com/nithin0306",
-    "githubDisplay": "github.com/nithin0306",
+    "github": "https://github.com/Nithin0306",
+    "githubDisplay": "github.com/Nithin0306",
     "location": "Coimbatore, India · IST (UTC+5:30)",
     "resumePdf": "assets/resume.pdf"
   },
@@ -87,7 +87,7 @@
       ],
       "stack": ["Go", "PostgreSQL WAL", "Kafka / Redpanda", "Redis", "MongoDB", "Docker"],
       "links": {
-        "github": "https://github.com/nithin0306/gocdc"
+        "github": "https://github.com/Nithin0306/gocdc"
       }
     },
     {
@@ -108,7 +108,7 @@
       ],
       "stack": ["Python", "LangGraph", "Model Context Protocol (MCP)", "GitHub Actions", "LLMs"],
       "links": {
-        "github": "https://github.com/nithin0306/archivist"
+        "github": "https://github.com/Nithin0306/archivist"
       }
     },
     {
@@ -129,7 +129,7 @@
       ],
       "stack": ["React (Vite)", "TypeScript", "FastAPI", "Pinecone", "Gemini API"],
       "links": {
-        "github": "https://github.com/nithin0306/dayta"
+        "github": "https://github.com/Nithin0306/dayta"
       }
     },
     {
@@ -150,7 +150,7 @@
       ],
       "stack": ["FastAPI", "Python", "Vector Search", "NLP", "React"],
       "links": {
-        "github": "https://github.com/nithin0306/SkillUp"
+        "github": "https://github.com/Nithin0306/SkillUp"
       }
     }
   ],

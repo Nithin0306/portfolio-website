@@ -149,19 +149,25 @@
 }
 
 /* 6. Summary Paragraphs */
-.sign .summary {
+.sign .summary,
+.sign p.summary {
   font-family: var(--font-body);
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--sign-soft);
+  font-size: 15px;
+  line-height: 1.6;
+  color: #fff4d6 !important;
   margin-bottom: 16px;
+  font-weight: 400;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-.sign .summary p {
+.sign .summary p,
+.sign p.summary p {
   margin: 0 0 10px 0;
+  color: #fff4d6 !important;
 }
 
-.sign .summary p:last-child {
+.sign .summary p:last-child,
+.sign p.summary p:last-child {
   margin-bottom: 0;
 }
 
@@ -178,13 +184,13 @@
   align-items: center;
   background-color: #241407;
   color: #ffd666;
-  border: 1.5px solid #a36f33;
+  border: 1.5px solid #8f5f25;
   box-shadow: 2px 2px 0 #120902;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 11px;
-  padding: 3px 8px;
-  letter-spacing: 0.03em;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 4px 10px;
+  letter-spacing: 0.02em;
   transition: transform var(--t-fast), border-color var(--t-fast), color var(--t-fast);
   user-select: none;
 }
@@ -208,9 +214,9 @@
   background-color: #fff4d6;
   color: var(--ink);
   border: 2px solid var(--wood-dark);
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: var(--fs-xs);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
   padding: 3px 10px;
   text-decoration: none;
   cursor: pointer;
@@ -234,10 +240,10 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-weight: 700;
-  font-size: var(--fs-xs);
-  padding: 7px 14px;
+  font-size: 13.5px;
+  padding: 8px 16px;
   background-color: #fff4d6;
   color: var(--ink);
   border: 3px solid var(--wood-dark);
@@ -310,7 +316,7 @@
   .sign .btn-sign {
     flex: 1 1 auto !important;
     min-height: 44px !important;
-    font-size: 11px !important;
+    font-size: 13px !important;
     padding: 8px 10px !important;
   }
 }

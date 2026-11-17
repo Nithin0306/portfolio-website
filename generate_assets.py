@@ -245,7 +245,7 @@ BT
 0 -18 Td
 (Coimbatore, Tamil Nadu | nithin.p.m2006@gmail.com | +91 73730 93900) Tj
 0 -14 Td
-(LinkedIn: linkedin.com/in/nithin-p-m- | GitHub: github.com/nithin0306) Tj
+(LinkedIn: linkedin.com/in/nithin-p-m- | GitHub: github.com/Nithin0306) Tj
 0 -24 Td
 (EDUCATION: Amrita Vishwa Vidyapeetham, Coimbatore | Aug 2024 - May 2028) Tj
 0 -14 Td

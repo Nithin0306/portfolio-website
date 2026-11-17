@@ -117,7 +117,7 @@ export const PROFILE = {
       ],
       links: {
         live: "https://dayta.example.com",
-        github: "https://github.com/nithin0306/dayta",
+        github: "https://github.com/Nithin0306/dayta",
       },
     },
     {
@@ -144,7 +144,7 @@ export const PROFILE = {
         "Model Context Protocol (MCP)",
       ],
       links: {
-        github: "https://github.com/nithin0306/archivist",
+        github: "https://github.com/Nithin0306/archivist",
       },
     },
     {
@@ -172,7 +172,7 @@ export const PROFILE = {
         "Docker",
       ],
       links: {
-        github: "https://github.com/nithin0306/gocdc",
+        github: "https://github.com/Nithin0306/gocdc",
       },
     },
     {
@@ -193,7 +193,7 @@ export const PROFILE = {
       ],
       stack: ["Python", "FastAPI", "NLP", "Machine Learning", "Vector Search"],
       links: {
-        github: "https://github.com/nithin0306/SkillUp",
+        github: "https://github.com/Nithin0306/SkillUp",
       },
     },
   ],
@@ -257,7 +257,7 @@ export const PROFILE = {
 
 export async function loadProfile() {
   try {
-    const res = await fetch("data/portfolio.json?v=30");
+    const res = await fetch("data/portfolio.json?v=32");
     if (res.ok) {
       const data = await res.json();
       Object.assign(PROFILE, data);

@@ -66,11 +66,12 @@
   --fs-l: 24px;
   --fs-xl: clamp(32px, 5vw, 56px);
 
-  --pf: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --ps: "Press Start 2P", "Courier New", monospace;
+  --pf: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ps: "Press Start 2P", monospace;
 
   --font-pixel: var(--ps);
-  --font-mono: "Inter", "Courier New", monospace;
+  --font-heading: var(--ps);
+  --font-mono: "Courier New", Courier, monospace;
   --font-body: var(--pf);
 
   /* 2.3 Space, borders, shadows */

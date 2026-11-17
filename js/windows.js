@@ -1,8 +1,8 @@
 // Retro OS Window Manager: manages draggable, stackable windows over the Mario surface world
 
-import { sprite } from "./sprites.js?v=30";
-import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=30";
-import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=30";
+import { sprite } from "./sprites.js?v=33";
+import { seen, updateScore, syncBlockSprites, startHeroIdleCycle, stopHeroIdleCycle } from "./world.js?v=33";
+import { playBump, playPickup, playWarp, isSoundEnabled, toggleSound, updateSoundButton } from "./audio.js?v=33";
 
 const SECTION_CONFIG = {
   about: { title: "ABOUT-ME", icon: "bulb", color: "about" },
@@ -10,8 +10,7 @@ const SECTION_CONFIG = {
   experience: { title: "EXPERIENCE", icon: "gear", color: "experience" },
   awards: { title: "AWARDS", icon: "trophy", color: "awards" },
   resume: { title: "RESUME", icon: "doc", color: "resume" },
-  contact: { title: "CONTACT", icon: "mail", color: "contact" },
-  terminal: { title: "TERMINAL", icon: "term", color: "projects" }
+  contact: { title: "CONTACT", icon: "mail", color: "contact" }
 };
 
 const SECTIONS_ORDER = ["about", "projects", "experience", "awards", "resume", "contact"];
@@ -56,15 +55,6 @@ export function initWindows() {
     });
   }
 
-  // Wire Taskbar Terminal button
-  const termBtn = document.getElementById("taskbarTerminal");
-  if (termBtn) {
-    termBtn.addEventListener("click", () => {
-      playPickup();
-      openWindow("terminal");
-    });
-  }
-
   // Wire Start Menu items
   if (startMenuEl) {
     startMenuEl.addEventListener("click", (e) => {
@@ -76,9 +66,6 @@ export function initWindows() {
         updateSfxUi();
       } else if (action === "toggle-theme") {
         toggleTheme();
-      } else if (action === "terminal") {
-        playPickup();
-        openWindow("terminal");
       } else if (action && SECTION_CONFIG[action]) {
         openWindow(action);
       }
@@ -223,7 +210,7 @@ export async function openWindow(id, originRect = null) {
   let html = pageCache.get(id);
   if (!html) {
     try {
-      const res = await fetch(`pages/${id}.html?v=30`);
+      const res = await fetch(`pages/${id}.html?v=32`);
       if (res.ok) {
         html = await res.text();
         pageCache.set(id, html);
@@ -281,14 +268,23 @@ export async function openWindow(id, originRect = null) {
     ${navFooterHtml}
   `;
 
-  // 28px Cascade positioning offset
-  const count = openWindows.size;
-  const offset = (count % 4) * 28;
-  const isMobile = window.innerWidth <= 768;
+  // Mount to container
+  win.style.zIndex = ++topZIndex;
+  containerEl.appendChild(win);
+  openWindows.set(id, win);
 
+  // Position in the middle of the available viewport / sky area (above the floor & taskbar)
+  const isMobile = window.innerWidth <= 768;
   if (!isMobile) {
-    const desktopLeft = Math.max(16, Math.round((window.innerWidth - 900) / 2) + offset - 30);
-    const desktopTop = Math.max(20, Math.round((window.innerHeight - 580) / 2) + offset - 40);
+    const count = openWindows.size;
+    const cascadeOffset = ((count - 1) % 3) * 18;
+    const winW = win.offsetWidth || 900;
+    const winH = win.offsetHeight || 520;
+    const skyH = Math.max(320, window.innerHeight - 124);
+
+    const desktopLeft = Math.max(16, Math.round((window.innerWidth - winW) / 2) + cascadeOffset);
+    const desktopTop = Math.max(16, Math.round((skyH - winH) / 2) + cascadeOffset);
+
     win.style.left = `${desktopLeft}px`;
     win.style.top = `${desktopTop}px`;
     win.style.setProperty("--win-left", `${desktopLeft}px`);
@@ -358,11 +354,6 @@ export async function openWindow(id, originRect = null) {
   // Make every opened window draggable across laptop, desktop, and touch screens
   makeDraggable(win);
 
-  // Mount to container
-  win.style.zIndex = ++topZIndex;
-  containerEl.appendChild(win);
-  openWindows.set(id, win);
-
   // Add Taskbar Tab
   addTaskbarTab(id, cfg, iconSrc);
 
@@ -395,11 +386,6 @@ export async function openWindow(id, originRect = null) {
   // If contact, wire copy email button & interactive console
   if (id === "contact") {
     initContactConsole(win);
-  }
-
-  // If terminal, wire interactive terminal prompt
-  if (id === "terminal") {
-    initTerminal(win);
   }
 
   // Update hash
@@ -458,16 +444,143 @@ function makeDraggable(win) {
 }
 
 function initResumeTabs(win) {
+  // Download button pickup sound
   const downloadBtn = win.querySelector("#resumeDownloadBtn");
   if (downloadBtn) {
     downloadBtn.addEventListener("click", () => playPickup());
   }
 
-  const printBtn = win.querySelector("#resumePrintBtn");
-  if (printBtn) {
-    printBtn.addEventListener("click", () => {
+  // Inject sprites
+  const avatarImg = win.querySelector("#resumeHeroAvatar");
+  if (avatarImg) avatarImg.src = sprite("hero", 7);
+
+  const mapGround = win.querySelector("#resumeMapGround");
+  if (mapGround) mapGround.style.backgroundImage = `url(${sprite("brick", 3)})`;
+
+  win.querySelectorAll(".resume-coin-img").forEach((img) => {
+    img.src = sprite("coin", 2);
+  });
+
+  const heroMarker = win.querySelector(".resume-hero-img");
+  if (heroMarker) heroMarker.src = sprite("hero", 3);
+
+  const nodeAmrita = win.querySelector('.resume-node[data-n="amrita"] .resume-node-img');
+  if (nodeAmrita) nodeAmrita.src = sprite("used", 4);
+  const nodeTensor = win.querySelector('.resume-node[data-n="tensor"] .resume-node-img');
+  if (nodeTensor) nodeTensor.src = sprite("used", 4);
+  const nodePed = win.querySelector('.resume-node[data-n="ped"] .resume-node-img');
+  if (nodePed) nodePed.src = sprite("used", 4);
+  const nodeNext = win.querySelector('.resume-node[data-n="next"] .resume-node-img');
+  if (nodeNext) nodeNext.src = sprite("q", 4);
+
+  const medal1 = win.querySelector("#resumeMedal1");
+  if (medal1) medal1.src = sprite("medal", 4);
+  const medal2 = win.querySelector("#resumeMedal2");
+  if (medal2) medal2.src = sprite("medalB", 4);
+  const termIcon = win.querySelector("#resumeTermIcon");
+  if (termIcon) termIcon.src = sprite("term", 4);
+
+  // Career Map Stops
+  const STOPS = [
+    {
+      id: "amrita",
+      title: "Amrita Vishwa Vidyapeetham",
+      meta: "B.Tech Computer Science and Engineering · Aug 2024 – May 2028 · CGPA 8.85 / 10",
+      bullets: [
+        "Coimbatore, Tamil Nadu",
+        "Key Coursework: Data Structures & Algorithms, Object-Oriented Programming, Operating Systems, Database Management Systems, Computer Networks, Distributed Systems."
+      ]
+    },
+    {
+      id: "tensor",
+      title: "Web Developer · Tensor Club",
+      meta: "Amrita student club · Jul 2025 – Apr 2026",
+      bullets: [
+        "Built the Featured and All Projects pages in React and Tailwind: 99 Lighthouse performance, 0.3s first contentful paint.",
+        "Terminal-style cards that look the same on phones and desktops: 98 accessibility, 100 SEO."
+      ]
+    },
+    {
+      id: "ped",
+      title: "Automation Intern · The Pedagogy Community",
+      meta: "Apr 2026 – Jun 2026",
+      bullets: [
+        "Webinar-to-course AI pipeline: 8 hours down to under 15 minutes.",
+        "Audio split into 20-minute chunks run in parallel, timestamps aligned; 5 scenario quizzes per lesson."
+      ]
+    },
+    {
+      id: "next",
+      title: "SDE Internship · Looking for an internship",
+      meta: "Backend, distributed systems, LLM agents",
+      bullets: [
+        "Looking for a summer internship team to build high-scale systems with.",
+        "Open to backend, distributed engineering, and AI agent roles. Email or LinkedIn is the fastest way to reach me."
+      ]
+    }
+  ];
+
+  const dp = win.querySelector("#resumeDp");
+  function pickStop(id) {
+    const s = STOPS.find((x) => x.id === id);
+    if (!s || !dp) return;
+    dp.innerHTML = `
+      <h4>${s.title}</h4>
+      <small>${s.meta}</small>
+      <ul>${s.bullets.map((b) => `<li>${b}</li>`).join("")}</ul>
+    `;
+    win.querySelectorAll(".resume-node").forEach((btn) => {
+      btn.classList.toggle("sel", btn.dataset.n === id);
+    });
+  }
+
+  win.querySelectorAll(".resume-node").forEach((btn) => {
+    btn.addEventListener("click", () => {
       playPickup();
-      window.print();
+      pickStop(btn.dataset.n);
+    });
+  });
+
+  // Default selection: Pedagogy
+  pickStop("ped");
+
+  // Inventory Hotbar Slots
+  const SKILLS = [
+    ["GO", "Go", "GoCDC change-data-capture engine"],
+    ["PY", "Python", "Archivist and the automation pipeline"],
+    ["TS", "TypeScript", "Dayta front end & SkillUp"],
+    ["API", "FastAPI", "Dayta backend & REST services"],
+    ["SQL", "PostgreSQL", "GoCDC, WAL logical decoding"],
+    ["KFK", "Kafka / Redpanda", "GoCDC event stream"],
+    ["RDS", "Redis", "GoCDC fan-out & cache"],
+    ["DKR", "Docker", "GoCDC 6-service stack, 20 MB images"],
+    ["LG", "LangGraph", "Archivist PR reviewer"]
+  ];
+
+  const invContainer = win.querySelector("#resumeInv");
+  const tipEl = win.querySelector("#resumeTip");
+
+  if (invContainer) {
+    invContainer.innerHTML = SKILLS.map(
+      (s, i) => `<button type="button" class="resume-slot" data-s="${i}" aria-label="${s[1]}">${s[0]}</button>`
+    ).join("");
+
+    invContainer.addEventListener("mouseover", (e) => {
+      const slot = e.target.closest(".resume-slot");
+      if (slot && tipEl) {
+        const item = SKILLS[+slot.dataset.s];
+        if (item) tipEl.textContent = `${item[1]} · ${item[2]}`;
+      }
+    });
+
+    invContainer.addEventListener("click", (e) => {
+      const slot = e.target.closest(".resume-slot");
+      if (slot) {
+        playPickup();
+        const item = SKILLS[+slot.dataset.s];
+        if (item && tipEl) tipEl.textContent = `${item[1]} · ${item[2]}`;
+        invContainer.querySelectorAll(".resume-slot").forEach((s) => s.classList.toggle("on", s === slot));
+      }
     });
   }
 }
@@ -500,7 +613,7 @@ function initContactConsole(win) {
     if (!mailtoLink || !msgInput) return;
     const body = encodeURIComponent(msgInput.value);
     const subj = encodeURIComponent(currentSubj);
-    mailtoLink.href = `mailto:nithinvs2006@gmail.com?subject=${subj}&body=${body}`;
+    mailtoLink.href = `mailto:nithin.p.m2006@gmail.com?subject=${subj}&body=${body}`;
   }
 
   topicChips.forEach((chip) => {
@@ -536,7 +649,7 @@ function initContactConsole(win) {
 
   if (copyEmailBtn) {
     copyEmailBtn.addEventListener("click", () => {
-      const email = copyEmailBtn.dataset.email || "nithinvs2006@gmail.com";
+      const email = copyEmailBtn.dataset.email || "nithin.p.m2006@gmail.com";
       navigator.clipboard.writeText(email).then(() => {
         playPickup();
         const orig = copyEmailBtn.textContent;
@@ -545,48 +658,6 @@ function initContactConsole(win) {
       });
     });
   }
-}
-
-function initTerminal(win) {
-  const form = win.querySelector("#termForm");
-  const input = win.querySelector("#termInput");
-  const output = win.querySelector("#termOutput");
-  if (!form || !input || !output) return;
-
-  const COMMANDS = {
-    help: "Available commands:\n  help        Show this list\n  about       View bio and education\n  projects    List key engineering builds\n  skills      Show core stack\n  clear       Clear terminal buffer\n  contact     Show email and links\n  exit        Close terminal",
-    about: "Nithin Venkat Sharma P M\nB.Tech CSE, Amrita Vishwa Vidyapeetham (2024-2028), CGPA: 8.85 / 10\nFocus: Backend systems, distributed engineering, LLM workflows",
-    projects: "Key Projects:\n  1. GoCDC      - 1,400 ev/s PostgreSQL WAL to Kafka engine (Go)\n  2. Archivist  - Autonomous ADR reviewer Action (Python, LangGraph)\n  3. Dayta      - RAG knowledge base with Pinecone (FastAPI, React)\n  4. SkillUp    - Job market path finder, Hack101 2nd place (TS)",
-    skills: "Languages: Go, Python, TypeScript, SQL, C, C++\nBackend:   PostgreSQL, Redis, Kafka/Redpanda, FastAPI\nInfra:     Docker, Linux, Git, GitHub Actions",
-    contact: "Email:    nithinvs2006@gmail.com\nGitHub:   github.com/Nithin-24\nLinkedIn: linkedin.com/in/nithin-p-m-\nLocation: Coimbatore, Tamil Nadu, India"
-  };
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const cmd = input.value.trim().toLowerCase();
-    input.value = "";
-    if (!cmd) return;
-
-    if (cmd === "clear") {
-      output.textContent = "";
-      return;
-    }
-
-    if (cmd === "exit") {
-      closeWindow("terminal");
-      return;
-    }
-
-    output.textContent += `\n\nvisitor@nithin.world:~$ ${cmd}\n`;
-    if (COMMANDS[cmd]) {
-      output.textContent += COMMANDS[cmd];
-    } else {
-      output.textContent += `Command not found: '${cmd}'. Type 'help' for available commands.`;
-    }
-
-    const content = win.querySelector(".window-content");
-    if (content) content.scrollTop = content.scrollHeight;
-  });
 }
 
 function addTaskbarTab(id, cfg, iconSrc) {
@@ -725,7 +796,7 @@ const PROJECTS_DATA = {
     ],
     stack: ["Go (Golang)", "PostgreSQL WAL", "Kafka", "Docker"],
     links: [
-      { label: "Source Code ↗", href: "https://github.com/Nithin-24/gocdc" }
+      { label: "Source Code ↗", href: "https://github.com/Nithin0306/gocdc" }
     ]
   },
   archivist: {
@@ -741,7 +812,7 @@ const PROJECTS_DATA = {
     ],
     stack: ["Python", "LangGraph", "GitHub Actions", "OpenAI API"],
     links: [
-      { label: "Source Code ↗", href: "https://github.com/Nithin-24/archivist" }
+      { label: "Source Code ↗", href: "https://github.com/Nithin0306/archivist" }
     ]
   },
   dayta: {
@@ -757,7 +828,7 @@ const PROJECTS_DATA = {
     ],
     stack: ["FastAPI", "Pinecone", "LangChain", "React"],
     links: [
-      { label: "Source Code ↗", href: "https://github.com/Nithin-24/dayta" }
+      { label: "Source Code ↗", href: "https://github.com/Nithin0306/dayta" }
     ]
   },
   skillup: {
@@ -773,7 +844,7 @@ const PROJECTS_DATA = {
     ],
     stack: ["TypeScript", "Next.js", "Gemini API", "Tailwind CSS"],
     links: [
-      { label: "Source Code ↗", href: "https://github.com/Nithin-24/skillup" }
+      { label: "Source Code ↗", href: "https://github.com/Nithin0306/skillup" }
     ]
   }
 };
